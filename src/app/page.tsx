@@ -1,31 +1,54 @@
-import Link from "next/link";
 import { type SanityDocument } from "next-sanity";
-
 import { client } from "@/sanity/client";
+import { Hero } from "@/components/Hero";
+import { NewsBar } from "@/components/NewsBar";
+import { FeatureSection } from "@/components/FeatureSection";
 
-const POSTS_QUERY = `*[
-  _type == "post"
-  && defined(slug.current)
-]|order(publishedAt desc)[0...12]{_id, title, slug, publishedAt}`;
+const HOME_QUERY = `*[_type == "homePage"][0]`;
 
-const options = { next: { revalidate: 30 } };
+export const metadata = {
+  title: "Gospel Project - Home",
+  description: "Welcome to the Gospel Project.",
+};
 
 export default async function IndexPage() {
-  const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY, {}, options);
+  const homeData = await client.fetch<SanityDocument>(HOME_QUERY);
+
+  if (!homeData) {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="text-center p-8">
+          <h1 className="text-2xl font-bold mb-4">Welcome</h1>
+          <p className="text-gray-600">Please configure the Home Page in Sanity Studio.</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
-    <main className="container mx-auto min-h-screen max-w-3xl p-8">
-      <h1 className="text-4xl font-bold mb-8">Posts</h1>
-      <ul className="flex flex-col gap-y-4">
-        {posts.map((post) => (
-          <li className="hover:underline" key={post._id}>
-            <Link href={`/${post.slug.current}`}>
-              <h2 className="text-xl font-semibold">{post.title}</h2>
-              <p>{new Date(post.publishedAt).toLocaleDateString()}</p>
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <main className="min-h-screen flex flex-col">
+      <Hero image={homeData.heroImage} />
+
+      {homeData.newsEnabled && <NewsBar items={homeData.newsItems} />}
+
+      <div className="container mx-auto px-4 py-16 flex-grow">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 w-full max-w-6xl mx-auto h-full items-stretch">
+          <FeatureSection
+            title={homeData.gospelationSection?.title}
+            logo={homeData.gospelationSection?.logo}
+            text={homeData.gospelationSection?.text}
+            linkUrl="/gospelation"
+            linkText="Visit Gospelation"
+          />
+          <FeatureSection
+            title={homeData.gospelprojectSection?.title}
+            logo={homeData.gospelprojectSection?.logo}
+            text={homeData.gospelprojectSection?.text}
+            linkUrl="/gospelproject"
+            linkText="Visit Gospel Project"
+          />
+        </div>
+      </div>
     </main>
   );
 }
