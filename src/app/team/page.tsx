@@ -2,10 +2,16 @@ import { client } from '@/sanity/client';
 import { PortableText } from "next-sanity";
 import Image from 'next/image';
 import { urlFor } from '@/sanity/client';
+import { HeroSection } from "@/components/HeroSection";
 
 export default async function TeamPage() {
     // Fetch team members sorted by the 'order' field
-    const members = await client.fetch(`*[_type == "teamMember"] | order(order asc)`);
+    const data = await client.fetch(`{
+      "members": *[_type == "teamMember"] | order(order asc),
+      "page": *[_type == "teamPage"][0]
+    }`);
+
+    const { members, page } = data;
 
     const sections = {
         team: members.filter((m: any) => m.section === 'team'),
@@ -14,13 +20,20 @@ export default async function TeamPage() {
     };
 
     return (
-        <div className="bg-white py-12">
-            <div className="max-w-7xl mx-auto px-4">
-                <Section title="Meet our Team" members={sections.team} />
-                <Section title="Soloists" members={sections.soloists} />
-                <Section title="The Band" members={sections.band} />
+        <main className="min-h-screen">
+            <HeroSection
+                title={page?.title || "Meet our Team"}
+                image={page?.heroImage}
+                logo={page?.logo}
+            />
+            <div className="bg-white py-12">
+                <div className="max-w-7xl mx-auto px-4">
+                    <Section title="Team" members={sections.team} />
+                    <Section title="Soloists" members={sections.soloists} />
+                    <Section title="The Band" members={sections.band} />
+                </div>
             </div>
-        </div>
+        </main>
     );
 }
 

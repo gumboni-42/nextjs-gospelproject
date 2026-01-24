@@ -1,6 +1,7 @@
 import { type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { GalleryView } from "@/components/GalleryView";
+import { HeroSection } from "@/components/HeroSection";
 
 interface CloudinaryAsset {
     _key: string;
@@ -22,6 +23,8 @@ interface YearEntry {
 interface GalleryDocument extends SanityDocument {
     years?: YearEntry[];
     title?: string;
+    heroImage?: any;
+    logo?: any;
 }
 
 const GALLERY_QUERY = `*[_type == "gallery"][0]{
@@ -58,12 +61,17 @@ export default async function ImpressionenPage() {
 
     return (
         <main className="min-h-screen">
-            <div className="bg-purple-900 text-white py-16 text-center">
+            <HeroSection
+                title={galleryData.title || 'Impressionen'}
+                image={galleryData.heroImage}
+                logo={galleryData.logo}
+            />
+            {/* <div className="bg-purple-900 text-white py-16 text-center">
                 <h1 className="text-5xl font-bold mb-4">{galleryData.title || 'Impressionen'}</h1>
                 <p className="text-purple-200 text-lg max-w-2xl mx-auto">
                     Einblick in unsere vergangenen Konzerte und Projekte.
                 </p>
-            </div>
+            </div> */}
 
             <GalleryView data={galleryData} />
         </main>

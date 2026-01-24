@@ -13,7 +13,7 @@ interface FeatureSectionProps {
 
 export function FeatureSection({ title, logo, text, linkUrl, linkText }: FeatureSectionProps) {
     return (
-        <div className="flex flex-col items-center justify-center p-8 text-center h-full border border-gray-100 dark:border-white/5 rounded-2xl bg-white/50 dark:bg-black/20 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+        <div className="flex flex-col p-8 h-full">
             {logo && (
                 <div className="mb-6 relative w-48 h-48">
                     <Image
@@ -25,16 +25,16 @@ export function FeatureSection({ title, logo, text, linkUrl, linkText }: Feature
                 </div>
             )}
             {title && (
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                <h3 className="text-2xl font-bold mb-4">
                     {title}
                 </h3>
             )}
-            <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-md leading-relaxed">
+            <p className="text-lg mb-8 max-w-md leading-relaxed">
                 {text}
             </p>
             <Link
                 href={linkUrl}
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                className=""
             >
                 {linkText}
             </Link>
