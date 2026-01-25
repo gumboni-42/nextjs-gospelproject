@@ -39,11 +39,11 @@ export function NavBar({ routes }: NavBarProps) {
                 <div className="flex h-16 items-center justify-between">
                     <Link href="/" className="text-2xl font-bold tracking-tight bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
                         <CldImage
-                            width="600"
-                            height="600"
-                            src="logo_gospelproject" // The "Public ID" from your Cloudinary media library
+                            width="337"
+                            height="26"
+                            src="logo_gospelproject"
                             alt="Gospel Project Logo"
-                            crop="fill"               // Example transformation
+                            crop="fill"
                         />
                     </Link>
 
@@ -51,15 +51,21 @@ export function NavBar({ routes }: NavBarProps) {
                     <nav className="hidden md:flex items-center gap-8">
                         {routes.map((route) => (
                             <div key={route.path} className="relative group">
-                                <Link
-                                    href={route.path}
-                                    className={`text-sm font-medium transition-colors hover:text-purple-600 ${pathname === route.path
-                                        ? "text-purple-600 dark:text-purple-400"
-                                        : "text-gray-700 dark:text-gray-200"
-                                        }`}
-                                >
-                                    {route.title}
-                                </Link>
+                                {pathname === route.path ? (
+                                    <span
+                                        className="text-sm font-bold cursor-default"
+                                        style={{ color: 'var(--gospel-primary)' }}
+                                    >
+                                        {route.title}
+                                    </span>
+                                ) : (
+                                    <Link
+                                        href={route.path}
+                                        className="nav-bar-link text-sm font-bold transition-colors text-gray-700 dark:text-gray-200"
+                                    >
+                                        {route.title}
+                                    </Link>
+                                )}
 
                                 {/* Dropdown */}
                                 {route.children && route.children.length > 0 && (
