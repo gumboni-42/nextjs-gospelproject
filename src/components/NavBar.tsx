@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { CldImage } from 'next-cloudinary';
 
 export interface Route {
     title: string;
@@ -30,14 +31,20 @@ export function NavBar({ routes }: NavBarProps) {
     return (
         <header
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                    ? "bg-white/80 backdrop-blur-md shadow-md dark:bg-black/80"
-                    : "bg-transparent"
+                ? "bg-black/60 backdrop-blur-md shadow-md dark:bg-black/60"
+                : "bg-black/80"
                 }`}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                     <Link href="/" className="text-2xl font-bold tracking-tight bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
-                        Gospel Project
+                        <CldImage
+                            width="600"
+                            height="600"
+                            src="logo_gospelproject" // The "Public ID" from your Cloudinary media library
+                            alt="Gospel Project Logo"
+                            crop="fill"               // Example transformation
+                        />
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -47,8 +54,8 @@ export function NavBar({ routes }: NavBarProps) {
                                 <Link
                                     href={route.path}
                                     className={`text-sm font-medium transition-colors hover:text-purple-600 ${pathname === route.path
-                                            ? "text-purple-600 dark:text-purple-400"
-                                            : "text-gray-700 dark:text-gray-200"
+                                        ? "text-purple-600 dark:text-purple-400"
+                                        : "text-gray-700 dark:text-gray-200"
                                         }`}
                                 >
                                     {route.title}

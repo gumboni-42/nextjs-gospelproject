@@ -12,7 +12,7 @@ const GOSPELATION_QUERY = `*[_type == "gospelationPage"][0]{
 
 export const metadata = {
     title: "Gospelation",
-    description: "Gospelation - Spreading the Good News",
+    description: "Gospelation - Gospel all year long",
 };
 
 export default async function GospelationPage() {
