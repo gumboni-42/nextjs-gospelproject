@@ -24,7 +24,7 @@ export const HeroSection = ({ title, image, logo }: HeroSectionProps) => {
     const logoUrl = getImageUrl(logo);
 
     return (
-        <section className="relative w-full h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+        <section className="relative w-full h-[45vh] min-h-[400px] flex items-center justify-center overflow-hidden">
             {/* Background Image */}
             {backgroundUrl && (
                 <div className="absolute inset-0 w-full h-full">
@@ -46,13 +46,14 @@ export const HeroSection = ({ title, image, logo }: HeroSectionProps) => {
                         <Image
                             src={logoUrl}
                             alt={`${title} Logo`}
-                            width={150}
-                            height={150}
+                            width={250}
+                            height={250}
                             className="object-contain"
                         />
                     </div>
                 )}
-                <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
+                <hr className="my-6 w-2/3 mx-auto border-gray-200" />
+                <h1 className="text-4xl md:text-4xl text-white drop-shadow-lg">
                     {title}
                 </h1>
             </div>

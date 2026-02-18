@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
+import { ReCaptchaProvider } from "@/components/ReCaptchaProvider";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -25,8 +26,10 @@ export default function RootLayout({
       <body
         className={`${lato.variable} antialiased pb-20 pt-16`}
       >
-        <Navigation />
-        {children}
+        <ReCaptchaProvider>
+          <Navigation />
+          {children}
+        </ReCaptchaProvider>
       </body>
     </html>
   );
