@@ -27,6 +27,13 @@ const VISIBILITY_QUERY = `{
   "gallery": *[_type == "gallery"][0] { visible }
 }`;
 
+// Pages linked from the footer — excluded from the main nav
+const NAV_EXCLUDED_PATHS = new Set([
+    '/impressum',
+    '/datenschutz',
+    '/newsletter',
+])
+
 function getRoutes(dir: string, baseUrl: string = ''): Route[] {
     const items = fs.readdirSync(dir, { withFileTypes: true });
     const routes: Route[] = [];
@@ -37,9 +44,11 @@ function getRoutes(dir: string, baseUrl: string = ''): Route[] {
         }
 
         if (item.isDirectory()) {
-            const pagePath = path.join(dir, item.name, 'page.tsx');
+            const pagePath = path.join(dir, item.name, 'page.tsx')
             if (fs.existsSync(pagePath)) {
-                const currentPath = `${baseUrl}/${item.name}`;
+                const currentPath = `${baseUrl}/${item.name}`
+
+                if (NAV_EXCLUDED_PATHS.has(currentPath)) continue
                 const children = getRoutes(path.join(dir, item.name), currentPath);
 
                 const title = item.name

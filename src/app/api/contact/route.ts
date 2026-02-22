@@ -49,23 +49,23 @@ export async function POST(request: Request) {
             from: `"${name}" <${process.env.EMAIL_USER || "no-reply@gospelproject.ch"}>`, // Sender address
             to: "info@gospelproject.ch", // List of receivers
             replyTo: email,
-            subject: `New Contact Form Submission from ${name}`,
-            text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+            subject: `Neue Mitteilung von ${name} via gospelproject.ch`,
+            text: `Name: ${name}\nEmail: ${email}\n\nNachricht:\n${message}`,
             html: `
-        <h3>New Contact Form Submission</h3>
+        <h3>Neue Mitteilung von ${name} via gospelproject.ch</h3>
         <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
+        <p><strong>E-Mail:</strong> ${email}</p>
+        <p><strong>Nachricht:</strong></p>
         <p>${message.replace(/\n/g, "<br>")}</p>
       `,
         });
 
-        return NextResponse.json({ message: "Email sent successfully" }, { status: 200 });
+        return NextResponse.json({ message: "Nachricht erfolgreich versendet" }, { status: 200 });
 
     } catch (error: any) {
         console.error("Contact API Error:", error);
         return NextResponse.json(
-            { message: "Failed to send email" },
+            { message: "Nachricht konnte nicht versendet werden" },
             { status: 500 }
         );
     }

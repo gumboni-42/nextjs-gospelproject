@@ -3,6 +3,7 @@ import { Lato } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { ReCaptchaProvider } from "@/components/ReCaptchaProvider";
+import { Footer } from "@/components/Footer";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -24,11 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${lato.variable} antialiased pb-20 pt-16`}
+        className={`${lato.variable} antialiased pt-16 flex flex-col min-h-screen`}
       >
         <ReCaptchaProvider>
           <Navigation />
-          {children}
+          <div className="flex-1">{children}</div>
+          <Footer />
         </ReCaptchaProvider>
       </body>
     </html>
