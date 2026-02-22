@@ -1,8 +1,31 @@
 import fs from 'fs';
 import path from 'path';
 import { NavBar, type Route } from './NavBar';
+import { client } from '@/sanity/client';
 
 const APP_DIR = path.join(process.cwd(), 'src/app');
+
+// Maps each page route path to its Sanity document _id (or a special key)
+const PATH_SANITY_MAP: Record<string, string> = {
+    '/agenda': 'agendaPage',
+    '/gospelation': 'gospelationPage',
+    '/gospelation/engagieren': 'gospelationEngagierenPage',
+    '/gospelproject': 'gospelprojectPage',
+    '/gospelproject/mitmachen': 'gospelprojectMitmachenPage',
+    '/gospelproject/anmeldung': 'gospelprojectAnmeldungPage',
+    '/gospelproject/termine': 'gospelprojectTerminePage',
+    '/gospelproject/team': 'teamPage',
+    '/gospelproject/member': 'gospelprojectMemberPage',
+    '/impressionen': '__gallery__',
+    '/kontakt': 'kontaktPage',
+};
+
+const SINGLETON_IDS = Object.values(PATH_SANITY_MAP).filter(id => id !== '__gallery__');
+
+const VISIBILITY_QUERY = `{
+  "singletons": *[_id in $ids] { _id, visible },
+  "gallery": *[_type == "gallery"][0] { visible }
+}`;
 
 function getRoutes(dir: string, baseUrl: string = ''): Route[] {
     const items = fs.readdirSync(dir, { withFileTypes: true });
@@ -14,13 +37,11 @@ function getRoutes(dir: string, baseUrl: string = ''): Route[] {
         }
 
         if (item.isDirectory()) {
-            // Check if this directory has a page
             const pagePath = path.join(dir, item.name, 'page.tsx');
             if (fs.existsSync(pagePath)) {
                 const currentPath = `${baseUrl}/${item.name}`;
                 const children = getRoutes(path.join(dir, item.name), currentPath);
 
-                // Title case format: "my-page" -> "My Page"
                 const title = item.name
                     .split('-')
                     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -32,36 +53,53 @@ function getRoutes(dir: string, baseUrl: string = ''): Route[] {
                     children: children.length > 0 ? children : undefined
                 });
             } else {
-                // If no page.tsx, maybe it's just a folder grouping other pages?
-                // For now, let's just recurse and flatten if the parent itself isn't a route?
-                // Actually requirement says "links to all pages in /app".
-                // If a dir doesn't have a page, it's not a linkable route.
-                // But it might have children that are linkable.
-                // For this iteration, let's treat folders without page.tsx as just containers (but nav structure usually implies the parent is linkable or a label).
-                // Let's check for children valid routes.
                 const currentPath = `${baseUrl}/${item.name}`;
                 const validChildren = getRoutes(path.join(dir, item.name), currentPath);
                 if (validChildren.length > 0) {
-                    // It's a group header, but not a link itself? 
-                    // NavBar expects valid paths.
-                    // Let's skip non-page folders for top level simplicity or use the first child?
-                    // Simpler: Only list folders that ARE pages.
+                    // folder without page — skip for now
                 }
             }
         }
     }
 
-    // Sort routes: Home first, then others alphabetically? 
-    // actually Home '/' is root.
     return routes;
 }
 
+function filterByVisibility(routes: Route[], visibilityMap: Record<string, boolean | null>): Route[] {
+    return routes
+        .filter(route => {
+            const key = PATH_SANITY_MAP[route.path];
+            if (!key) return true; // no Sanity mapping → always visible
+            const val = visibilityMap[key];
+            return val !== false; // null / undefined / true → visible
+        })
+        .map(route => ({
+            ...route,
+            children: route.children
+                ? filterByVisibility(route.children, visibilityMap)
+                : undefined,
+        }));
+}
+
 export async function Navigation() {
-    // Manually add Home
-    const routes: Route[] = [
-        { title: 'Home', path: '/' },
-        ...getRoutes(APP_DIR)
-    ];
+    const [visibilityData, rawRoutes] = await Promise.all([
+        client.fetch<{
+            singletons: Array<{ _id: string; visible: boolean | null }>;
+            gallery: { visible: boolean | null } | null;
+        }>(VISIBILITY_QUERY, { ids: SINGLETON_IDS }),
+        Promise.resolve([
+            { title: 'Home', path: '/' },
+            ...getRoutes(APP_DIR),
+        ] as Route[]),
+    ]);
+
+    const visibilityMap: Record<string, boolean | null> = {};
+    visibilityData.singletons.forEach(doc => {
+        visibilityMap[doc._id] = doc.visible;
+    });
+    visibilityMap['__gallery__'] = visibilityData.gallery?.visible ?? null;
+
+    const routes = filterByVisibility(rawRoutes, visibilityMap);
 
     return <NavBar routes={routes} />;
 }
