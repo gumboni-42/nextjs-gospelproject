@@ -24,7 +24,11 @@ const SINGLETON_IDS = Object.values(PATH_SANITY_MAP).filter(id => id !== '__gall
 
 const VISIBILITY_QUERY = `{
   "singletons": *[_id in $ids] { _id, visible },
-  "gallery": *[_type == "gallery"][0] { visible }
+  "gallery": *[_type == "gallery"][0] { visible },
+  "navigationOrder": *[_type == "navigationSettings"][0].mainNav[]{
+    "id": page->_id,
+    "title": title
+  }
 }`;
 
 // Pages linked from the footer — excluded from the main nav
@@ -95,9 +99,9 @@ export async function Navigation() {
         client.fetch<{
             singletons: Array<{ _id: string; visible: boolean | null }>;
             gallery: { visible: boolean | null } | null;
+            navigationOrder: Array<{ id: string; title: string | null }> | null;
         }>(VISIBILITY_QUERY, { ids: SINGLETON_IDS }),
         Promise.resolve([
-            { title: 'Home', path: '/' },
             ...getRoutes(APP_DIR),
         ] as Route[]),
     ]);
@@ -108,7 +112,31 @@ export async function Navigation() {
     });
     visibilityMap['__gallery__'] = visibilityData.gallery?.visible ?? null;
 
-    const routes = filterByVisibility(rawRoutes, visibilityMap);
+    const orderMap = visibilityData.navigationOrder?.reduce((acc, item, index) => {
+        if (item.id) acc[item.id] = index;
+        return acc;
+    }, {} as Record<string, number>) || {};
+
+    const customTitleMap = visibilityData.navigationOrder?.reduce((acc, item) => {
+        if (item.id && item.title) acc[item.id] = item.title;
+        return acc;
+    }, {} as Record<string, string>) || {};
+
+    const routes = filterByVisibility(rawRoutes, visibilityMap).map(route => {
+        const id = PATH_SANITY_MAP[route.path];
+        if (id && customTitleMap[id]) {
+            return { ...route, title: customTitleMap[id] };
+        }
+        return route;
+    }).sort((a, b) => {
+        const idA = PATH_SANITY_MAP[a.path];
+        const idB = PATH_SANITY_MAP[b.path];
+
+        const orderA = idA && orderMap[idA] !== undefined ? orderMap[idA] : 999;
+        const orderB = idB && orderMap[idB] !== undefined ? orderMap[idB] : 999;
+
+        return orderA - orderB;
+    });
 
     return <NavBar routes={routes} />;
 }

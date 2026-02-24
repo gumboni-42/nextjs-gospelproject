@@ -3,11 +3,20 @@ import { client } from "@/sanity/client";
 import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { HeroSection } from "@/components/HeroSection";
+import { CallToAction } from "@/components/CallToAction";
 
 const MITMACHEN_QUERY = `*[_type == "gospelprojectMitmachenPage"][0]{
   ...,
   "heroImage": heroImage,
-  "logo": logo
+  "logo": logo,
+  "projectStatus": projectStatus,
+  "inactiveBody": inactiveBody,
+  "callToAction": callToAction {
+    text,
+    linkType,
+    internalLink,
+    url
+  }
 }`;
 
 export const metadata = {
@@ -45,19 +54,15 @@ export default async function GospelprojectMitmachenPage() {
                     )}
 
                     <div className="prose prose-lg max-w-none mb-12">
-                        {data.body && <PortableText value={data.body} />}
+                        {data.projectStatus !== false ? (
+                            data.body && <PortableText value={data.body} />
+                        ) : (
+                            data.inactiveBody && <PortableText value={data.inactiveBody} />
+                        )}
                     </div>
 
-                    {data.callToAction?.url && (
-                        <div className="flex justify-center mt-8">
-                            <Link
-                                href={data.callToAction.url}
-                                className="inline-block px-8 py-4 text-white font-bold rounded-lg transition-transform hover:scale-105"
-                                style={{ backgroundColor: 'var(--gospel-primary)' }}
-                            >
-                                {data.callToAction.text || 'Learn More'}
-                            </Link>
-                        </div>
+                    {data.projectStatus !== false && (
+                        <CallToAction data={data.callToAction} />
                     )}
                 </div>
             </div>

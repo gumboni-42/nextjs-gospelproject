@@ -69,14 +69,14 @@ export function NavBar({ routes }: NavBarProps) {
 
                                 {/* Dropdown */}
                                 {route.children && route.children.length > 0 && (
-                                    <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out transform translate-y-2 group-hover:translate-y-0">
-                                        <div className="overflow-hidden rounded-xl bg-white shadow-xl ring-1 ring-black/5 dark:bg-gray-900 dark:ring-white/10">
+                                    <div className="absolute left-0 -ml-5 top-full mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out transform translate-y-2 group-hover:translate-y-0">
+                                        <div className="overflow-hidden rounded-xl bg-gray-900 shadow-xl ring-1 ring-white/10">
                                             <div className="p-1">
                                                 {route.children.map((child) => (
                                                     <Link
                                                         key={child.path}
                                                         href={child.path}
-                                                        className={`block rounded-lg px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-purple-600 dark:text-gray-200 dark:hover:bg-white/5 dark:hover:text-purple-400 ${pathname === child.path && "bg-gray-50 dark:bg-white/5 text-purple-600"
+                                                        className={`block rounded-lg px-4 py-2 text-sm !text-white hover:bg-gray-800 ${pathname === child.path && "bg-gray-800/60"
                                                             }`}
                                                     >
                                                         {child.title}

@@ -1,6 +1,6 @@
 import { type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
-import { Hero } from "@/components/Hero";
+import { HeroSection } from "@/components/HeroSection";
 import { NewsBar } from "@/components/NewsBar";
 import { FeatureSection } from "@/components/FeatureSection";
 
@@ -27,7 +27,7 @@ export default async function IndexPage() {
 
   return (
     <main className="min-h-screen flex flex-col">
-      <Hero image={homeData.heroImage} />
+      <HeroSection image={homeData.heroImage} size="large" overlay={false} />
 
       {homeData.newsEnabled && <NewsBar items={homeData.newsItems} />}
 

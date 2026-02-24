@@ -3,11 +3,18 @@ import { client } from "@/sanity/client";
 import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { HeroSection } from "@/components/HeroSection";
+import { CallToAction } from "@/components/CallToAction";
 
 const TERMINE_QUERY = `*[_type == "gospelprojectTerminePage"][0]{
   ...,
   "heroImage": heroImage,
-  "logo": logo
+  "logo": logo,
+  "callToAction": callToAction {
+    text,
+    linkType,
+    internalLink,
+    url
+  }
 }`;
 
 export const metadata = {
@@ -48,17 +55,7 @@ export default async function GospelprojectTerminePage() {
                         {data.body && <PortableText value={data.body} />}
                     </div>
 
-                    {data.callToAction?.url && (
-                        <div className="flex justify-center mt-8">
-                            <Link
-                                href={data.callToAction.url}
-                                className="inline-block px-8 py-4 text-white font-bold rounded-lg transition-transform hover:scale-105"
-                                style={{ backgroundColor: 'var(--gospel-primary)' }}
-                            >
-                                {data.callToAction.text || 'Learn More'}
-                            </Link>
-                        </div>
-                    )}
+                    <CallToAction data={data.callToAction} />
                 </div>
             </div>
         </main>

@@ -2,12 +2,14 @@ import Image from 'next/image';
 import { urlFor } from '@/sanity/client';
 
 export type HeroSectionProps = {
-    title: string;
+    title?: string;
     image?: any;
     logo?: any;
+    size?: 'default' | 'large';
+    overlay?: boolean;
 };
 
-export const HeroSection = ({ title, image, logo }: HeroSectionProps) => {
+export const HeroSection = ({ title, image, logo, size = 'default', overlay = true }: HeroSectionProps) => {
     // Helper to get URL from either Sanity image or Cloudinary asset
     const getImageUrl = (source: any) => {
         if (!source) return null;
@@ -23,40 +25,48 @@ export const HeroSection = ({ title, image, logo }: HeroSectionProps) => {
     const backgroundUrl = getImageUrl(image);
     const logoUrl = getImageUrl(logo);
 
+    const matchSize = !backgroundUrl ? 'h-[120px] min-h-0 pb-0 items-center' : (size === 'large' ? 'h-[60vh] md:h-[80vh] items-end pb-16 md:pb-24' : 'h-[45vh] min-h-[400px] items-end pb-16 md:pb-24');
+
     return (
-        <section className="relative w-full h-[45vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+        <section className={`relative w-full ${matchSize} flex justify-center overflow-hidden`}>
             {/* Background Image */}
             {backgroundUrl && (
                 <div className="absolute inset-0 w-full h-full">
                     <Image
                         src={backgroundUrl}
-                        alt={title}
+                        alt={title || 'Hero Background'}
                         fill
-                        className="object-cover"
+                        className="object-cover object-center"
                         priority
                     />
-                    <div className="absolute inset-0 bg-black/50" />
+                    {overlay && <div className="absolute inset-0 bg-black/30" />} {/* Subtle overlay */}
                 </div>
             )}
 
             {/* Content */}
-            <div className="relative z-10 container mx-auto px-4 text-center">
-                {logoUrl && (
-                    <div className="mb-6 flex justify-center">
-                        <Image
-                            src={logoUrl}
-                            alt={`${title} Logo`}
-                            width={250}
-                            height={250}
-                            className="object-contain"
-                        />
-                    </div>
-                )}
-                <hr className="my-6 w-2/3 mx-auto border-gray-200" />
-                <h1 className="text-4xl md:text-4xl text-white drop-shadow-lg">
-                    {title}
-                </h1>
-            </div>
+            {(title || logoUrl) && (
+                <div className="relative z-10 container mx-auto px-4 text-center">
+                    {logoUrl && (
+                        <div className="mb-6 flex justify-center">
+                            <Image
+                                src={logoUrl}
+                                alt={`${title || 'Hero'} Logo`}
+                                width={250}
+                                height={250}
+                                className="object-contain"
+                            />
+                        </div>
+                    )}
+                    {title && (
+                        <>
+                            {logoUrl && <hr className="my-6 w-2/3 mx-auto" style={{ borderColor: 'var(--gospel-primary)' }} />}
+                            <h1 className="text-4xl md:text-4xl text-white drop-shadow-lg">
+                                {title}
+                            </h1>
+                        </>
+                    )}
+                </div>
+            )}
         </section>
     );
 };
