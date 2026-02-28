@@ -1,4 +1,5 @@
 import ContactForm from "@/components/ContactForm";
+import ObfuscatedEmail from "@/components/ObfuscatedEmail";
 
 export const metadata = {
     title: "Kontakt | Gospelproject",
@@ -14,7 +15,7 @@ export default function ContactPage() {
                         Kontakt
                     </h1>
                     <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400">
-                        Schreib uns direkt an <a href="mailto:info@gospelproject.ch">info@gospelproject.ch</a> oder füll das untenstehende Formular aus 🙂
+                        Schreib uns direkt an <ObfuscatedEmail /> oder füll das untenstehende Formular aus 🙂
                     </p>
                 </div>
 

@@ -14,8 +14,10 @@ export const ReCaptchaProvider = ({
 }: ReCaptchaProviderProps) => {
     const siteKey = reCaptchaKey || process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
-    if (!siteKey) {
-        console.warn("ReCaptchaProvider: No site key provided.");
+    if (!siteKey || process.env.NODE_ENV !== "production") {
+        if (!siteKey && process.env.NODE_ENV === "production") {
+            console.warn("ReCaptchaProvider: No site key provided in production.");
+        }
         return <>{children}</>;
     }
 

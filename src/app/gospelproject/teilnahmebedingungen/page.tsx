@@ -1,36 +1,28 @@
 import { type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { PortableText } from "next-sanity";
-import Link from "next/link";
 import { HeroSection } from "@/components/HeroSection";
-import { CallToAction } from "@/components/CallToAction";
 
-const GOSPELATION_QUERY = `*[_type == "gospelprojectPage"][0]{
+const BEDINGUNGEN_QUERY = `*[_type == "gospelprojectBedingungenPage"][0]{
   ...,
   "heroImage": heroImage,
   "logo": logo,
-  "callToAction": callToAction {
-    text,
-    linkType,
-    internalLink,
-    url
-  }
 }`;
 
 export const metadata = {
-    title: "Gospelproject",
-    description: "Gospelproject - Gospel all year long",
+    title: "Gospelproject - Teilnahmebedingungen",
+    description: "Teilnahmebedingungen im Gospelproject",
 };
 
-export default async function GospelprojectPage() {
-    const data = await client.fetch<SanityDocument>(GOSPELATION_QUERY);
+export default async function GospelprojectBedingungenPage() {
+    const data = await client.fetch<SanityDocument>(BEDINGUNGEN_QUERY);
 
     if (!data) {
         return (
             <main className="min-h-screen flex items-center justify-center">
                 <div className="text-center p-8">
                     <h1 className="text-2xl font-bold mb-4">Content Not Found</h1>
-                    <p className="text-gray-600">Please configure the Gospelation Page in Sanity Studio.</p>
+                    <p className="text-gray-600">Please configure the Gospelproject Teilnahmebedingungen Page in Sanity Studio.</p>
                 </div>
             </main>
         );
@@ -54,8 +46,6 @@ export default async function GospelprojectPage() {
                     <div className="prose max-w-none mb-12">
                         {data.body && <PortableText value={data.body} />}
                     </div>
-
-                    <CallToAction data={data.callToAction} />
                 </div>
             </div>
         </main>

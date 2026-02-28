@@ -18,6 +18,8 @@ const PATH_SANITY_MAP: Record<string, string> = {
     '/gospelproject/member': 'gospelprojectMemberPage',
     '/impressionen': '__gallery__',
     '/kontakt': 'kontaktPage',
+    '/sponsoring': 'sponsoringPage',
+    '/gospelproject/teilnahmebedingungen': 'gospelprojectBedingungenPage',
 };
 
 const SINGLETON_IDS = Object.values(PATH_SANITY_MAP).filter(id => id !== '__gallery__');
@@ -27,7 +29,11 @@ const VISIBILITY_QUERY = `{
   "gallery": *[_type == "gallery"][0] { visible },
   "navigationOrder": *[_type == "navigationSettings"][0].mainNav[]{
     "id": page->_id,
-    "title": title
+    "title": title,
+    "children": children[]{
+      "id": page->_id,
+      "title": title
+    }
   }
 }`;
 
@@ -99,7 +105,7 @@ export async function Navigation() {
         client.fetch<{
             singletons: Array<{ _id: string; visible: boolean | null }>;
             gallery: { visible: boolean | null } | null;
-            navigationOrder: Array<{ id: string; title: string | null }> | null;
+            navigationOrder: Array<{ id: string; title: string | null; children: Array<{ id: string; title: string | null }> | null }> | null;
         }>(VISIBILITY_QUERY, { ids: SINGLETON_IDS }),
         Promise.resolve([
             ...getRoutes(APP_DIR),
@@ -112,31 +118,46 @@ export async function Navigation() {
     });
     visibilityMap['__gallery__'] = visibilityData.gallery?.visible ?? null;
 
-    const orderMap = visibilityData.navigationOrder?.reduce((acc, item, index) => {
-        if (item.id) acc[item.id] = index;
-        return acc;
-    }, {} as Record<string, number>) || {};
+    const orderMap: Record<string, number> = {};
+    const customTitleMap: Record<string, string> = {};
 
-    const customTitleMap = visibilityData.navigationOrder?.reduce((acc, item) => {
-        if (item.id && item.title) acc[item.id] = item.title;
-        return acc;
-    }, {} as Record<string, string>) || {};
-
-    const routes = filterByVisibility(rawRoutes, visibilityMap).map(route => {
-        const id = PATH_SANITY_MAP[route.path];
-        if (id && customTitleMap[id]) {
-            return { ...route, title: customTitleMap[id] };
+    visibilityData.navigationOrder?.forEach((item, index) => {
+        if (item.id) {
+            orderMap[item.id] = index;
+            if (item.title) customTitleMap[item.id] = item.title;
         }
-        return route;
-    }).sort((a, b) => {
-        const idA = PATH_SANITY_MAP[a.path];
-        const idB = PATH_SANITY_MAP[b.path];
-
-        const orderA = idA && orderMap[idA] !== undefined ? orderMap[idA] : 999;
-        const orderB = idB && orderMap[idB] !== undefined ? orderMap[idB] : 999;
-
-        return orderA - orderB;
+        item.children?.forEach((child, childIndex) => {
+            if (child.id) {
+                orderMap[child.id] = childIndex;
+                if (child.title) customTitleMap[child.id] = child.title;
+            }
+        });
     });
+
+    function processRoutes(routesToProcess: Route[]): Route[] {
+        return routesToProcess.map(route => {
+            const id = PATH_SANITY_MAP[route.path];
+            let title = route.title;
+            if (id && customTitleMap[id]) {
+                title = customTitleMap[id];
+            }
+            return {
+                ...route,
+                title,
+                children: route.children ? processRoutes(route.children) : undefined
+            };
+        }).sort((a, b) => {
+            const idA = PATH_SANITY_MAP[a.path];
+            const idB = PATH_SANITY_MAP[b.path];
+
+            const orderA = idA && orderMap[idA] !== undefined ? orderMap[idA] : 999;
+            const orderB = idB && orderMap[idB] !== undefined ? orderMap[idB] : 999;
+
+            return orderA - orderB;
+        });
+    }
+
+    const routes = processRoutes(filterByVisibility(rawRoutes, visibilityMap));
 
     return <NavBar routes={routes} />;
 }

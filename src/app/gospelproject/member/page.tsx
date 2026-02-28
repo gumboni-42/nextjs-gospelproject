@@ -60,7 +60,7 @@ export default async function GospelprojectMemberPage() {
                         </h2>
                     )}
 
-                    <div className="prose prose-lg max-w-none mb-12">
+                    <div className="prose max-w-none mb-12">
                         {data.body && <PortableText value={data.body} />}
                     </div>
 

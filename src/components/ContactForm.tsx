@@ -18,15 +18,18 @@ export default function ContactForm() {
         setStatus("loading");
         setErrorMessage("");
 
-        if (!executeRecaptcha) {
+        if (!executeRecaptcha && process.env.NODE_ENV === 'production') {
             setStatus("error");
             setErrorMessage("Recaptcha not ready. Please try again in a moment.");
             return;
         }
 
         try {
-            // Execute v3 recaptcha with action "contact_form"
-            const captchaValue = await executeRecaptcha("contact_form");
+            let captchaValue = 'development-bypass';
+            if (process.env.NODE_ENV === 'production') {
+                // Execute v3 recaptcha with action "contact_form"
+                captchaValue = await executeRecaptcha!("contact_form");
+            }
 
             const res = await fetch("/api/contact", {
                 method: "POST",

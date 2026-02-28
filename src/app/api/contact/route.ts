@@ -19,7 +19,7 @@ export async function POST(request: Request) {
             // In production, this should likely fail, but for dev without keys we might want to allow it or fail explicitly.
             // Failing explicitly is safer.
             // return NextResponse.json({ message: "Server configuration error" }, { status: 500 });
-        } else {
+        } else if (process.env.NODE_ENV === 'production') {
             const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captcha}`;
             const captchaRes = await fetch(verifyUrl, { method: "POST" });
             const captchaData = await captchaRes.json();
@@ -46,8 +46,8 @@ export async function POST(request: Request) {
 
         // Send Email
         await transporter.sendMail({
-            from: `"${name}" <${process.env.EMAIL_USER || "no-reply@gospelproject.ch"}>`, // Sender address
-            to: "info@gospelproject.ch", // List of receivers
+            from: `"${name}" <${process.env.EMAIL_USER || "[EMAIL_ADDRESS]"}>`, // Sender address
+            to: "webformular@gospelproject.ch", // List of receivers
             replyTo: email,
             subject: `Neue Mitteilung von ${name} via gospelproject.ch`,
             text: `Name: ${name}\nEmail: ${email}\n\nNachricht:\n${message}`,

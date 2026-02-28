@@ -2,6 +2,7 @@ import { type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { GalleryView } from "@/components/GalleryView";
 import { HeroSection } from "@/components/HeroSection";
+import { VideoGallery } from "@/components/VideoGallery";
 
 interface CloudinaryAsset {
     _key: string;
@@ -22,6 +23,12 @@ interface YearEntry {
 
 interface GalleryDocument extends SanityDocument {
     years?: YearEntry[];
+    videos?: {
+        _key: string;
+        title: string;
+        youtubeUrl: string;
+        thumbnail?: CloudinaryAsset;
+    }[];
     title?: string;
     heroImage?: any;
     logo?: any;
@@ -32,6 +39,15 @@ const GALLERY_QUERY = `*[_type == "gallery"][0]{
   years[]{
     ...,
     images[]{
+      ...,
+      "secure_url": secure_url,
+      "public_id": public_id,
+      "context": context
+    }
+  },
+  videos[]{
+    ...,
+    thumbnail{
       ...,
       "secure_url": secure_url,
       "public_id": public_id,
@@ -74,6 +90,7 @@ export default async function ImpressionenPage() {
             </div> */}
 
             <GalleryView data={galleryData} />
+            <VideoGallery videos={galleryData.videos} />
         </main>
     );
 }

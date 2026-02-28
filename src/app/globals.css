@@ -4,14 +4,14 @@
 :root {
   --light: #ffffff;
   --dark: #000000;
-  --background: var(--light);
-  --foreground: var(--dark);
+  --background: var(--dark);
+  --foreground: var(--light);
 
   /* Custom colors */
   --gospel-primary: #ff9c00;
   --gospel-secondary: #8e5700;
   --gospel-text: var(--foreground);
-  --gospel-text-light: var(--background);
+  --gospel-text-light: var(--foreground);
   --gospel-contrast: #1b7bb6;
   --gospel-hover: #1b7bb67e;
 }
@@ -23,18 +23,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: var(--dark);
-    --foreground: var(--light);
-    --gospel-primary: #ff9c00;
-    --gospel-secondary: #8e5700;
-    --gospel-text: var(--foreground);
-    --gospel-text-light: var(--background);
-    --gospel-contrast: #1b7bb6;
-    --gospel-hover: #1b7bb67e;
-  }
-}
 
 body {
   background: var(--background);
@@ -103,4 +91,10 @@ a:hover {
 button {
   color: var(--gospel-text-light);
   background-color: var(--gospel-primary);
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--gospel-secondary);
+  color: var(--gospel-text);
 }

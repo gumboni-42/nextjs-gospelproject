@@ -4,6 +4,7 @@ import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { HeroSection } from "@/components/HeroSection";
 import { CallToAction } from "@/components/CallToAction";
+import { SignupForm } from "@/components/SignupForm";
 
 const ANMELDUNG_QUERY = `*[_type == "gospelprojectAnmeldungPage"][0]{
   ...,
@@ -51,8 +52,14 @@ export default async function GospelprojectAnmeldungPage() {
                         </h2>
                     )}
 
-                    <div className="prose prose-lg max-w-none mb-12">
+                    <div className="prose max-w-none mb-12">
                         {data.body && <PortableText value={data.body} />}
+                    </div>
+
+                    <div className="p-8 sm:p-12">
+                        <h2 className="text-3xl font-bold mb-2 text-center">Jetzt Anmelden</h2>
+                        <p className="text-center text-gray-400 mb-8 max-w-xl mx-auto">Fülle das Formular aus, um dich für das nächste Gospelproject anzumelden.</p>
+                        <SignupForm />
                     </div>
 
                     <CallToAction data={data.callToAction} />

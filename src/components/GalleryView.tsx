@@ -111,7 +111,7 @@ export function GalleryView({ data }: GalleryViewProps) {
                             <button
                                 key={entry._key}
                                 onClick={() => scrollToYear(entry.year)}
-                                className="px-3 py-1 text-sm font-medium rounded-full bg-gray-100 dark:bg-white/10 hover:bg-purple-100 hover:text-purple-600 dark:hover:bg-purple-900/40 dark:hover:text-purple-400 transition-colors whitespace-nowrap"
+                                className="px-3 py-1 text-sm font-bold rounded-md cursor-pointer transition-colors whitespace-nowrap"
                             >
                                 {entry.year}
                             </button>
@@ -121,12 +121,12 @@ export function GalleryView({ data }: GalleryViewProps) {
                     {/* Sort Toggle */}
                     <button
                         onClick={() => setSortOrder(prev => prev === 'desc' ? 'asc' : 'desc')}
-                        className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors whitespace-nowrap"
+                        className="px-3 py-1 flex items-center gap-2 text-sm font-medium rounded-md whitespace-nowrap"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
                         </svg>
-                        {sortOrder === 'desc' ? 'Latest First' : 'Oldest First'}
+                        {sortOrder === 'desc' ? 'Neueste zuerst' : 'Älteste zuerst'}
                     </button>
                 </div>
             </div>
@@ -172,7 +172,7 @@ export function GalleryView({ data }: GalleryViewProps) {
             {/* Lightbox */}
             {selectedIndex !== null && allImages[selectedIndex] && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 transition-opacity duration-300"
                     onClick={() => setSelectedIndex(null)}
                 >
                     {/* Close Button */}
@@ -187,7 +187,7 @@ export function GalleryView({ data }: GalleryViewProps) {
 
                     {/* Year Label */}
                     <div className="absolute top-4 left-4 z-50">
-                        <span className="text-white font-bold text-xl bg-black/50 px-3 py-1 rounded-full border border-white/20">
+                        <span className="text-white font-bold text-md bg-black/50 px-3 py-1 rounded-md border border-white/20">
                             {allImages[selectedIndex].year}
                         </span>
                     </div>
