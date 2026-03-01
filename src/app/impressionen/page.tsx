@@ -30,7 +30,9 @@ interface GalleryDocument extends SanityDocument {
         thumbnail?: CloudinaryAsset;
     }[];
     title?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     heroImage?: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logo?: any;
 }
 
@@ -70,7 +72,7 @@ export default async function ImpressionenPage() {
         return (
             <main className="container mx-auto min-h-screen px-4 py-20 text-center">
                 <h1 className="text-3xl font-bold mb-4">Impressionen</h1>
-                <p className="text-gray-600">No gallery found. Please create a "Gallery" document in Sanity.</p>
+                <p className="text-gray-600">No gallery found. Please create a &quot;Gallery&quot; document in Sanity.</p>
             </main>
         );
     }

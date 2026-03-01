@@ -3,7 +3,9 @@ import { urlFor } from '@/sanity/client';
 
 export type HeroSectionProps = {
     title?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     image?: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logo?: any;
     size?: 'default' | 'large';
     overlay?: boolean;
@@ -11,6 +13,7 @@ export type HeroSectionProps = {
 
 export const HeroSection = ({ title, image, logo, size = 'default', overlay = true }: HeroSectionProps) => {
     // Helper to get URL from either Sanity image or Cloudinary asset
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const getImageUrl = (source: any) => {
         if (!source) return null;
         if (source.secure_url) return source.secure_url; // Cloudinary

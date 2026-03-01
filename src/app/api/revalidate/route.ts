@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
             now: Date.now(),
             type: body._type
         });
-    } catch (err: any) {
-        return new Response(err.message, { status: 500 });
+    } catch (err: unknown) {
+        return new Response(err instanceof Error ? err.message : String(err), { status: 500 });
     }
 }

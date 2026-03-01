@@ -1,7 +1,6 @@
 import { type SanityDocument } from "next-sanity";
 import { client } from "@/sanity/client";
 import { PortableText } from "next-sanity";
-import Link from "next/link";
 import { HeroSection } from "@/components/HeroSection";
 import { CallToAction } from "@/components/CallToAction";
 

@@ -62,7 +62,7 @@ export async function POST(request: Request) {
 
         return NextResponse.json({ message: "Nachricht erfolgreich versendet" }, { status: 200 });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Contact API Error:", error);
         return NextResponse.json(
             { message: "Nachricht konnte nicht versendet werden" },

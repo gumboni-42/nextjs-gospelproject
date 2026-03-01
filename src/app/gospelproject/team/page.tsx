@@ -1,28 +1,31 @@
 import { client } from '@/sanity/client';
 import { PortableText } from "next-sanity";
-import Image from 'next/image';
-import { urlFor } from '@/sanity/client';
+
+
 import { HeroSection } from "@/components/HeroSection";
 
 export default async function TeamPage() {
     // Fetch team members sorted by the 'order' field
     const data = await client.fetch(`{
-      "members": *[_type == "teamMember"] | order(order asc),
-      "page": *[_type == "teamPage"][0]
+      "members": *[_type == "teamMember" && isVisible != false] | order(order asc),
+      "page": *[_id == "teamPage"][0]
     }`);
 
     const { members, page } = data;
 
     const sections = {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         team: members.filter((m: any) => m.section === 'team'),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         soloists: members.filter((m: any) => m.section === 'soloists'),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         band: members.filter((m: any) => m.section === 'band'),
     };
 
     return (
         <main className="min-h-screen">
             <HeroSection
-                title={page?.title || "Meet our Team"}
+                title={page?.title || "Unser Team"}
                 image={page?.heroImage}
                 logo={page?.logo}
             />
@@ -37,20 +40,23 @@ export default async function TeamPage() {
     );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Section({ title, members }: { title: string, members: any[] }) {
     if (!members || members.length === 0) return null;
 
     return (
         <div className="mb-16 text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl mb-10">{title}</h2>
-            <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {members.map((member: any) => (
                     <div key={member._id} className="flex flex-col items-center">
-                        {member.image && (
+                        {member.image && member.image.secure_url && (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img
-                                src={urlFor(member.image).width(400).height(400).url()}
+                                src={member.image.secure_url}
                                 alt={member.name}
-                                className="h-48 w-48 rounded-full object-cover shadow-lg"
+                                className="w-128 aspect-[16/9] rounded-md object-cover shadow-lg"
                             />
                         )}
                         <h4 className="mt-6 text-lg font-semibold">{member.name}</h4>

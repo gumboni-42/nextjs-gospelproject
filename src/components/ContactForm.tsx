@@ -54,9 +54,9 @@ export default function ContactForm() {
             setName("");
             setEmail("");
             setMessage("");
-        } catch (error: any) {
+        } catch (error: unknown) {
             setStatus("error");
-            setErrorMessage(error.message);
+            setErrorMessage(error instanceof Error ? error.message : String(error));
         }
     };
 
@@ -139,7 +139,7 @@ export default function ContactForm() {
                         </div>
                         <div className="ml-3">
                             <p className="text-sm font-medium text-green-800 dark:text-green-200">
-                                Message sent successfully! We'll get back to you soon.
+                                Message sent successfully! We&apos;ll get back to you soon.
                             </p>
                         </div>
                     </div>

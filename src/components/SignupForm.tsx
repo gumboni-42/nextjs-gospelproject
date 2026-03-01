@@ -111,10 +111,10 @@ export function SignupForm() {
 
             setStatus('success');
             setFormData(initialFormData);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Signup submit error:', error);
             setStatus('error');
-            setErrorMessage(error.message || 'Leider gab es ein Problem bei der Anmeldung. Bitte versuchen Sie es später noch einmal.');
+            setErrorMessage(error instanceof Error ? error.message : 'Leider gab es ein Problem bei der Anmeldung. Bitte versuchen Sie es später noch einmal.');
         }
     };
 

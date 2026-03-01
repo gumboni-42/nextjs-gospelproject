@@ -74,7 +74,7 @@ export async function POST(request: Request) {
             throw new Error(googleData.message || 'Unknown error from Google Apps Script');
         }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Signup form error:', error);
         return NextResponse.json(
             { message: 'Internal server error while processing signup.' },

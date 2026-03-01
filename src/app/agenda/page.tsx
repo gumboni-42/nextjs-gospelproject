@@ -9,6 +9,7 @@ interface AgendaItem extends SanityDocument {
     title: string;
     placeName: string;
     placeUrl: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     description?: any;
     active: boolean;
     logoType?: 'none' | 'gospelation' | 'gospelproject';
@@ -31,7 +32,7 @@ export const metadata = {
 };
 
 export default async function AgendaPage() {
-    const data = await client.fetch<{ items: AgendaItem[], page: any }>(AGENDA_QUERY, {}, options);
+    const data = await client.fetch<{ items: AgendaItem[], page: SanityDocument }>(AGENDA_QUERY, {}, options);
     const { items: agendaItems, page } = data;
 
     return (
@@ -50,7 +51,7 @@ export default async function AgendaPage() {
                     </div>
                 ) : (
                     <div className="grid gap-6">
-                        {agendaItems.map((item) => {
+                        {agendaItems.map((item: AgendaItem) => {
                             const date = new Date(item.date);
                             const formattedDate = date.toLocaleDateString('de-CH', {
                                 weekday: 'long',
