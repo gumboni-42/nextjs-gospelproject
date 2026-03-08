@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 export default async function IndexPage() {
-  const homeData = await sanityFetch<SanityDocument>({ query: HOME_QUERY, tags: ['page'] });
+  const homeData = await sanityFetch<SanityDocument>({ query: HOME_QUERY, tags: ['homePage'] });
 
   if (!homeData) {
     return (

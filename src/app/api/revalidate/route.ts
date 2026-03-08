@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         }
 
         // This tells Next.js to clear the cache for this specific document type
-        revalidateTag(body._type, {});
+        revalidateTag(body._type, 'default');
 
         return NextResponse.json({
             revalidated: true,
