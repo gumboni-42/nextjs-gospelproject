@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 
         // Revalidate the cache tag matching the Sanity document type
         console.log('[revalidate] Calling revalidateTag for:', body._type);
-        revalidateTag(body._type);
+        revalidateTag(body._type, 'default');
 
         return NextResponse.json({
             revalidated: true,
