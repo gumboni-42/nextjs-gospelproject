@@ -1,16 +1,14 @@
-import { client } from '@/sanity/client';
+import { sanityFetch } from '@/sanity/fetch';
 import { PortableText } from "next-sanity";
-
-
 import { HeroSection } from "@/components/HeroSection";
 
-export default async function TeamPage() {
-    // Fetch team members sorted by the 'order' field
-    const data = await client.fetch(`{
-      "members": *[_type == "teamMember" && isVisible != false] | order(order asc),
-      "page": *[_id == "teamPage"][0]
-    }`);
+const TEAM_QUERY = `{
+  "members": *[_type == "teamMember" && isVisible != false] | order(order asc),
+  "page": *[_id == "teamPage"][0]
+}`;
 
+export default async function TeamPage() {
+    const data = await sanityFetch<{ members: any[]; page: any }>({ query: TEAM_QUERY, tags: ['teamMember', 'teamPage'] });
     const { members, page } = data;
 
     const sections = {

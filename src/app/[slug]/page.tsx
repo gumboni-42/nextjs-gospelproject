@@ -1,16 +1,18 @@
 import { PortableText, type SanityDocument } from "next-sanity";
 import { client, urlFor } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import Link from "next/link";
 
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]`;
-const options = { next: { revalidate: 30 } };
+
 
 export default async function PostPage({
     params,
 }: {
     params: Promise<{ slug: string }>;
 }) {
-    const post = await client.fetch<SanityDocument>(POST_QUERY, await params, options);
+    const { slug } = await params;
+    const post = await sanityFetch<SanityDocument>({ query: POST_QUERY, params: { slug }, tags: ['post'] });
     const postImageUrl = post.image
         ? urlFor(post.image)?.width(550).height(310).url()
         : null;

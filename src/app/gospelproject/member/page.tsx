@@ -1,5 +1,5 @@
 import { type SanityDocument } from "next-sanity";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
 import { CallToAction } from "@/components/CallToAction";
@@ -31,7 +31,7 @@ export default async function GospelprojectMemberPage() {
         return <MemberPasswordGate />;
     }
 
-    const data = await client.fetch<SanityDocument>(MEMBER_QUERY);
+    const data = await sanityFetch<SanityDocument>({ query: MEMBER_QUERY, tags: ['gospelprojectMemberPage'] });
 
     if (!data) {
         return (

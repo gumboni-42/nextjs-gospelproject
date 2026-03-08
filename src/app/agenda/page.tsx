@@ -1,5 +1,5 @@
 import { PortableText, type SanityDocument } from "next-sanity";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { HeroSection } from "@/components/HeroSection";
 import Image from "next/image";
 
@@ -24,15 +24,13 @@ const AGENDA_QUERY = `{
     "page": *[_type == "agendaPage"][0]
 }`;
 
-const options = { next: { revalidate: 60 } };
-
 export const metadata = {
     title: "Agenda - Gospel Project",
     description: "Upcoming gigs and events.",
 };
 
 export default async function AgendaPage() {
-    const data = await client.fetch<{ items: AgendaItem[], page: SanityDocument }>(AGENDA_QUERY, {}, options);
+    const data = await sanityFetch<{ items: AgendaItem[], page: SanityDocument }>({ query: AGENDA_QUERY, tags: ['agenda', 'agendaPage'] });
     const { items: agendaItems, page } = data;
 
     return (

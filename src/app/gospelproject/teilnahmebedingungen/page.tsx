@@ -1,5 +1,5 @@
 import { type SanityDocument } from "next-sanity";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
 
@@ -15,7 +15,7 @@ export const metadata = {
 };
 
 export default async function GospelprojectBedingungenPage() {
-    const data = await client.fetch<SanityDocument>(BEDINGUNGEN_QUERY);
+    const data = await sanityFetch<SanityDocument>({ query: BEDINGUNGEN_QUERY, tags: ['gospelprojectBedingungenPage'] });
 
     if (!data) {
         return (

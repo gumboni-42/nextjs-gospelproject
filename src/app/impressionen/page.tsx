@@ -1,5 +1,5 @@
 import { type SanityDocument } from "next-sanity";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { GalleryView } from "@/components/GalleryView";
 import { HeroSection } from "@/components/HeroSection";
 import { VideoGallery } from "@/components/VideoGallery";
@@ -58,7 +58,7 @@ const GALLERY_QUERY = `*[_type == "gallery"][0]{
   }
 }`;
 
-const options = { next: { revalidate: 60 } };
+
 
 export const metadata = {
     title: "Impressionen - Gospel Project",
@@ -66,7 +66,7 @@ export const metadata = {
 };
 
 export default async function ImpressionenPage() {
-    const galleryData = await client.fetch<GalleryDocument>(GALLERY_QUERY, {}, options);
+    const galleryData = await sanityFetch<GalleryDocument>({ query: GALLERY_QUERY, tags: ['gallery'] });
 
     if (!galleryData) {
         return (

@@ -1,5 +1,5 @@
 import { type SanityDocument } from "next-sanity";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
 import Image from "next/image";
@@ -28,7 +28,7 @@ export const metadata = {
 };
 
 export default async function SponsoringPage() {
-    const data = await client.fetch<SanityDocument>(SPONSORING_QUERY);
+    const data = await sanityFetch<SanityDocument>({ query: SPONSORING_QUERY, tags: ['sponsoringPage'] });
 
     if (!data) {
         return (

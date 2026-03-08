@@ -1,5 +1,5 @@
 import { type SanityDocument } from "next-sanity";
-import { client } from "@/sanity/client";
+import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
 import { CallToAction } from "@/components/CallToAction";
@@ -22,7 +22,7 @@ export const metadata = {
 };
 
 export default async function GospelprojectTerminePage() {
-    const data = await client.fetch<SanityDocument>(TERMINE_QUERY);
+    const data = await sanityFetch<SanityDocument>({ query: TERMINE_QUERY, tags: ['gospelprojectTerminePage'] });
 
     if (!data) {
         return (
