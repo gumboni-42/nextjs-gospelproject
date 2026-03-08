@@ -1,8 +1,8 @@
 import { type SanityDocument } from "next-sanity";
-import { client } from "@/sanity/client";
 import { HeroSection } from "@/components/HeroSection";
 import { NewsBar } from "@/components/NewsBar";
 import { FeatureSection } from "@/components/FeatureSection";
+import { sanityFetch } from "@/sanity/fetch";
 
 const HOME_QUERY = `*[_id == "homePage"][0]`;
 
@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 export default async function IndexPage() {
-  const homeData = await client.fetch<SanityDocument>(HOME_QUERY);
+  const homeData = await sanityFetch<SanityDocument>({ query: HOME_QUERY, tags: ['page'] });
 
   if (!homeData) {
     return (
