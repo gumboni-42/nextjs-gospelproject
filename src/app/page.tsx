@@ -4,7 +4,7 @@ import { NewsBar } from "@/components/NewsBar";
 import { FeatureSection } from "@/components/FeatureSection";
 import { sanityFetch } from "@/sanity/fetch";
 
-const HOME_QUERY = `*[_id == "homePage"][0]`;
+const HOME_QUERY = `*[_type == "homePage"][0]`;
 
 export const metadata = {
   title: "Gospelproject - Home",
