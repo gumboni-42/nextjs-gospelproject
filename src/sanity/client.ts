@@ -6,6 +6,9 @@ export const client = createClient({
     dataset: "production",
     apiVersion: "2024-01-01",
     useCdn: false,
+    stega: {
+        studioUrl: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL || "http://localhost:3333",
+    },
 });
 
 const builder = createImageUrlBuilder(client)
