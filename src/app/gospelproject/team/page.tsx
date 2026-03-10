@@ -3,22 +3,18 @@ import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
 
 const TEAM_QUERY = `{
-  "members": *[_type == "teamMember" && isVisible != false] | order(order asc),
+  "sections": {
+    "team": *[_type == "teamMember" && isVisible != false && section == "team"] | order(order asc),
+    "soloists": *[_type == "teamMember" && isVisible != false && section == "soloists"] | order(order asc),
+    "band": *[_type == "teamMember" && isVisible != false && section == "band"] | order(order asc)
+  },
   "page": *[_id in ["teamPage", "drafts.teamPage"]][0]
 }`;
 
 export default async function TeamPage() {
-    const data = await sanityFetch<{ members: any[]; page: any }>({ query: TEAM_QUERY, tags: ['teamMember', 'teamPage'] });
-    const { members, page } = data;
-
-    const sections = {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        team: members.filter((m: any) => m.section === 'team'),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        soloists: members.filter((m: any) => m.section === 'soloists'),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        band: members.filter((m: any) => m.section === 'band'),
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = await sanityFetch<{ sections: Record<string, any[]>; page: any }>({ query: TEAM_QUERY, tags: ['teamMember', 'teamPage'] });
+    const { sections, page } = data;
 
     return (
         <main className="min-h-screen">
