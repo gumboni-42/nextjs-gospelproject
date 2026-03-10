@@ -11,7 +11,13 @@ export async function sanityFetch<QueryResponse>({
     params?: QueryParams;
     tags?: string[];
 }) {
-    const isDraftMode = (await draftMode()).isEnabled
+    // Await draftMode but catch errors thrown during static prerender in Next 15+
+    let isDraftMode = false;
+    try {
+        isDraftMode = (await draftMode()).isEnabled;
+    } catch {
+        isDraftMode = false;
+    }
 
     if (isDraftMode && !process.env.SANITY_API_READ_TOKEN) {
         throw new Error("The `SANITY_API_READ_TOKEN` environment variable is required.");

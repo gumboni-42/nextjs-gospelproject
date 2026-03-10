@@ -4,7 +4,7 @@ import { HeroSection } from "@/components/HeroSection";
 
 const TEAM_QUERY = `{
   "members": *[_type == "teamMember" && isVisible != false] | order(order asc),
-  "page": *[_type == "teamPage"][0]
+  "page": *[_id in ["teamPage", "drafts.teamPage"]][0]
 }`;
 
 export default async function TeamPage() {

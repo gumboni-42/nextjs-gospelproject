@@ -34,9 +34,13 @@ export default async function RootLayout({
           <div className="flex-1">{children}</div>
           <Footer />
         </ReCaptchaProvider>
-        {(await draftMode()).isEnabled && (
-          <VisualEditing />
-        )}
+        {await (async () => {
+          try {
+            return (await draftMode()).isEnabled && <VisualEditing />;
+          } catch {
+            return null;
+          }
+        })()}
       </body>
     </html>
   );
