@@ -28,7 +28,7 @@ export const HeroSection = ({ title, image, logo, size = 'default', overlay = tr
     const backgroundUrl = getImageUrl(image);
     const logoUrl = getImageUrl(logo);
 
-    const matchSize = !backgroundUrl ? 'h-[120px] min-h-0 pb-0 items-center' : (size === 'large' ? 'h-[60vh] md:h-[80vh] items-end pb-16 md:pb-24' : 'h-[45vh] min-h-[400px] items-end pb-16 md:pb-24');
+    const matchSize = !backgroundUrl ? 'h-auto min-h-0 pb-8 pt-48 items-center' : (size === 'large' ? 'h-[60vh] md:h-[80vh] items-end pb-16 md:pb-24' : 'h-[45vh] min-h-[400px] items-end pb-16 md:pb-24');
 
     return (
         <section className={`relative w-full ${matchSize} flex justify-center overflow-hidden`}>

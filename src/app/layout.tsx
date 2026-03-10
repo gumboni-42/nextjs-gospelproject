@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${lato.variable} antialiased pt-16 flex flex-col min-h-screen`}
+        className={`${lato.variable} antialiased flex flex-col min-h-screen`}
       >
         <ReCaptchaProvider>
           <Navigation />
