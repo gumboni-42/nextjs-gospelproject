@@ -20,6 +20,7 @@ const PATH_SANITY_MAP: Record<string, string> = {
     '/kontakt': 'kontaktPage',
     '/sponsoring': 'sponsoringPage',
     '/gospelproject/teilnahmebedingungen': 'gospelprojectBedingungenPage',
+    '/gospelverein': 'gospelvereinPage',
 };
 
 const SINGLETON_IDS = Object.values(PATH_SANITY_MAP).filter(id => id !== '__gallery__');
