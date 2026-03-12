@@ -113,21 +113,15 @@ export default function ContactForm() {
                 </div>
             </div>
 
-            <div>
+            <div className="flex justify-end">
                 <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="flex w-full justify-center rounded-md border border-transparent bg-orange-600 py-3 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="flex w-auto justify-center rounded-md border border-transparent bg-orange-600 py-3 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                     {status === "loading" ? "Schicke …" : "Nachricht schicken"}
                 </button>
             </div>
-
-            <p className="text-xs text-gray-500 text-center mt-4">
-                This site is protected by reCAPTCHA and the Google
-                <a href="https://policies.google.com/privacy" className="underline hover:text-gray-700 mx-1">Privacy Policy</a> and
-                <a href="https://policies.google.com/terms" className="underline hover:text-gray-700 mx-1">Terms of Service</a> apply.
-            </p>
 
             {status === "success" && (
                 <div className="rounded-md p-4">

@@ -42,7 +42,7 @@ export default async function GospelvereinPage() {
     }
 
     return (
-        <main className="min-h-screen">
+        <main className="min-h-screen overflow-x-hidden">
             <HeroSection
                 title={data.title}
                 image={data.heroImage}
@@ -61,14 +61,16 @@ export default async function GospelvereinPage() {
                     </div>
 
                     {data.organigramm && (
-                        <div className="mb-12">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.organigramm.public_id}`}
-                                alt="Organigramm"
-                                className="w-full h-auto rounded-2xl shadow-lg"
-                                loading="lazy"
-                            />
+                        <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-white py-16 mb-12 px-4 shadow-sm">
+                            <div className="max-w-2xl mx-auto">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                    src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.organigramm.public_id}`}
+                                    alt="Organigramm"
+                                    className="w-full h-auto rounded-2xl shadow-lg"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     )}
 
@@ -95,14 +97,16 @@ export default async function GospelvereinPage() {
                     )}
 
                     {data.gospelFriends && (
-                        <div className="bg-gray-100 rounded-2xl mb-16 relative overflow-hidden">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.gospelFriends.public_id}`}
-                                alt="GospelFriends"
-                                className="w-full h-auto rounded-2xl shadow-lg"
-                                loading="lazy"
-                            />
+                        <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-white py-16 mb-16 px-4 shadow-sm">
+                            <div className="max-w-2xl mx-auto">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                    src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.gospelFriends.public_id}`}
+                                    alt="GospelFriends"
+                                    className="w-full h-auto rounded-2xl shadow-lg"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     )}
 

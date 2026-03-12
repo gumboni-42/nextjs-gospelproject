@@ -36,7 +36,7 @@ export default async function GospelprojectBedingungenPage() {
                 logo={data.logo}
             />
             <div className="container mx-auto px-4 py-16">
-                <div className="max-w-4xl mx-auto">
+                <div className="max-w-2xl mx-auto">
                     {data.subtitle && (
                         <h2 className="text-2xl text-gray-600 mb-10 font-medium text-center">
                             {data.subtitle}

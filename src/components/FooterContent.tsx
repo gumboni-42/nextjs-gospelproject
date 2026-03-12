@@ -56,7 +56,6 @@ export function FooterContent({ data }: { data: FooterData }) {
                         <div className="flex flex-wrap items-left justify-left gap-12">
                             {data?.sponsors && data.sponsors.length > 0 && (
                                 <div className="flex flex-col items-left gap-4">
-                                    <p className="prose prose-invert text-white font-semibold">Mit freundlicher Unterstützung von</p>
                                     <div className="flex flex-wrap items-center gap-8">
                                         {data.sponsors.map((sponsor, i) => (
                                             <a
@@ -80,12 +79,12 @@ export function FooterContent({ data }: { data: FooterData }) {
                                             </a>
                                         ))}
                                     </div>
+                                    <p className="prose prose-invert text-white">Mit freundlicher Unterstützung</p>
                                 </div>
                             )}
 
                             {data?.mediaPartner && (
                                 <div className="flex flex-col items-start gap-4">
-                                    <p className="prose prose-invert text-white font-semibold">Medienpartner</p>
                                     <div className="flex flex-wrap items-center gap-8">
                                         <a
                                             href={data.mediaPartner.url || '#'}
@@ -106,6 +105,7 @@ export function FooterContent({ data }: { data: FooterData }) {
                                             )}
                                         </a>
                                     </div>
+                                    <p className="prose prose-invert text-white">Medienpartner</p>
                                 </div>
                             )}
                         </div>

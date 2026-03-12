@@ -9,6 +9,6 @@ const FOOTER_QUERY = `*[_type == "footerSettings"][0]{
 }`
 
 export async function Footer() {
-    const data = await client.fetch<FooterData>(FOOTER_QUERY)
-    return <FooterContent data={data} />
+  const data = await client.fetch<FooterData>(FOOTER_QUERY)
+  return <FooterContent data={data} />
 }
