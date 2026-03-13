@@ -3,7 +3,7 @@ import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
 import Image from "next/image";
-import { urlFor } from "@/sanity/client";
+import { getImageUrl } from "@/sanity/client";
 import Link from "next/link";
 
 const SPONSORING_QUERY = `*[_type == "sponsoringPage"][0]{
@@ -66,12 +66,12 @@ export default async function SponsoringPage() {
                         {data.body && <PortableText value={data.body} />}
                     </div>
 
-                    {data.qrCodeImage && (
+                    {getImageUrl(data.qrCodeImage) && (
                         <div className="mb-16 flex flex-col items-center">
                             <h3 className="text-2xl font-semibold mb-6">Mit TWINT unterstützen</h3>
                             <div className="relative w-64 h-64 border-2 border-gray-100 rounded-2xl overflow-hidden shadow-sm">
                                 <Image
-                                    src={urlFor(data.qrCodeImage).url()}
+                                    src={getImageUrl(data.qrCodeImage) as string}
                                     alt="TWINT QR Code für Gospelproject"
                                     fill
                                     className="object-contain p-4"
@@ -84,13 +84,14 @@ export default async function SponsoringPage() {
                         <div className="mb-16 border-t pt-16">
                             <h3 className="text-2xl font-semibold mb-8 text-center">Unsere bisherigen Hauptsponsoren</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center justify-items-center">
-                                {data.pastMainSponsors.map((sponsor: { name: string, logo: Record<string, unknown>, url?: string }, index: number) => (
+                                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                                {data.pastMainSponsors.map((sponsor: { name: string, logo: any, url?: string }, index: number) => (
                                     <div key={index} className="w-full max-w-[240px] relative aspect-[3/2] flex items-center justify-center">
                                         {sponsor.url ? (
                                             <Link href={sponsor.url} target="_blank" rel="noopener noreferrer" className="block w-full h-full relative group">
-                                                {sponsor.logo && (
+                                                {getImageUrl(sponsor.logo) && (
                                                     <Image
-                                                        src={urlFor(sponsor.logo).url()}
+                                                        src={getImageUrl(sponsor.logo) as string}
                                                         alt={sponsor.name}
                                                         fill
                                                         className="object-contain group-hover:scale-105 transition-transform duration-300"
@@ -99,9 +100,9 @@ export default async function SponsoringPage() {
                                             </Link>
                                         ) : (
                                             <div className="w-full h-full relative">
-                                                {sponsor.logo && (
+                                                {getImageUrl(sponsor.logo) && (
                                                     <Image
-                                                        src={urlFor(sponsor.logo).url()}
+                                                        src={getImageUrl(sponsor.logo) as string}
                                                         alt={sponsor.name}
                                                         fill
                                                         className="object-contain"
@@ -115,7 +116,7 @@ export default async function SponsoringPage() {
                         </div>
                     )}
 
-                    {data.mediaPartner && data.mediaPartner.name && data.mediaPartner.logo && (
+                    {data.mediaPartner?.name && getImageUrl(data.mediaPartner?.logo) && (
                         <div className="mb-8 border-t pt-16">
                             <h3 className="text-xl font-medium mb-8 text-center text-gray-500 uppercase tracking-widest">Medienpartner</h3>
                             <div className="flex justify-center">
@@ -123,7 +124,7 @@ export default async function SponsoringPage() {
                                     {data.mediaPartner.url ? (
                                         <Link href={data.mediaPartner.url} target="_blank" rel="noopener noreferrer" className="block w-full h-full relative group opacity-80 hover:opacity-100 transition-opacity">
                                             <Image
-                                                src={urlFor(data.mediaPartner.logo).url()}
+                                                src={getImageUrl(data.mediaPartner.logo) as string}
                                                 alt={data.mediaPartner.name}
                                                 fill
                                                 className="object-contain"
@@ -132,7 +133,7 @@ export default async function SponsoringPage() {
                                     ) : (
                                         <div className="w-full h-full relative opacity-80">
                                             <Image
-                                                src={urlFor(data.mediaPartner.logo).url()}
+                                                src={getImageUrl(data.mediaPartner.logo) as string}
                                                 alt={data.mediaPartner.name}
                                                 fill
                                                 className="object-contain"

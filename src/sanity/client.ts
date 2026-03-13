@@ -1,5 +1,4 @@
 import { createClient } from "next-sanity";
-import createImageUrlBuilder from '@sanity/image-url'
 
 export const client = createClient({
     projectId: "jynb9blr",
@@ -11,9 +10,8 @@ export const client = createClient({
     },
 });
 
-const builder = createImageUrlBuilder(client)
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function urlFor(source: any) {
-    return builder.image(source)
+export function getImageUrl(source: any) {
+    if (!source) return null;
+    return source.secure_url || null; // Cloudinary
 }

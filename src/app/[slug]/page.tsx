@@ -1,5 +1,5 @@
 import { PortableText, type SanityDocument } from "next-sanity";
-import { client, urlFor } from "@/sanity/client";
+import { getImageUrl } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
 import Link from "next/link";
 
@@ -14,7 +14,7 @@ export default async function PostPage({
     const { slug } = await params;
     const post = await sanityFetch<SanityDocument>({ query: POST_QUERY, params: { slug }, tags: ['post'] });
     const postImageUrl = post.image
-        ? urlFor(post.image)?.width(550).height(310).url()
+        ? getImageUrl(post.image)
         : null;
 
     return (

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { urlFor } from '@/sanity/client';
+import { getImageUrl } from '@/sanity/client';
 
 interface FeatureSectionProps {
     title?: string;
@@ -12,18 +12,6 @@ interface FeatureSectionProps {
 }
 
 export function FeatureSection({ title, logo, text, linkUrl, linkText }: FeatureSectionProps) {
-    // Helper to get URL from either Sanity image or Cloudinary asset
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const getImageUrl = (source: any) => {
-        if (!source) return null;
-        if (source.secure_url) return source.secure_url; // Cloudinary
-        try {
-            return urlFor(source).width(400).url(); // Sanity fallback
-        } catch (e) {
-            console.error("Error generating image URL:", e);
-            return null;
-        }
-    };
 
     const logoUrl = getImageUrl(logo);
 
