@@ -51,7 +51,7 @@ export default async function SponsoringPage() {
             )}
 
             <div className={`container mx-auto px-4 ${data.heroImage ? 'py-16' : 'pt-32 pb-16'}`}>
-                <div className="max-w-2xl mx-auto">
+                <div className="max-w-xl mx-auto">
                     {!data.heroImage && (
                         <h1 className="text-4xl font-bold mb-8 text-center">{data.title}</h1>
                     )}
@@ -68,15 +68,16 @@ export default async function SponsoringPage() {
 
                     {getImageUrl(data.qrCodeImage) && (
                         <div className="mb-16 flex flex-col items-center">
-                            <h3 className="text-2xl font-semibold mb-6">Mit TWINT unterstützen</h3>
-                            <div className="relative w-64 h-64 border-2 border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-                                <Image
-                                    src={getImageUrl(data.qrCodeImage) as string}
-                                    alt="TWINT QR Code für Gospelproject"
-                                    fill
-                                    className="object-contain p-4"
-                                />
-                            </div>
+                            <Image
+                                src={getImageUrl(data.qrCodeImage) as string}
+                                alt="TWINT QR Code für Gospelproject"
+                                width={0}
+                                height={0}
+                                sizes="100vw"
+                                style={{ width: '100%', height: 'auto' }}
+                                className="object-contain rounded-lg"
+                            />
+
                         </div>
                     )}
 
