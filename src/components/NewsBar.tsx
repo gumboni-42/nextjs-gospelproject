@@ -17,7 +17,7 @@ export function NewsBar({ items }: NewsBarProps) {
 
     return (
         <div className="w-full bg-[color:var(--gospel-primary)] text-foreground overflow-hidden py-3">
-            <div className="whitespace-nowrap flex gap-12 px-4 shadow-sm justify-center items-center">
+            <div className="whitespace-nowrap flex gap-12 px-4 justify-center items-center">
                 {items.map((item, index) => {
                     const text = typeof item === 'string' ? item : item.text;
                     const link = typeof item === 'string' ? null : item.internalLink;
