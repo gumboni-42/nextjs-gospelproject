@@ -7,6 +7,7 @@ import { CallToAction } from "@/components/CallToAction";
 const TERMINE_QUERY = `*[_type == "gospelprojectTerminePage"][0]{
   ...,
   "heroImage": heroImage,
+  "htmlTable": htmlTable,
   "logo": logo,
   "callToAction": callToAction {
     text,
@@ -53,6 +54,13 @@ export default async function GospelprojectTerminePage() {
                     <div className="prose max-w-none mb-12">
                         {data.body && <PortableText value={data.body} />}
                     </div>
+
+                    {data.htmlTable && (
+                        <div
+                            className="prose max-w-none mb-12 html-table-container"
+                            dangerouslySetInnerHTML={{ __html: data.htmlTable }}
+                        />
+                    )}
 
                     <CallToAction data={data.callToAction} />
                 </div>
