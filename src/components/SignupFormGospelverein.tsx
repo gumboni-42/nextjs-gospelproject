@@ -191,7 +191,7 @@ export function SignupFormGospelverein() {
                 <button
                     type="submit"
                     disabled={status === 'submitting'}
-                    className="w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-700 transition-colors rounded-lg font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-auto py-2 px-4 cursor-pointer justify-end text-center bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl shadow-lg transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed mt-4"
                 >
                     {status === 'submitting' ? (
                         <>
@@ -202,7 +202,7 @@ export function SignupFormGospelverein() {
                             Wird gesendet...
                         </>
                     ) : (
-                        "JETZT REGISTRIEREN"
+                        "Jetzt Gönner werden"
                     )}
                 </button>
             </div>

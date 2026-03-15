@@ -51,7 +51,7 @@ export const HeroSection = ({ title, image, logo, size = 'default', overlay = tr
                     {title && (
                         <>
                             {logoUrl && <hr className="my-6 w-2/3 mx-auto" style={{ borderColor: 'var(--gospel-primary)' }} />}
-                            <h1 className="text-4xl md:text-4xl text-white drop-shadow-lg">
+                            <h1 className="text-4xl md:text-4xl text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
                                 {title}
                             </h1>
                         </>

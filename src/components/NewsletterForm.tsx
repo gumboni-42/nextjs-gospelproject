@@ -51,18 +51,12 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
         return (
             <main className="min-h-screen pt-24 pb-16 px-4 flex items-center justify-center">
                 <div className="max-w-2xl text-center bg-white/5 backdrop-blur-sm p-8 md:p-12 rounded-2xl border border-white/10 shadow-2xl">
-                    <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-                        Fast geschafft!
+                    <h1 className="text-xl font-bold mb-6">
+                        Du bist angemeldet
                     </h1>
                     <p className="text-gray-200 text-lg leading-relaxed">
                         {message}
                     </p>
-                    <button
-                        onClick={() => setStatus("idle")}
-                        className="mt-8 px-8 py-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-all border border-white/20"
-                    >
-                        Zurück
-                    </button>
                 </div>
             </main>
         );
@@ -82,7 +76,9 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
 
                 <form onSubmit={handleSubmit} className="space-y-4 bg-white/5 p-8 rounded-2xl border border-white/10 shadow-xl">
                     <div>
-                        <label htmlFor="firstName" className="block text-sm font-medium text-gray-300 mb-1">Vorname</label>
+                        <label htmlFor="firstName" className="block text-sm font-medium text-gray-300 mb-1">
+                            {initialPageData?.vornameLabel || "Vorname"}
+                        </label>
                         <input
                             type="text"
                             id="firstName"
@@ -91,11 +87,13 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                             value={formData.firstName}
                             onChange={handleChange}
                             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                            placeholder="Dein Vorname"
+                            placeholder={initialPageData?.vornameLabel || "Dein Vorname"}
                         />
                     </div>
                     <div>
-                        <label htmlFor="lastName" className="block text-sm font-medium text-gray-300 mb-1">Nachname</label>
+                        <label htmlFor="lastName" className="block text-sm font-medium text-gray-300 mb-1">
+                            {initialPageData?.nachnameLabel || "Nachname"}
+                        </label>
                         <input
                             type="text"
                             id="lastName"
@@ -104,11 +102,13 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                             value={formData.lastName}
                             onChange={handleChange}
                             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                            placeholder="Dein Nachname"
+                            placeholder={initialPageData?.nachnameLabel || "Dein Nachname"}
                         />
                     </div>
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">E-Mail-Adresse</label>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+                            {initialPageData?.emailLabel || "E-Mail-Adresse"}
+                        </label>
                         <input
                             type="email"
                             id="email"
@@ -126,27 +126,28 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                             {message}
                         </p>
                     )}
-
-                    <button
-                        type="submit"
-                        disabled={status === "loading"}
-                        className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed mt-4"
-                    >
-                        {status === "loading" ? (
-                            <span className="flex items-center justify-center">
-                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                Wird angemeldet...
-                            </span>
-                        ) : (
-                            "Jetzt abonnieren"
-                        )}
-                    </button>
+                    <div className="flex justify-end">
+                        <button
+                            type="submit"
+                            disabled={status === "loading"}
+                            className="w-auto py-2 px-4 cursor-pointer justify-end text-center bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl shadow-lg transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed mt-4"
+                        >
+                            {status === "loading" ? (
+                                <span className="flex items-center justify-center">
+                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Wird angemeldet...
+                                </span>
+                            ) : (
+                                initialPageData?.buttonText || "Jetzt abonnieren"
+                            )}
+                        </button>
+                    </div>
 
                     <p className="text-xs text-gray-500 text-center mt-6">
-                        Durch das Abonnieren erklärst du dich damit einverstanden, Gospelupdates zu erhalten. Wir versprechen, dass wir deine Daten nicht an Dritte weitergeben und du dich jederzeit abmelden kannst.
+                        {initialPageData?.footerText || "Durch das Abonnieren erklärst du dich damit einverstanden, Gospelupdates zu erhalten. Wir versprechen, dass wir deine Daten nicht an Dritte weitergeben und du dich jederzeit abmelden kannst."}
                     </p>
                 </form>
             </div>
