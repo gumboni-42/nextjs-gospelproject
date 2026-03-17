@@ -168,7 +168,7 @@ export async function POST(request: Request) {
                     useCdn: false
                 });
 
-                await writeClient.patch(_id).inc({ signupCount: 1 }).commit();
+                await writeClient.patch(_id).setIfMissing({ signupCount: 0 }).inc({ signupCount: 1 }).commit();
             } else if (!process.env.SANITY_API_WRITE_TOKEN) {
                 console.warn('SANITY_API_WRITE_TOKEN is not defined, cannot increment signupCount.');
             }
