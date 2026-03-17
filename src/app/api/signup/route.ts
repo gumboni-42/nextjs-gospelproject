@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { client } from '@/sanity/client';
+import crypto from 'crypto';
 
 export async function POST(request: Request) {
     try {
@@ -41,43 +43,145 @@ export async function POST(request: Request) {
             }
         }
 
+        // Fetch Configuration from Sanity
+        const pageData = await client.fetch(`*[_type == "gospelprojectAnmeldungPage"][0]{
+            _id,
+            submissionMethod,
+            mailchimpAudienceId,
+            mailchimpTags,
+            signupLimit,
+            signupCount
+        }`);
+
+        if (!pageData) {
+            return NextResponse.json({ message: 'Configuration for Anmeldung not found.' }, { status: 500 });
+        }
+
+        const { _id, submissionMethod = 'googleSheets', mailchimpAudienceId, mailchimpTags, signupLimit, signupCount = 0 } = pageData;
+
+        // Check Signup Limit
+        if (signupLimit && signupCount >= signupLimit) {
+            return NextResponse.json({ message: 'Ausgebucht. Leider sind keine weiteren Anmeldungen mehr möglich.' }, { status: 400 });
+        }
+
+        let mailchimpSuccess = false;
+        let googleSheetsSuccess = false;
+
+        // Mailchimp Submission
+        if (submissionMethod === 'mailchimp' || submissionMethod === 'both') {
+            const API_KEY = process.env.MAILCHIMP_API_KEY;
+            // distinct audience id check
+            const AUDIENCE_ID = mailchimpAudienceId || process.env.MAILCHIMP_AUDIENCE_ID;
+            const API_SERVER = process.env.MAILCHIMP_API_SERVER;
+
+            if (!API_KEY || !AUDIENCE_ID || !API_SERVER) {
+                console.error('Mailchimp configuration missing');
+                return NextResponse.json({ message: 'Mailchimp Server configuration error' }, { status: 500 });
+            }
+
+            const mcUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`;
+            
+            const mcData = {
+                email_address: formData.email,
+                status: "subscribed",
+                merge_fields: {
+                    FNAME: formData.vorname,
+                    LNAME: formData.name,
+                },
+                tags: mailchimpTags || []
+            };
+
+            const mcRes = await fetch(mcUrl, {
+                method: "POST",
+                headers: {
+                    Authorization: `apikey ${API_KEY}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(mcData),
+            });
+
+            const mcResult = await mcRes.json();
+            
+            if (mcRes.ok || mcResult.title === "Member Exists") {
+                // If member exists, we need to apply tags via PUT instead of POST if they already exist
+                if (mcResult.title === "Member Exists" && mailchimpTags && mailchimpTags.length > 0) {
+                    const subscriberHash = crypto.createHash('md5').update(formData.email.toLowerCase()).digest('hex');
+                    const tagsUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members/${subscriberHash}/tags`;
+                    const tagsData = {
+                        tags: mailchimpTags.map((tag: string) => ({ name: tag, status: 'active' }))
+                    };
+                    await fetch(tagsUrl, {
+                        method: "POST",
+                        headers: {
+                            Authorization: `apikey ${API_KEY}`,
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(tagsData),
+                    });
+                }
+                mailchimpSuccess = true;
+            } else {
+                console.error('Mailchimp error:', mcResult);
+                throw new Error(mcResult.title || 'Mailchimp error');
+            }
+        }
+
         // Forward to Google Apps Script
-        const googleScriptUrl = process.env.GOOGLE_SCRIPT_SIGNUP_URL;
-        if (!googleScriptUrl) {
-            console.error('GOOGLE_SCRIPT_SIGNUP_URL is not defined');
-            return NextResponse.json(
-                { message: 'Server configuration error' },
-                { status: 500 }
-            );
+        if (submissionMethod === 'googleSheets' || submissionMethod === 'both') {
+            const googleScriptUrl = process.env.GOOGLE_SCRIPT_SIGNUP_URL;
+            if (!googleScriptUrl) {
+                console.error('GOOGLE_SCRIPT_SIGNUP_URL is not defined');
+                return NextResponse.json(
+                    { message: 'Server configuration error' },
+                    { status: 500 }
+                );
+            }
+
+            const googleRes = await fetch(googleScriptUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                },
+                body: JSON.stringify(formData),
+                redirect: 'follow', 
+            });
+
+            if (!googleRes.ok) {
+                throw new Error(`Google Apps Script responded with status ${googleRes.status}`);
+            }
+
+            const googleData = await googleRes.json();
+
+            if (googleData.status === 'success') {
+                googleSheetsSuccess = true;
+            } else {
+                console.error('Google App Script error:', googleData);
+                throw new Error(googleData.message || 'Unknown error from Google Apps Script');
+            }
         }
 
-        const googleRes = await fetch(googleScriptUrl, {
-            method: 'POST',
-            // Google Apps Script requires text/plain for CORS to cleanly accept JSON
-            headers: {
-                'Content-Type': 'text/plain;charset=utf-8',
-            },
-            body: JSON.stringify(formData),
-            redirect: 'follow', // Apps Script usually redirects on POST
-        });
+        // If either method was chosen and succeeded, increment Sanity count
+        if (mailchimpSuccess || googleSheetsSuccess) {
+            if (_id && process.env.SANITY_API_WRITE_TOKEN) {
+                const writeClient = client.withConfig({
+                    token: process.env.SANITY_API_WRITE_TOKEN,
+                    useCdn: false
+                });
 
-        if (!googleRes.ok) {
-            throw new Error(`Google Apps Script responded with status ${googleRes.status}`);
-        }
+                await writeClient.patch(_id).inc({ signupCount: 1 }).commit();
+            } else if (!process.env.SANITY_API_WRITE_TOKEN) {
+                console.warn('SANITY_API_WRITE_TOKEN is not defined, cannot increment signupCount.');
+            }
 
-        const googleData = await googleRes.json();
-
-        if (googleData.status === 'success') {
             return NextResponse.json({ message: 'Signup received successfully' }, { status: 200 });
         } else {
-            console.error('Google App Script error:', googleData);
-            throw new Error(googleData.message || 'Unknown error from Google Apps Script');
+            throw new Error('No submission method was successful');
         }
 
-    } catch (error: unknown) {
+    } catch (error: any) {
         console.error('Signup form error:', error);
         return NextResponse.json(
-            { message: 'Internal server error while processing signup.' },
+            { message: error.message || 'Internal server error while processing signup.' },
             { status: 500 }
         );
     }
