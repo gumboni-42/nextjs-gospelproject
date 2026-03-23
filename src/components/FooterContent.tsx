@@ -14,6 +14,8 @@ export interface FooterData {
     mediaPartner?: Sponsor
     instagramUrl?: string
     youtubeUrl?: string
+    spotifyUrl?: string
+    appleMusicUrl?: string
 }
 
 function InstagramIcon() {
@@ -36,6 +38,22 @@ function FacebookIcon() {
     return (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6" aria-hidden="true">
             <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+        </svg>
+    )
+}
+
+function SpotifyIcon() {
+    return (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6" aria-hidden="true">
+            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.66.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.781-.18-.6.18-1.2.78-1.381 4.26-1.26 11.28-1.02 15.72 1.621.539.3.719 1.02.419 1.56-.299.54-1.019.72-1.559.42z" />
+        </svg>
+    )
+}
+
+function AppleMusicIcon() {
+    return (
+        <svg viewBox="0 0 250 250" fill="currentColor" className="w-6 h-6" aria-hidden="true">
+            <path fillRule="evenodd" clipRule="evenodd" d="M212.797.045c-.873.082-8.629 1.48-9.562 1.674L95.883 23.757l-.04.01c-2.8.602-4.996 1.613-6.692 3.063-2.047 1.745-3.18 4.215-3.612 7.094-.09.612-.24 1.858-.24 3.695v136.699c0 3.195-.252 6.298-2.379 8.942s-4.755 3.44-7.835 4.073l-7.013 1.439c-8.87 1.817-14.638 3.052-19.865 5.114-4.997 1.97-8.74 4.481-11.719 7.666-5.91 6.298-8.307 14.842-7.484 22.844.702 6.829 3.722 13.362 8.909 18.19 3.501 3.267 7.876 5.747 13.033 6.798 5.347 1.093 11.046.715 19.373-1 4.435-.908 8.588-2.327 12.541-4.706a31.7 31.7 0 0 0 9.883-9.299c2.628-3.828 4.324-8.084 5.257-12.606.963-4.665 1.194-8.881 1.194-13.535V89.678c0-6.35 1.766-8.024 6.802-9.27 0 0 89.233-18.312 93.397-19.138 5.809-1.133 8.548.55 8.548 6.747v80.935c0 3.206-.03 6.452-2.177 9.106-2.127 2.643-4.756 3.439-7.836 4.072l-7.013 1.44c-8.869 1.817-14.638 3.052-19.865 5.114-4.997 1.97-8.739 4.481-11.719 7.665-5.909 6.298-8.518 14.842-7.695 22.845.702 6.829 3.933 13.362 9.12 18.19a26.9 26.9 0 0 0 13.033 6.737c5.347 1.092 11.046.704 19.373-1.001 4.435-.908 8.589-2.266 12.541-4.644a31.7 31.7 0 0 0 9.883-9.299c2.629-3.828 4.324-8.084 5.257-12.606.963-4.665 1.003-8.881 1.003-13.536V9.701c.021-6.288-3.24-10.166-9.049-9.656" />
         </svg>
     )
 }
@@ -124,10 +142,10 @@ export function FooterContent({ data }: { data: FooterData }) {
                 <div className="border-t border-white/10">
                     <div className="container mx-auto px-6 py-5 flex flex-wrap items-center justify-between gap-4">
 
-                        {/* Social icons */}
+                        {/* Social & Music icons */}
                         <div className="flex items-center gap-4">
                             <a
-                                href="https://www.instagram.com/gospelproject_zo/"
+                                href={data?.instagramUrl || "https://www.instagram.com/gospelproject_zo/"}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="Instagram"
@@ -136,7 +154,7 @@ export function FooterContent({ data }: { data: FooterData }) {
                                 <InstagramIcon />
                             </a>
                             <a
-                                href="https://www.youtube.com/@gospelprojectch"
+                                href={data?.youtubeUrl || "https://www.youtube.com/@gospelprojectch"}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="YouTube"
@@ -153,6 +171,33 @@ export function FooterContent({ data }: { data: FooterData }) {
                             >
                                 <FacebookIcon />
                             </a>
+
+                            {/* Separator Pipe */}
+                            <div className="w-px h-5 bg-white/20 ml-2 mr-2"></div>
+
+                            {/* Music links */}
+                            {data?.spotifyUrl && (
+                                <a
+                                    href={data.spotifyUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Spotify"
+                                    className="text-white hover:text-[var(--gospel-primary)] transition-colors"
+                                >
+                                    <SpotifyIcon />
+                                </a>
+                            )}
+                            {data?.appleMusicUrl && (
+                                <a
+                                    href={data.appleMusicUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Apple Music"
+                                    className="text-white hover:text-[var(--gospel-primary)] transition-colors"
+                                >
+                                    <AppleMusicIcon />
+                                </a>
+                            )}
                         </div>
 
                         {/* Legal, Newsletter & Copyright */}

@@ -5,7 +5,9 @@ const FOOTER_QUERY = `*[_type == "footerSettings"][0]{
   sponsors[]{ name, logo, url },
   mediaPartner{ name, logo, url },
   instagramUrl,
-  youtubeUrl
+  youtubeUrl,
+  spotifyUrl,
+  appleMusicUrl
 }`
 
 export async function Footer() {
