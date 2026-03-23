@@ -53,7 +53,7 @@ export function MemberPasswordGate() {
 
                 <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8 space-y-5">
                     <div>
-                        <label htmlFor="member-password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label htmlFor="member-password" className="block text-sm font-medium text-gray-300 mb-2">
                             Passwort
                         </label>
                         <input
@@ -64,7 +64,7 @@ export function MemberPasswordGate() {
                             required
                             autoFocus
                             placeholder="••••••••"
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                         />
                     </div>
 
@@ -75,8 +75,7 @@ export function MemberPasswordGate() {
                     <button
                         type="submit"
                         disabled={loading || !password}
-                        className="w-full py-3 px-4 rounded-lg font-semibold text-white transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                        style={{ backgroundColor: 'var(--gospel-primary)' }}
+                        className="w-full py-3 px-4 bg-primary hover:bg-primary-hover rounded-xl font-semibold text-white shadow-lg transition-all transform active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? (
                             <span className="inline-flex items-center gap-2">

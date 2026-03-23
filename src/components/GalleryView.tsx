@@ -136,7 +136,7 @@ export function GalleryView({ data }: GalleryViewProps) {
                 {sortedYears.map((entry) => (
                     <div key={entry._key} id={`year-${entry.year}`} className="mb-20 scroll-mt-32">
                         <div className="flex items-center gap-4 mb-8">
-                            <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                            <h2 className="text-4xl font-bold">
                                 {entry.year}
                             </h2>
                             <div className="h-px bg-gray-200 dark:bg-white/10 flex-grow"></div>

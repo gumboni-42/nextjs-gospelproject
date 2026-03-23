@@ -57,7 +57,7 @@ export default async function SponsoringPage() {
                     )}
 
                     {data.subtitle && (
-                        <h2 className="text-2xl text-gray-600 mb-10 font-medium text-center">
+                        <h2 className="text-2xl text-gray-300 mb-10 font-medium text-center">
                             {data.subtitle}
                         </h2>
                     )}

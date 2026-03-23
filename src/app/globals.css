@@ -13,7 +13,7 @@
   --gospel-text: var(--foreground);
   --gospel-text-light: var(--foreground);
   --gospel-contrast: #1b7bb6;
-  --gospel-hover: #1b7bb67e;
+  --gospel-hover: #359fe1;
 }
 
 @theme inline {
@@ -21,6 +21,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-lato);
   --font-mono: var(--font-geist-mono);
+  --color-primary: var(--gospel-primary);
+  --color-primary-hover: var(--gospel-secondary);
 }
 
 
@@ -49,6 +51,12 @@ p {
   font-size: 16px;
 }
 
+/* color for break in data table Termine */
+tr td.break {
+  background-color: #333;
+  color: var(--gospel-text);
+}
+
 .prose {
   --tw-prose-body: var(--light);
   --tw-prose-headings: var(--light);
@@ -68,12 +76,14 @@ p {
   --tw-prose-td-borders: var(--light);
 }
 
-a {
+p a {
   color: var(--gospel-contrast);
+  text-decoration: none !important;
 }
 
-a:hover {
+p a:hover {
   color: var(--gospel-hover);
+  text-decoration: underline !important;
 }
 
 .nav-bar-link {

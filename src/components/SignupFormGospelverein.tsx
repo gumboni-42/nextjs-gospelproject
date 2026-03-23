@@ -114,12 +114,12 @@ export function SignupFormGospelverein() {
                 <div className="space-y-2">
                     <label htmlFor="vorname" className="block text-sm font-medium text-gray-300">Vorname *</label>
                     <input type="text" id="vorname" name="vorname" required value={formData.vorname} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none" />
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
                 <div className="space-y-2">
                     <label htmlFor="name" className="block text-sm font-medium text-gray-300">Name *</label>
                     <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none" />
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
             </div>
 
@@ -127,19 +127,19 @@ export function SignupFormGospelverein() {
             <div className="space-y-2">
                 <label htmlFor="adresse" className="block text-sm font-medium text-gray-300">Adresse / Strasse und Nummer *</label>
                 <input type="text" id="adresse" name="adresse" required value={formData.adresse} onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div className="space-y-2 sm:col-span-1">
                     <label htmlFor="plz" className="block text-sm font-medium text-gray-300">PLZ *</label>
                     <input type="text" id="plz" name="plz" required value={formData.plz} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none" />
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
                 <div className="space-y-2 sm:col-span-2">
                     <label htmlFor="ort" className="block text-sm font-medium text-gray-300">Ort *</label>
                     <input type="text" id="ort" name="ort" required value={formData.ort} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none" />
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
             </div>
 
@@ -147,7 +147,7 @@ export function SignupFormGospelverein() {
             <div className="space-y-2">
                 <label htmlFor="geburtsdatum" className="block text-sm font-medium text-gray-300">Geburtstag *</label>
                 <input type="date" id="geburtsdatum" name="geburtsdatum" required value={formData.geburtsdatum} onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
             </div>
 
             {/* Contact */}
@@ -155,12 +155,12 @@ export function SignupFormGospelverein() {
                 <div className="space-y-2">
                     <label htmlFor="email" className="block text-sm font-medium text-gray-300">E-Mail-Adresse *</label>
                     <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none" />
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
                 <div className="space-y-2">
                     <label htmlFor="telefon" className="block text-sm font-medium text-gray-300">Telefonnummer *</label>
                     <input type="tel" id="telefon" name="telefon" required value={formData.telefon} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none" />
+                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
             </div>
 
@@ -168,14 +168,14 @@ export function SignupFormGospelverein() {
             <div className="space-y-2">
                 <label htmlFor="mitteilung" className="block text-sm font-medium text-gray-300">Mitteilung (optional)</label>
                 <textarea id="mitteilung" name="mitteilung" rows={4} value={formData.mitteilung} onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all outline-none resize-y" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-y" />
             </div>
 
             {/* Hinweis zum Datenschutz as a text note below, not a checkbox as per requirement */}
             <div className="text-sm text-gray-400">
-                <p><strong>Hinweis zum Datenschutz:</strong> Wir verwenden deine Adressdaten ausschliesslich im Zusammenhang mit deiner Mitgliedschaft als Gönnerin oder Gönner. Für alle Fragen in Hinsicht auf Datenschutz oder einen Antrag auf komplette Löschung aller deiner personenbezogenen Daten kannst du dich jederzeit gerne an uns wenden: <a href="mailto:datenschutz@gospelverein.ch" className="underline hover:text-purple-400">datenschutz@gospelverein.ch</a></p>
+                <p><strong>Hinweis zum Datenschutz:</strong> Wir verwenden deine Adressdaten ausschliesslich im Zusammenhang mit deiner Mitgliedschaft als Gönnerin oder Gönner. Für alle Fragen in Hinsicht auf Datenschutz oder einen Antrag auf komplette Löschung aller deiner personenbezogenen Daten kannst du dich jederzeit gerne an uns wenden: <a href="mailto:datenschutz@gospelverein.ch" className="underline hover:text-primary-hover">datenschutz@gospelverein.ch</a></p>
                 <p className="mt-2 text-xs">
-                    Mit dem Absenden des Formulars akzeptierst du die <Link href="/datenschutz" className="underline hover:text-purple-400">Datenschutzbestimmungen</Link>.
+                    Mit dem Absenden des Formulars akzeptierst du die <Link href="/datenschutz" className="underline hover:text-primary-hover">Datenschutzbestimmungen</Link>.
                 </p>
             </div>
 
@@ -191,7 +191,7 @@ export function SignupFormGospelverein() {
                 <button
                     type="submit"
                     disabled={status === 'submitting'}
-                    className="w-auto py-2 px-4 cursor-pointer justify-end text-center bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl shadow-lg transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed mt-4"
+                    className="w-auto py-2.5 px-6 cursor-pointer justify-end text-center bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl shadow-lg transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed mt-4"
                 >
                     {status === 'submitting' ? (
                         <>

@@ -84,12 +84,6 @@ export default async function ImpressionenPage() {
                 image={galleryData.heroImage}
                 logo={galleryData.logo}
             />
-            {/* <div className="bg-purple-900 text-white py-16 text-center">
-                <h1 className="text-5xl font-bold mb-4">{galleryData.title || 'Impressionen'}</h1>
-                <p className="text-purple-200 text-lg max-w-2xl mx-auto">
-                    Einblick in unsere vergangenen Konzerte und Projekte.
-                </p>
-            </div> */}
 
             <GalleryView data={galleryData} />
             <VideoGallery videos={galleryData.videos} />

@@ -130,7 +130,7 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                         <button
                             type="submit"
                             disabled={status === "loading"}
-                            className="w-auto py-2 px-4 cursor-pointer justify-end text-center bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl shadow-lg transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed mt-4"
+                            className="w-auto py-2.5 px-6 cursor-pointer justify-end text-center bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl shadow-lg transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed mt-4"
                         >
                             {status === "loading" ? (
                                 <span className="flex items-center justify-center">
