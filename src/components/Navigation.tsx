@@ -43,6 +43,7 @@ const NAV_EXCLUDED_PATHS = new Set([
     '/impressum',
     '/datenschutz',
     '/newsletter',
+    '/zusammenklang',
 ])
 
 function getRoutes(dir: string, baseUrl: string = ''): Route[] {
