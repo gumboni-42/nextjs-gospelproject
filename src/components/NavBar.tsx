@@ -37,13 +37,22 @@ export function NavBar({ routes }: NavBarProps) {
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
-                    <Link href="/" className="text-2xl font-bold tracking-tight bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
+                    <Link href="/">
                         <CldImage
                             width="337"
                             height="26"
                             src="logo_gospelproject"
                             alt="Gospel Project Logo"
                             crop="fill"
+                            className="block md:hidden lg:block pr-10"
+                        />
+                        <CldImage
+                            width="26"
+                            height="26"
+                            src="the-g.svg"
+                            alt="Gospel Project Icon"
+                            crop="fill"
+                            className="hidden md:block md:mx-10 lg:hidden"
                         />
                     </Link>
 
