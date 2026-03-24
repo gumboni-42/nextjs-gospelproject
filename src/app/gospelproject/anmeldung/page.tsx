@@ -56,7 +56,7 @@ export default async function GospelprojectAnmeldungPage() {
                         {data.body && <PortableText value={data.body} />}
                     </div>
 
-                    <div className="p-8 sm:p-12">
+                    <div className="bg-gray-800/50 rounded-2xl p-8 sm:p-12">
                         <h2 className="text-3xl font-bold mb-2 text-center">Jetzt Anmelden</h2>
                         {data.signupLimit && data.signupCount >= data.signupLimit ? (
                             <div className="text-center p-12 bg-gray-900/50 rounded-2xl border border-gray-800 my-8">

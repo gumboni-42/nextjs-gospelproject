@@ -110,7 +110,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
         }
     };
 
-    const inputClasses = "block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-2 focus:ring-primary sm:text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-2 dark:focus:ring-primary dark:focus:border-primary p-3 border";
+    const inputClasses = "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none";
     const labelClasses = "block text-sm font-medium text-gray-300 mb-1";
 
     return (

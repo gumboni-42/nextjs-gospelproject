@@ -73,7 +73,7 @@ export default async function ZusammenklangPage() {
                         <h2 className="text-2xl font-bold mb-8 text-center text-white">
                             Anmeldung als Sponsor oder Spender
                         </h2>
-                        <div className="shadow-xl rounded-2xl overflow-hidden p-8 sm:p-12">
+                        <div className="bg-gray-800/50 rounded-2xl p-8 sm:p-12">
                             <ZusammenklangForm introText={data.formIntroText} />
                         </div>
                     </div>
