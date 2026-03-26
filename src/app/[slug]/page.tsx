@@ -1,6 +1,7 @@
 import { PortableText, type SanityDocument } from "next-sanity";
 import { getImageUrl } from "@/sanity/client";
 import { sanityFetch } from "@/sanity/fetch";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]`;
@@ -13,6 +14,11 @@ export default async function PostPage({
 }) {
     const { slug } = await params;
     const post = await sanityFetch<SanityDocument>({ query: POST_QUERY, params: { slug }, tags: ['post'] });
+
+    if (!post) {
+        notFound();
+    }
+
     const postImageUrl = post.image
         ? getImageUrl(post.image)
         : null;
