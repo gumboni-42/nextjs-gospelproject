@@ -27,6 +27,7 @@ interface GalleryDocument extends SanityDocument {
         _key: string;
         title: string;
         youtubeUrl: string;
+        isPublic?: boolean;
         thumbnail?: CloudinaryAsset;
     }[];
     title?: string;
@@ -36,7 +37,7 @@ interface GalleryDocument extends SanityDocument {
     logo?: any;
 }
 
-const GALLERY_QUERY = `*[_type == "gallery"][0]{
+const GALLERY_QUERY = `*[_type == "impressionenPage" && _id == "impressionenPage"][0]{
   ...,
   years[]{
     ...,
@@ -49,6 +50,7 @@ const GALLERY_QUERY = `*[_type == "gallery"][0]{
   },
   videos[]{
     ...,
+    isPublic,
     thumbnail{
       ...,
       "secure_url": secure_url,
@@ -66,13 +68,13 @@ export const metadata = {
 };
 
 export default async function ImpressionenPage() {
-    const galleryData = await sanityFetch<GalleryDocument>({ query: GALLERY_QUERY, tags: ['gallery'] });
+    const galleryData = await sanityFetch<GalleryDocument>({ query: GALLERY_QUERY, tags: ['impressionenPage'] });
 
     if (!galleryData) {
         return (
             <main className="container mx-auto min-h-screen px-4 py-20 text-center">
                 <h1 className="text-3xl font-bold mb-4">Impressionen</h1>
-                <p className="text-gray-600">No gallery found. Please create a &quot;Gallery&quot; document in Sanity.</p>
+                <p className="text-gray-600">Keine Inhalte gefunden. Bitte erstelle die &quot;Impressionen Page&quot; in Sanity.</p>
             </main>
         );
     }
@@ -84,9 +86,9 @@ export default async function ImpressionenPage() {
                 image={galleryData.heroImage}
                 logo={galleryData.logo}
             />
-
-            <GalleryView data={galleryData} />
             <VideoGallery videos={galleryData.videos} />
+            <GalleryView data={galleryData} />
+
         </main>
     );
 }

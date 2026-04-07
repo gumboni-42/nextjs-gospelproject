@@ -1,5 +1,4 @@
 import type { MetadataRoute } from 'next'
-import { client } from '@/sanity/client'
 
 const SITE_URL = process.env.SITE_URL || 'https://www.gospelproject.ch'
 
@@ -30,21 +29,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { url: `${SITE_URL}/datenschutz`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.2 },
     ]
 
-    // Dynamic blog post routes from Sanity
-    let postRoutes: MetadataRoute.Sitemap = []
-    try {
-        const posts = await client.fetch<Array<{ slug: string; _updatedAt: string }>>(
-            `*[_type == "post" && defined(slug.current)]{ "slug": slug.current, _updatedAt }`
-        )
-        postRoutes = posts.map((post) => ({
-            url: `${SITE_URL}/${post.slug}`,
-            lastModified: new Date(post._updatedAt),
-            changeFrequency: 'monthly' as const,
-            priority: 0.5,
-        }))
-    } catch {
-        // Silently skip if Sanity query fails
-    }
-
-    return [...staticRoutes, ...postRoutes]
+    return staticRoutes
 }

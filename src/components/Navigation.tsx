@@ -16,18 +16,17 @@ const PATH_SANITY_MAP: Record<string, string> = {
     '/gospelproject/termine': 'gospelprojectTerminePage',
     '/gospelproject/team': 'teamPage',
     '/gospelproject/member': 'gospelprojectMemberPage',
-    '/impressionen': '__gallery__',
+    '/impressionen': 'impressionenPage',
     '/kontakt': 'kontaktPage',
     '/sponsoring': 'sponsoringPage',
     '/gospelproject/teilnahmebedingungen': 'gospelprojectBedingungenPage',
     '/gospelverein': 'gospelvereinPage',
 };
 
-const SINGLETON_IDS = Object.values(PATH_SANITY_MAP).filter(id => id !== '__gallery__');
+const SINGLETON_IDS = Object.values(PATH_SANITY_MAP);
 
 const VISIBILITY_QUERY = `{
   "singletons": *[_id in $ids] { _id, visible },
-  "gallery": *[_type == "gallery"][0] { visible },
   "navigationOrder": *[_type == "navigationSettings"][0].mainNav[]{
     "id": page->_id,
     "title": title,
@@ -106,7 +105,6 @@ export async function Navigation() {
     const [visibilityData, rawRoutes] = await Promise.all([
         client.fetch<{
             singletons: Array<{ _id: string; visible: boolean | null }>;
-            gallery: { visible: boolean | null } | null;
             navigationOrder: Array<{ id: string; title: string | null; children: Array<{ id: string; title: string | null }> | null }> | null;
         }>(VISIBILITY_QUERY, { ids: SINGLETON_IDS }),
         Promise.resolve([
@@ -118,7 +116,6 @@ export async function Navigation() {
     visibilityData.singletons.forEach(doc => {
         visibilityMap[doc._id] = doc.visible;
     });
-    visibilityMap['__gallery__'] = visibilityData.gallery?.visible ?? null;
 
     const orderMap: Record<string, number> = {};
     const customTitleMap: Record<string, string> = {};
