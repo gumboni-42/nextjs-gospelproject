@@ -25,8 +25,8 @@ const AGENDA_QUERY = `{
 }`;
 
 export const metadata = {
-    title: "Agenda - Gospel Project",
-    description: "Upcoming gigs and events.",
+    title: "Agenda",
+    description: "Alle kommenden Konzerte und Events des Gospelproject auf einen Blick. Finde heraus, wann und wo wir auftreten.",
 };
 
 export default async function AgendaPage() {

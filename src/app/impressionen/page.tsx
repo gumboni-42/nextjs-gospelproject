@@ -63,8 +63,8 @@ const GALLERY_QUERY = `*[_type == "impressionenPage" && _id == "impressionenPage
 
 
 export const metadata = {
-    title: "Impressionen - Gospel Project",
-    description: "Bildergalerie des Gospel Project.",
+    title: "Impressionen",
+    description: "Bildergalerie des Gospelproject – Eindrücke und Fotos von unseren Konzerten, Proben und Events.",
 };
 
 export default async function ImpressionenPage() {

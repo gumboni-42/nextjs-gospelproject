@@ -19,7 +19,7 @@ const GOSPELATION_QUERY = `*[_type == "gospelationPage"][0]{
 
 export const metadata = {
     title: "Gospelation",
-    description: "Gospelation - Gospel all year long",
+    description: "Gospelation – das ganze Jahr Gospel erleben. Regelmässige Proben, Auftritte und Gemeinschaft für alle, die Gospel lieben.",
 };
 
 export default async function GospelationPage() {

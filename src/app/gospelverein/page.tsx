@@ -23,8 +23,8 @@ const GOSPELVEREIN_QUERY = `*[_type == "gospelvereinPage"][0]{
 }`;
 
 export const metadata = {
-    title: "Gospelverein - Gospelproject",
-    description: "Der Gospelverein - Mitgliedschaft, Gönner werden und Spenden",
+    title: "Gospelverein",
+    description: "Der Gospelverein – werde Mitglied, unterstütze uns als Gönner oder spende. Erfahre mehr über unsere Organisation und Struktur.",
 };
 
 export default async function GospelvereinPage() {

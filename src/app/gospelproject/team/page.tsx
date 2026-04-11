@@ -11,6 +11,11 @@ const TEAM_QUERY = `{
   "page": *[_id in ["teamPage", "drafts.teamPage"]][0]
 }`;
 
+export const metadata = {
+    title: "Team",
+    description: "Das Team hinter dem Gospelproject – lerne unsere Solisten, Bandmitglieder und das Organisationsteam kennen.",
+};
+
 export default async function TeamPage() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data = await sanityFetch<{ sections: Record<string, any[]>; page: any }>({ query: TEAM_QUERY, tags: ['teamMember', 'teamPage'] });

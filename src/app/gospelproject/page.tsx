@@ -19,7 +19,7 @@ const GOSPELATION_QUERY = `*[_type == "gospelprojectPage"][0]{
 
 export const metadata = {
     title: "Gospelproject",
-    description: "Gospelproject - Gospel all year long",
+    description: "Das Gospelproject – ein einzigartiges Chor-Erlebnis in der Schweiz. Erfahre alles über unser aktuelles Projekt, Termine und wie du mitmachen kannst.",
 };
 
 export default async function GospelprojectPage() {

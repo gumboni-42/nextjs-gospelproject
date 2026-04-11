@@ -14,8 +14,8 @@ const ZUSAMMENKLANG_QUERY = `*[_type == "zusammenklangPage"][0]{
 }`;
 
 export const metadata = {
-    title: "Zusammenklang | Gospelproject",
-    description: "Sponsoring und Spenden für Gospelproject",
+    title: "Zusammenklang",
+    description: "Zusammenklang – werde Sponsor oder Spender für das Gospelproject und unterstütze unser gemeinsames Gospeln.",
 };
 
 export default async function ZusammenklangPage() {

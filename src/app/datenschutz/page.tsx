@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 export const metadata = {
-    title: "Datenschutz | Gospelproject",
-    description: "Datenschutzerklärung des Gospelproject",
+    title: "Datenschutz",
+    description: "Datenschutzerklärung des Gospelproject – Informationen zum Umgang mit personenbezogenen Daten, Cookies und Analyse-Tools.",
 };
 
 export default function DatenschutzPage() {

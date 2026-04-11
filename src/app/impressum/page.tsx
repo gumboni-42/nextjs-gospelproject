@@ -1,8 +1,8 @@
 import ObfuscatedEmail from "@/components/ObfuscatedEmail";
 
 export const metadata = {
-    title: "Impressum | Gospelproject",
-    description: "Impressum des Gospelproject",
+    title: "Impressum",
+    description: "Impressum des Gospelproject – Angaben zum Betreiber, Haftungsausschluss und Urheberrechte.",
 };
 
 export default function ImpressumPage() {

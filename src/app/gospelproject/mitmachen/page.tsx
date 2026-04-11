@@ -20,8 +20,8 @@ const MITMACHEN_QUERY = `*[_type == "gospelprojectMitmachenPage"][0]{
 }`;
 
 export const metadata = {
-    title: "Gospelproject - Mitmachen",
-    description: "Mitmachen bei Gospelproject",
+    title: "Mitmachen",
+    description: "Mach mit beim Gospelproject – alle Infos zur Teilnahme, Voraussetzungen und wie du dich anmelden kannst.",
 };
 
 export default async function GospelprojectMitmachenPage() {

@@ -19,8 +19,8 @@ const ANMELDUNG_QUERY = `*[_type == "gospelprojectAnmeldungPage"][0]{
 }`;
 
 export const metadata = {
-    title: "Gospelproject - Anmeldung",
-    description: "Anmeldung für Gospelproject",
+    title: "Anmeldung",
+    description: "Jetzt für das Gospelproject anmelden – sichere dir deinen Platz im nächsten Chor-Erlebnis.",
 };
 
 export default async function GospelprojectAnmeldungPage() {

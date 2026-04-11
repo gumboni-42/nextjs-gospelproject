@@ -23,8 +23,8 @@ const SPONSORING_QUERY = `*[_type == "sponsoringPage"][0]{
 }`;
 
 export const metadata = {
-    title: "Sponsoring | Gospelproject",
-    description: "Sponsoring bei Gospelproject",
+    title: "Sponsoring",
+    description: "Werde Sponsor des Gospelproject – unterstütze unsere Gospel-Events und profitiere von attraktiven Sponsoring-Paketen.",
 };
 
 export default async function SponsoringPage() {

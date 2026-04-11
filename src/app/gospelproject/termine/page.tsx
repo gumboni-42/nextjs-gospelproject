@@ -19,8 +19,8 @@ const TERMINE_QUERY = `*[_type == "gospelprojectTerminePage"][0]{
 }`;
 
 export const metadata = {
-    title: "Gospelproject - Termine",
-    description: "Termine des Gospelproject",
+    title: "Termine",
+    description: "Alle Probentermine und wichtige Daten für das aktuelle Gospelproject – auch als PDF zum Herunterladen.",
 };
 
 export default async function GospelprojectTerminePage() {

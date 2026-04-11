@@ -2,8 +2,8 @@ import ContactForm from "@/components/ContactForm";
 import ObfuscatedEmail from "@/components/ObfuscatedEmail";
 
 export const metadata = {
-    title: "Kontakt | Gospelproject",
-    description: "Get in touch with us.",
+    title: "Kontakt",
+    description: "Nimm Kontakt mit dem Gospelproject auf – schreib uns eine Nachricht über das Kontaktformular oder per E-Mail.",
 };
 
 export default function ContactPage() {

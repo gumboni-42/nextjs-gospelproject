@@ -19,8 +19,8 @@ const GOSPELATION_ENGAGIEREN_QUERY = `*[_type == "gospelationEngagierenPage"][0]
 }`;
 
 export const metadata = {
-    title: "Gospelation - Engagieren",
-    description: "Engagiere dich bei Gospelation",
+    title: "Engagieren",
+    description: "Engagiere dich bei Gospelation – erfahre, wie du aktiv mitgestalten und Teil unserer Gospel-Community werden kannst.",
 };
 
 export default async function GospelationEngagierenPage() {

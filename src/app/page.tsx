@@ -7,8 +7,8 @@ import { sanityFetch } from "@/sanity/fetch";
 const HOME_QUERY = `*[_id in ["homePage", "drafts.homePage"]][0]`;
 
 export const metadata = {
-  title: "Gospelproject - Home",
-  description: "Willkommen beim Gospelproject.",
+  title: "Home",
+  description: "Willkommen beim Gospelproject – Gemeinsam Gospel singen, erleben und geniessen. Entdecke unsere Konzerte, Events und werde Teil der Gospel-Community in der Schweiz.",
 };
 
 export default async function IndexPage() {

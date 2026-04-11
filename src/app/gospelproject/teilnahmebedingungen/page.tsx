@@ -10,8 +10,8 @@ const BEDINGUNGEN_QUERY = `*[_type == "gospelprojectBedingungenPage"][0]{
 }`;
 
 export const metadata = {
-    title: "Gospelproject - Teilnahmebedingungen",
-    description: "Teilnahmebedingungen im Gospelproject",
+    title: "Teilnahmebedingungen",
+    description: "Teilnahmebedingungen für das Gospelproject – alle Regeln und Informationen für Teilnehmende.",
 };
 
 export default async function GospelprojectBedingungenPage() {

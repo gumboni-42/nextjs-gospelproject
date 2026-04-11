@@ -19,8 +19,8 @@ const MEMBER_QUERY = `*[_type == "gospelprojectMemberPage"][0]{
 }`;
 
 export const metadata = {
-    title: "Gospelproject - Members",
-    description: "Mitgliederbereich des Gospelproject",
+    title: "Mitgliederbereich",
+    description: "Geschützter Mitgliederbereich des Gospelproject – exklusive Inhalte und Informationen für Teilnehmende.",
 };
 
 export default async function GospelprojectMemberPage() {
