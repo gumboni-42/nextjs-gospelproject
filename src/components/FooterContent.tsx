@@ -1,6 +1,7 @@
 "use client"
 
-import Link from 'next/link'
+import Link from 'next/link';
+import Image from 'next/image';
 
 
 export interface Sponsor {
@@ -64,12 +65,12 @@ export function FooterContent({ data }: { data: FooterData }) {
 
             {/* Background image — stacks above content on mobile, fills footer on desktop */}
             <div className="w-full md:absolute md:inset-0 pointer-events-none">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                     src="/footer-lines.png"
                     alt=""
-                    className="w-full object-cover md:h-full"
-                    style={{ aspectRatio: '4/1' }}
+                    fill
+                    sizes="100vw"
+                    className="object-cover"
                 />
             </div>
 
@@ -93,10 +94,11 @@ export function FooterContent({ data }: { data: FooterData }) {
                                                 title={sponsor.name}
                                             >
                                                 {sponsor.logo?.public_id ? (
-                                                    // eslint-disable-next-line @next/next/no-img-element
-                                                    <img
+                                                    <Image
                                                         src={sponsor.logo.secure_url || ''}
                                                         alt={sponsor.name}
+                                                        width={200}
+                                                        height={48}
                                                         className="h-12 w-auto object-contain"
                                                     />
                                                 ) : (
@@ -120,10 +122,11 @@ export function FooterContent({ data }: { data: FooterData }) {
                                             title={data.mediaPartner.name}
                                         >
                                             {data.mediaPartner.logo?.public_id ? (
-                                                // eslint-disable-next-line @next/next/no-img-element
-                                                <img
+                                                <Image
                                                     src={data.mediaPartner.logo.secure_url || ''}
                                                     alt={data.mediaPartner.name}
+                                                    width={200}
+                                                    height={48}
                                                     className="h-12 w-auto object-contain"
                                                 />
                                             ) : (

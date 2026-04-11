@@ -31,7 +31,11 @@ export function GalleryView({ data }: GalleryViewProps) {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
     const getLightboxUrl = (url: string) => {
-        return url.replace('/upload/', '/upload/w_1200,h_900,c_limit/');
+        return url.replace('/upload/', '/upload/w_1200,h_900,c_limit,f_auto,q_auto/');
+    };
+
+    const getThumbnailUrl = (url: string) => {
+        return url.replace('/upload/', '/upload/w_600,h_450,c_fill,f_auto,q_auto/');
     };
 
     const sortedYears = useMemo(() => {
@@ -153,7 +157,7 @@ export function GalleryView({ data }: GalleryViewProps) {
                                     }}
                                 >
                                     <img
-                                        src={image.secure_url}
+                                        src={getThumbnailUrl(image.secure_url)}
                                         alt={image.context?.custom?.alt || `Gallery image ${entry.year}`}
                                         className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
                                         loading="lazy"

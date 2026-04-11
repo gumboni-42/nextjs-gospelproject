@@ -29,6 +29,7 @@ export const HeroSection = ({ title, image, logo, size = 'default', overlay = tr
                         fill
                         className="object-cover object-center"
                         priority
+                        sizes="100vw"
                     />
                     {overlay && <div className="absolute inset-0 bg-black/30" />} {/* Subtle overlay */}
                 </div>
