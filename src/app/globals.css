@@ -134,3 +134,8 @@ button:hover {
 .agenda-card:hover {
   background-color: var(--surface-hover);
 }
+
+/* Hide Google reCAPTCHA badge */
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
