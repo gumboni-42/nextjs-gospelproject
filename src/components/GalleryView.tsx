@@ -103,7 +103,7 @@ export function GalleryView({ data }: GalleryViewProps) {
     return (
         <div className="min-h-screen">
             {/* Sticky Navigation & Controls */}
-            <div className="sticky top-16 z-40 bg-white/90 backdrop-blur-md border-b border-gray-200 dark:bg-black/90 dark:border-white/10 py-4">
+            <div className="sticky top-16 z-40 backdrop-blur-md border-b py-4" style={{ backgroundColor: 'color-mix(in srgb, var(--background) 90%, transparent)', borderColor: 'var(--border-color)' }}>
                 <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                     {/* Year Links */}
                     <div className="flex flex-wrap items-center gap-2 overflow-x-auto max-w-full pb-2 sm:pb-0 scrollbar-hide">
@@ -139,14 +139,14 @@ export function GalleryView({ data }: GalleryViewProps) {
                             <h2 className="text-4xl font-bold">
                                 {entry.year}
                             </h2>
-                            <div className="h-px bg-gray-200 dark:bg-white/10 flex-grow"></div>
+                            <div className="h-px flex-grow" style={{ backgroundColor: 'var(--border-color)' }}></div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                             {entry.images?.map((image) => (
                                 <div
                                     key={image.public_id}
-                                    className="relative aspect-[4/3] group overflow-hidden rounded-xl bg-gray-100 dark:bg-white/5 cursor-pointer"
+                                    className="relative aspect-[4/3] group overflow-hidden rounded-xl cursor-pointer" style={{ backgroundColor: 'var(--surface)' }}
                                     onClick={() => {
                                         const index = allImages.findIndex(img => img.asset.public_id === image.public_id);
                                         setSelectedIndex(index);

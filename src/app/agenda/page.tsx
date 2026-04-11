@@ -65,7 +65,7 @@ export default async function AgendaPage() {
                             return (
                                 <div
                                     key={item._id}
-                                    className="group relative overflow-hidden rounded-2xl bg-white/5 p-6 shadow-lg ring-1 ring-gray-900/5 transition-all hover:shadow-xl dark:bg-white/5 hover:bg-white/10 dark:ring-white/10"
+                                    className="agenda-card group relative overflow-hidden rounded-2xl p-6 shadow-lg ring-1 transition-all hover:shadow-xl"
                                 >
                                     {/* Optional Logo */}
                                     {item.logoType && item.logoType !== 'none' && (
@@ -88,7 +88,7 @@ export default async function AgendaPage() {
                                                 </svg>
                                                 {formattedDate} • {time}
                                             </div>
-                                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                                            <h2 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>
                                                 {item.title}
                                             </h2>
                                             <div className="mt-4 md:mt-0 flex-shrink-0">
@@ -96,7 +96,8 @@ export default async function AgendaPage() {
                                                     href={item.placeUrl}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-[color:var(--gospel-primary)] dark:hover:text-[color:var(--gospel-primary)] transition-colors"
+                                                    className="inline-flex items-center gap-2 transition-colors hover:text-[color:var(--gospel-primary)]"
+                                                    style={{ color: 'var(--text-secondary)' }}
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 opacity-70">
                                                         <path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.62.829.799 1.654 1.381 2.274 1.766.311.192.571.337.757.433.093.048.17.088.232.117.029.014.05.024.066.032l.009.004.003.002zM10 13a4 4 0 100-8 4 4 0 000 8z" clipRule="evenodd" />
@@ -105,7 +106,7 @@ export default async function AgendaPage() {
                                                 </a>
                                             </div>
                                             {item.description && (
-                                                <div className="mt-4 prose prose-sm dark:prose-invert text-gray-700 dark:text-gray-300">
+                                                <div className="mt-4 prose prose-sm" style={{ color: 'var(--text-secondary)' }}>
                                                     <PortableText value={item.description} />
                                                 </div>
                                             )}

@@ -51,7 +51,7 @@ export default async function GospelvereinPage() {
             <div className="container mx-auto px-4 py-16">
                 <div className="max-w-2xl mx-auto">
                     {data.subtitle && (
-                        <h2 className="text-2xl text-gray-200 mb-10 font-medium text-center">
+                        <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
                             {data.subtitle}
                         </h2>
                     )}
@@ -110,10 +110,10 @@ export default async function GospelvereinPage() {
                         </div>
                     )}
 
-                    <div className="bg-gray-800/50 rounded-2xl p-8 sm:p-12 mb-16 relative overflow-hidden text-gray-100">
+                    <div className="rounded-2xl p-8 sm:p-12 mb-16 relative overflow-hidden" style={{ backgroundColor: 'var(--surface)', color: 'var(--foreground)' }}>
                         <div className="relative z-10">
                             <h2 className="text-3xl font-bold mb-4 text-center">Gönner werden</h2>
-                            <p className="text-center text-gray-400 mb-8 max-w-xl mx-auto">
+                            <p className="text-center mb-8 max-w-xl mx-auto" style={{ color: 'var(--text-muted)' }}>
                                 Möchtest Du als Gönner unsere Gospeln ideel und finanziell unterstützen? Ab CHF 50.– im Jahr bist du dabei.
                             </p>
                             <SignupFormGospelverein />
@@ -123,7 +123,7 @@ export default async function GospelvereinPage() {
                     {data.twintImage && (
                         <div className="mb-16 text-center max-w-md mx-auto">
                             <h2 className="text-2xl font-bold mb-6">Spende per Twint</h2>
-                            <p className="text-gray-400 mb-6">
+                            <p className="mb-6" style={{ color: 'var(--text-muted)' }}>
                                 Wenn du lieber eine einmalige Spende vornehmen möchtest, kannst du dazu unkompliziert den folgenden Twint-QR-Code benutzen. DANKE für deine Unterstützung!
                             </p>
                             <div className="bg-white p-4 rounded-xl inline-block shadow-lg">

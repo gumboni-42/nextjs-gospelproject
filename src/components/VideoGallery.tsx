@@ -78,7 +78,7 @@ export const VideoGallery = ({ videos }: VideoGalleryProps) => {
                                 rel="noopener noreferrer"
                                 className="group relative block overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
                             >
-                                <div className="relative aspect-video w-full bg-gray-900">
+                                <div className="relative aspect-video w-full" style={{ backgroundColor: 'var(--surface)' }}>
                                     {thumbnailUrl ? (
                                         <Image
                                             src={thumbnailUrl}
@@ -88,7 +88,7 @@ export const VideoGallery = ({ videos }: VideoGalleryProps) => {
                                             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                         />
                                     ) : (
-                                        <div className="absolute inset-0 flex items-center justify-center bg-gray-300">
+                                        <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: 'var(--surface)' }}>
                                             <span className="text-gray-500">No Thumbnail</span>
                                         </div>
                                     )}
@@ -108,7 +108,7 @@ export const VideoGallery = ({ videos }: VideoGalleryProps) => {
                                 </div>
 
                                 <div className="py-4">
-                                    <p className="text-white line-clamp-2">
+                                    <p className="line-clamp-2" style={{ color: 'var(--foreground)' }}>
                                         {video.title}
                                     </p>
                                 </div>

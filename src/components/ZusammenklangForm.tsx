@@ -111,13 +111,13 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
     };
 
     const inputClasses = "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none";
-    const labelClasses = "block text-sm font-medium text-gray-300 mb-1";
+    const labelClasses = "block text-sm font-medium text-[var(--text-secondary)] mb-1";
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto">
             {/* Sponsor Type */}
             <fieldset>
-                <legend className="text-sm font-medium text-gray-300 mb-3">
+                <legend className="text-sm font-medium text-[var(--text-secondary)] mb-3">
                     {introText || "Gerne unterstützen wir das Gospeln 2026 und investieren als:"}
                 </legend>
                 <div className="space-y-2">
@@ -132,7 +132,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
                                 className="text-primary focus:ring-primary"
                                 required
                             />
-                            <span className="text-sm text-gray-300">{type}</span>
+                            <span className="text-sm text-[var(--text-secondary)]">{type}</span>
                         </label>
                     ))}
                 </div>
@@ -182,7 +182,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
 
             {/* Publikation Programmheft */}
             <fieldset>
-                <legend className="text-sm font-medium text-gray-300 mb-3">Publikation im Programmheft</legend>
+                <legend className="text-sm font-medium text-[var(--text-secondary)] mb-3">Publikation im Programmheft</legend>
                 <div className="space-y-2">
                     {PUBLIKATION_PROGRAMMHEFT.map((option) => (
                         <label key={option} className="flex items-start gap-3 cursor-pointer">
@@ -194,7 +194,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
                                 onChange={handleChange}
                                 className="text-primary focus:ring-primary mt-0.5"
                             />
-                            <span className="text-sm text-gray-300">{option}</span>
+                            <span className="text-sm text-[var(--text-secondary)]">{option}</span>
                         </label>
                     ))}
                 </div>
@@ -202,7 +202,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
 
             {/* Publikation Website */}
             <fieldset>
-                <legend className="text-sm font-medium text-gray-300 mb-3">Publikation auf der Website</legend>
+                <legend className="text-sm font-medium text-[var(--text-secondary)] mb-3">Publikation auf der Website</legend>
                 <div className="space-y-2">
                     {PUBLIKATION_WEBSITE.map((option) => (
                         <label key={option} className="flex items-start gap-3 cursor-pointer">
@@ -214,7 +214,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
                                 onChange={handleChange}
                                 className="text-primary focus:ring-primary mt-0.5"
                             />
-                            <span className="text-sm text-gray-300">{option}</span>
+                            <span className="text-sm text-[var(--text-secondary)]">{option}</span>
                         </label>
                     ))}
                 </div>
@@ -228,7 +228,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
 
             {/* Logo / Inserat */}
             <fieldset>
-                <legend className="text-sm font-medium text-gray-300 mb-3">Logo / Inserat</legend>
+                <legend className="text-sm font-medium text-[var(--text-secondary)] mb-3">Logo / Inserat</legend>
                 <div className="space-y-2">
                     {LOGO_INSERAT.map((option) => (
                         <label key={option} className="flex items-start gap-3 cursor-pointer">
@@ -240,7 +240,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
                                 onChange={handleChange}
                                 className="text-primary focus:ring-primary mt-0.5"
                             />
-                            <span className="text-sm text-gray-300">{option}</span>
+                            <span className="text-sm text-[var(--text-secondary)]">{option}</span>
                         </label>
                     ))}
                 </div>
@@ -272,7 +272,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
                             </svg>
                         </div>
                         <div className="ml-3">
-                            <p className="text-sm font-medium text-green-800 dark:text-green-200">
+                            <p className="text-sm font-medium text-green-600">
                                 Vielen Dank für Ihre Anmeldung! Wir melden uns bald.
                             </p>
                         </div>
@@ -281,7 +281,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
             )}
 
             {status === "error" && (
-                <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/20">
+                <div className="rounded-md p-4" style={{ backgroundColor: 'var(--surface)' }}>
                     <div className="flex">
                         <div className="flex-shrink-0">
                             <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
@@ -289,7 +289,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
                             </svg>
                         </div>
                         <div className="ml-3">
-                            <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                            <p className="text-sm font-medium text-red-500">
                                 {errorMessage || "Anmeldung konnte nicht versendet werden. Bitte versuche es erneut."}
                             </p>
                         </div>

@@ -20,7 +20,7 @@ Gospelproject vereint über 130 Sängerinnen und Sänger, die gemeinsam mit Soli
 ## Bereiche
 
 ### Gospelproject — der Projektchor
-"Gospel all year long." Der saisonale Mitmach-Chor: Jede Produktion beginnt mit einem Kickoff, gefolgt von wöchentlichen Proben (montags in Rüti ZH) und endet mit mehreren öffentlichen Konzerten. Keine musikalische Vorbildung nötig — willkommen ist, wer Freude an Gospelmusik hat.
+Der saisonale Mitmach-Chor: Jede Produktion beginnt mit einem Kickoff, gefolgt von wöchentlichen Proben (montags in Rüti ZH) und endet mit mehreren öffentlichen Konzerten. Keine musikalische Vorbildung nötig — willkommen ist, wer Freude an Gospelmusik hat.
 
 Ablauf einer Produktion:
 1. Kickoff nach der Sommerpause: Noten, Liedtexte und Demo-Aufnahmen werden ausgeteilt
@@ -39,6 +39,7 @@ Anmeldeschluss Produktion 2026: 31. Juli 2026.
 - [Mitgliederbereich](${SITE_URL}/gospelproject/member): Passwortgeschützter Bereich für aktive Chormitglieder
 
 ### Gospelation — das Stammensemble
+"Gospel all year long." 
 Gospelation ist der permanente Gospelchor, der das ganze Jahr über auftritt. Mit fast 20 Jahren Auftrittserfahrung tritt das Ensemble an grossen Konzertbühnen ebenso auf wie an kleinen privaten Anlässen. Geleitet von Christina Gasser, mit denselben Musikerinnen, Musikern und Solistinnen/Solisten wie Gospelproject.
 
 Gospelation ist buchbar für: Hochzeiten, Firmenfeiern, Jazzfestivals, Gemeindeanlässe, Weihnachtsfeiern, Gottesdienste und weitere private oder öffentliche Veranstaltungen. Besetzung, Chorgrösse und technisches Equipment werden flexibel auf den jeweiligen Anlass abgestimmt.

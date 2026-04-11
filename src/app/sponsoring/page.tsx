@@ -57,7 +57,7 @@ export default async function SponsoringPage() {
                     )}
 
                     {data.subtitle && (
-                        <h2 className="text-2xl text-gray-300 mb-10 font-medium text-center">
+                        <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
                             {data.subtitle}
                         </h2>
                     )}

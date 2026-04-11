@@ -63,7 +63,7 @@ export default function ContactForm() {
     return (
         <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto">
             <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="name" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
                     Name
                 </label>
                 <div className="mt-1">
@@ -72,7 +72,8 @@ export default function ContactForm() {
                         name="name"
                         id="name"
                         required
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-2 focus:ring-primary sm:text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-2 dark:focus:ring-primary dark:focus:border-primary p-3 border"
+                        className="block w-full rounded-md shadow-sm focus:border-primary focus:ring-2 focus:ring-primary sm:text-sm p-3 border"
+                        style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
@@ -80,7 +81,7 @@ export default function ContactForm() {
             </div>
 
             <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="email" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
                     E-Mail
                 </label>
                 <div className="mt-1">
@@ -89,7 +90,8 @@ export default function ContactForm() {
                         name="email"
                         id="email"
                         required
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-2 focus:ring-primary sm:text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-2 dark:focus:ring-primary dark:focus:border-primary p-3 border"
+                        className="block w-full rounded-md shadow-sm focus:border-primary focus:ring-2 focus:ring-primary sm:text-sm p-3 border"
+                        style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -97,7 +99,7 @@ export default function ContactForm() {
             </div>
 
             <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="message" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
                     Nachricht
                 </label>
                 <div className="mt-1">
@@ -106,7 +108,8 @@ export default function ContactForm() {
                         name="message"
                         rows={4}
                         required
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-2 focus:ring-primary sm:text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-2 dark:focus:ring-primary dark:focus:border-primary p-3 border"
+                        className="block w-full rounded-md shadow-sm focus:border-primary focus:ring-2 focus:ring-primary sm:text-sm p-3 border"
+                        style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                     />
@@ -132,7 +135,7 @@ export default function ContactForm() {
                             </svg>
                         </div>
                         <div className="ml-3">
-                            <p className="text-sm font-medium text-green-800 dark:text-green-200">
+                            <p className="text-sm font-medium text-green-600">
                                 Message sent successfully! We&apos;ll get back to you soon.
                             </p>
                         </div>
@@ -141,7 +144,7 @@ export default function ContactForm() {
             )}
 
             {status === "error" && (
-                <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/20">
+                <div className="rounded-md p-4" style={{ backgroundColor: 'var(--surface)' }}>
                     <div className="flex">
                         <div className="flex-shrink-0">
                             <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
@@ -149,7 +152,7 @@ export default function ContactForm() {
                             </svg>
                         </div>
                         <div className="ml-3">
-                            <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                            <p className="text-sm font-medium text-red-500">
                                 {errorMessage || "Failed to send message. Please try again."}
                             </p>
                         </div>

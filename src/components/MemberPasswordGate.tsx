@@ -37,23 +37,23 @@ export function MemberPasswordGate() {
     }
 
     return (
-        <main className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black px-4">
+        <main className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: 'var(--background)' }}>
             <div className="w-full max-w-sm">
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-black/10 dark:bg-white/10 mb-4">
-                        <svg className="w-8 h-8 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4" style={{ backgroundColor: 'var(--surface)' }}>
+                        <svg className="w-8 h-8" style={{ color: 'var(--text-muted)' }} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                         </svg>
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Mitgliederbereich</h1>
-                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    <h1 className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>Mitgliederbereich</h1>
+                    <p className="mt-2 text-sm" style={{ color: 'var(--text-muted)' }}>
                         Dieser Bereich ist nur für Mitglieder zugänglich.
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8 space-y-5">
+                <form onSubmit={handleSubmit} className="rounded-2xl shadow-xl p-8 space-y-5" style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)' }}>
                     <div>
-                        <label htmlFor="member-password" className="block text-sm font-medium text-gray-300 mb-2">
+                        <label htmlFor="member-password" className="block text-sm font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>
                             Passwort
                         </label>
                         <input
@@ -64,12 +64,13 @@ export function MemberPasswordGate() {
                             required
                             autoFocus
                             placeholder="••••••••"
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                            className="w-full px-4 py-3 rounded-lg border placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                            style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                         />
                     </div>
 
                     {error && (
-                        <p className="text-sm text-red-500 dark:text-red-400 text-center">{error}</p>
+                        <p className="text-sm text-red-500 text-center">{error}</p>
                     )}
 
                     <button

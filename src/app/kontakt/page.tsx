@@ -8,13 +8,13 @@ export const metadata = {
 
 export default function ContactPage() {
     return (
-        <main className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-black">
+        <main className="min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: 'var(--background)' }}>
             <div className="max-w-3xl mx-auto">
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
+                    <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg" style={{ color: 'var(--foreground)' }}>
                         Kontakt
                     </h1>
-                    <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-400">
+                    <p className="mt-4 max-w-2xl mx-auto text-xl" style={{ color: 'var(--text-muted)' }}>
                         Schreib uns direkt an <ObfuscatedEmail /> oder füll das untenstehende Formular aus 🙂
                     </p>
                 </div>

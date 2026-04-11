@@ -141,19 +141,19 @@ export function SignupForm() {
 
             {/* Anrede */}
             <fieldset className="space-y-3">
-                <legend className="text-sm font-semibold text-gray-300">Anrede *</legend>
+                <legend className="text-sm font-semibold text-[var(--text-secondary)]">Anrede *</legend>
                 <div className="flex gap-6">
                     <label className="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="anrede" value="Frau" required
                             checked={formData.anrede === 'Frau'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Frau</span>
+                        <span className="text-[var(--text-secondary)]">Frau</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="anrede" value="Herr" required
                             checked={formData.anrede === 'Herr'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Herr</span>
+                        <span className="text-[var(--text-secondary)]">Herr</span>
                     </label>
                 </div>
             </fieldset>
@@ -161,12 +161,12 @@ export function SignupForm() {
             {/* Personal Info Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                    <label htmlFor="vorname" className="block text-sm font-medium text-gray-300">Vorname *</label>
+                    <label htmlFor="vorname" className="block text-sm font-medium text-[var(--text-secondary)]">Vorname *</label>
                     <input type="text" id="vorname" name="vorname" required value={formData.vorname} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-300">Name *</label>
+                    <label htmlFor="name" className="block text-sm font-medium text-[var(--text-secondary)]">Name *</label>
                     <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
@@ -174,19 +174,19 @@ export function SignupForm() {
 
             {/* Address */}
             <div className="space-y-2">
-                <label htmlFor="strasse" className="block text-sm font-medium text-gray-300">Strasse und Nummer *</label>
+                <label htmlFor="strasse" className="block text-sm font-medium text-[var(--text-secondary)]">Strasse und Nummer *</label>
                 <input type="text" id="strasse" name="strasse" required value={formData.strasse} onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div className="space-y-2 sm:col-span-1">
-                    <label htmlFor="plz" className="block text-sm font-medium text-gray-300">PLZ *</label>
+                    <label htmlFor="plz" className="block text-sm font-medium text-[var(--text-secondary)]">PLZ *</label>
                     <input type="text" id="plz" name="plz" required value={formData.plz} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
                 <div className="space-y-2 sm:col-span-2">
-                    <label htmlFor="ort" className="block text-sm font-medium text-gray-300">Ort *</label>
+                    <label htmlFor="ort" className="block text-sm font-medium text-[var(--text-secondary)]">Ort *</label>
                     <input type="text" id="ort" name="ort" required value={formData.ort} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
@@ -195,12 +195,12 @@ export function SignupForm() {
             {/* Contact */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300">E-Mail-Adresse *</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-[var(--text-secondary)]">E-Mail-Adresse *</label>
                     <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="telefon" className="block text-sm font-medium text-gray-300">Telefonnummer (Mobile) *</label>
+                    <label htmlFor="telefon" className="block text-sm font-medium text-[var(--text-secondary)]">Telefonnummer (Mobile) *</label>
                     <input type="tel" id="telefon" name="telefon" required value={formData.telefon} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
@@ -208,89 +208,89 @@ export function SignupForm() {
 
             {/* Dob */}
             <div className="space-y-2">
-                <label htmlFor="geburtsdatum" className="block text-sm font-medium text-gray-300">Geburtsdatum (Mindestalter 15 Jahre) *</label>
+                <label htmlFor="geburtsdatum" className="block text-sm font-medium text-[var(--text-secondary)]">Geburtsdatum (Mindestalter 15 Jahre) *</label>
                 <input type="date" id="geburtsdatum" name="geburtsdatum" required value={formData.geburtsdatum} onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
             </div>
 
             {/* Experience */}
             <fieldset className="space-y-3">
-                <legend className="text-sm font-semibold text-gray-300">Ich war schon dabei (optional)</legend>
+                <legend className="text-sm font-semibold text-[var(--text-secondary)]">Ich war schon dabei (optional)</legend>
                 <div className="flex gap-6">
                     <label className="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="schonDabei" value="Ja"
                             checked={formData.schonDabei === 'Ja'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Ja</span>
+                        <span className="text-[var(--text-secondary)]">Ja</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="schonDabei" value="Nein"
                             checked={formData.schonDabei === 'Nein'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Nein</span>
+                        <span className="text-[var(--text-secondary)]">Nein</span>
                     </label>
                 </div>
             </fieldset>
 
             {/* Vocal Range */}
             <fieldset className="space-y-3">
-                <legend className="text-sm font-semibold text-gray-300">Stimmlage *</legend>
+                <legend className="text-sm font-semibold text-[var(--text-secondary)]">Stimmlage *</legend>
                 <div className="flex flex-col gap-3">
                     <label className="flex items-center gap-3 cursor-pointer">
                         <input type="radio" name="stimmlage" value="Sopran" required
                             checked={formData.stimmlage === 'Sopran'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Sopran (höhere Frauenstimmen)</span>
+                        <span className="text-[var(--text-secondary)]">Sopran (höhere Frauenstimmen)</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                         <input type="radio" name="stimmlage" value="Alt" required
                             checked={formData.stimmlage === 'Alt'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Alt (tiefere Frauenstimmen)</span>
+                        <span className="text-[var(--text-secondary)]">Alt (tiefere Frauenstimmen)</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                         <input type="radio" name="stimmlage" value="Tenor" required
                             checked={formData.stimmlage === 'Tenor'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Tenor (höhere Männerstimmen, auch tiefe Frauenstimmen)</span>
+                        <span className="text-[var(--text-secondary)]">Tenor (höhere Männerstimmen, auch tiefe Frauenstimmen)</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                         <input type="radio" name="stimmlage" value="Bass" required
                             checked={formData.stimmlage === 'Bass'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Bass (tiefere Männerstimmen)</span>
+                        <span className="text-[var(--text-secondary)]">Bass (tiefere Männerstimmen)</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                         <input type="radio" name="stimmlage" value="Bin mir nicht sicher" required
                             checked={formData.stimmlage === 'Bin mir nicht sicher'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Bin mir nicht sicher</span>
+                        <span className="text-[var(--text-secondary)]">Bin mir nicht sicher</span>
                     </label>
                 </div>
             </fieldset>
 
             {/* Demo Materials */}
             <fieldset className="space-y-3">
-                <legend className="text-sm font-semibold text-gray-300">Demo Aufnahmen Songs *</legend>
+                <legend className="text-sm font-semibold text-[var(--text-secondary)]">Demo Aufnahmen Songs *</legend>
                 <div className="flex flex-col gap-3">
                     <label className="flex items-center gap-3 cursor-pointer">
                         <input type="radio" name="demoAufnahme" value="Mir reicht der Link zum MP3 Download" required
                             checked={formData.demoAufnahme === 'Mir reicht der Link zum MP3 Download'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Mir reicht der Link zum MP3 Download</span>
+                        <span className="text-[var(--text-secondary)]">Mir reicht der Link zum MP3 Download</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer">
                         <input type="radio" name="demoAufnahme" value="Ich wünsche zusätzlich zum MP3 Download auch eine Übungs-CD" required
                             checked={formData.demoAufnahme === 'Ich wünsche zusätzlich zum MP3 Download auch eine Übungs-CD'} onChange={handleChange}
                             className="w-4 h-4 text-primary focus:ring-primary" />
-                        <span className="text-gray-300">Ich wünsche zusätzlich zum MP3 Download auch eine Übungs-CD</span>
+                        <span className="text-[var(--text-secondary)]">Ich wünsche zusätzlich zum MP3 Download auch eine Übungs-CD</span>
                     </label>
                 </div>
             </fieldset>
 
             {/* Message */}
             <div className="space-y-2">
-                <label htmlFor="mitteilung" className="block text-sm font-medium text-gray-300">Mitteilung (optional)</label>
+                <label htmlFor="mitteilung" className="block text-sm font-medium text-[var(--text-secondary)]">Mitteilung (optional)</label>
                 <textarea id="mitteilung" name="mitteilung" rows={4} value={formData.mitteilung} onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-y" />
             </div>
@@ -303,7 +303,7 @@ export function SignupForm() {
                             checked={formData.bedingungenAkzeptiert} onChange={handleChange}
                             className="w-5 h-5 text-primary rounded border-gray-300 focus:ring-primary" />
                     </div>
-                    <span className="text-sm text-gray-300 leading-relaxed group-hover:text-gray-900 transition-colors">
+                    <span className="text-sm text-[var(--text-secondary)] leading-relaxed group-hover:text-gray-900 transition-colors">
                         Mit dieser Anmeldung akzeptiere ich die <Link href="/gospelproject/teilnahmebedingungen" className="text-primary underline hover:text-primary-hover">Teilnahmebedingungen</Link> inklusive der <Link href="/datenschutz" className="text-primary underline hover:text-primary-hover">Datenschutzbestimmungen</Link> *
                     </span>
                 </label>

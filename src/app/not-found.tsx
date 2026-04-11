@@ -10,10 +10,10 @@ export default function NotFound() {
                 >
                     404
                 </p>
-                <h1 className="text-3xl font-bold mb-4 text-white">
+                <h1 className="text-3xl font-bold mb-4" style={{ color: 'var(--foreground)' }}>
                     Seite nicht gefunden
                 </h1>
-                <p className="text-gray-400 mb-8">
+                <p className="mb-8" style={{ color: 'var(--text-muted)' }}>
                     Die gesuchte Seite existiert leider nicht oder wurde verschoben.
                 </p>
                 <Link

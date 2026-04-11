@@ -50,11 +50,11 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
     if (status === "success") {
         return (
             <main className="min-h-screen pt-24 pb-16 px-4 flex items-center justify-center">
-                <div className="max-w-2xl text-center bg-white/5 backdrop-blur-sm p-8 md:p-12 rounded-2xl border border-white/10 shadow-2xl">
+                <div className="max-w-2xl text-center p-8 md:p-12 rounded-2xl border shadow-2xl" style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)' }}>
                     <h1 className="text-xl font-bold mb-6">
                         Du bist angemeldet
                     </h1>
-                    <p className="text-gray-200 text-lg leading-relaxed">
+                    <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                         {message}
                     </p>
                 </div>
@@ -63,20 +63,20 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
     }
 
     return (
-        <main className="min-h-screen pt-24 pb-16 px-4 flex items-center justify-center bg-[#050505]">
+        <main className="min-h-screen pt-24 pb-16 px-4 flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
             <div className="max-w-md w-full">
                 <div className="text-center mb-10">
                     <h1 className="text-4xl font-bold mb-4 tracking-tight">
                         {initialPageData?.headerTitle || "Newsletter"}
                     </h1>
-                    <p className="text-gray-400 text-lg">
+                    <p className="text-lg" style={{ color: 'var(--text-muted)' }}>
                         {initialPageData?.description || "Bleib auf dem Laufenden – abonniere unseren Newsletter!"}
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4 bg-white/5 p-8 rounded-2xl border border-white/10 shadow-xl">
+                <form onSubmit={handleSubmit} className="space-y-4 p-8 rounded-2xl border shadow-xl" style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)' }}>
                     <div>
-                        <label htmlFor="firstName" className="block text-sm font-medium text-gray-300 mb-1">
+                        <label htmlFor="firstName" className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
                             {initialPageData?.vornameLabel || "Vorname"}
                         </label>
                         <input
@@ -86,12 +86,13 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                             required
                             value={formData.firstName}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                            className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                            style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                             placeholder={initialPageData?.vornameLabel || "Dein Vorname"}
                         />
                     </div>
                     <div>
-                        <label htmlFor="lastName" className="block text-sm font-medium text-gray-300 mb-1">
+                        <label htmlFor="lastName" className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
                             {initialPageData?.nachnameLabel || "Nachname"}
                         </label>
                         <input
@@ -101,12 +102,13 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                             required
                             value={formData.lastName}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                            className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                            style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                             placeholder={initialPageData?.nachnameLabel || "Dein Nachname"}
                         />
                     </div>
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+                        <label htmlFor="email" className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
                             {initialPageData?.emailLabel || "E-Mail-Adresse"}
                         </label>
                         <input
@@ -116,7 +118,8 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                             required
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                            className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                            style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                             placeholder="deine@email.ch"
                         />
                     </div>

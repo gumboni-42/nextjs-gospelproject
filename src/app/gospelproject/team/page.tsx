@@ -40,7 +40,7 @@ function Section({ title, members }: { title: string, members: any[] }) {
 
     return (
         <div className="mb-16 text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl mb-10">{title}</h2>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-10" style={{ color: 'var(--foreground)' }}>{title}</h2>
             <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {members.map((member: any) => (
@@ -55,7 +55,7 @@ function Section({ title, members }: { title: string, members: any[] }) {
                         )}
                         <h4 className="mt-6 text-lg font-semibold">{member.name}</h4>
                         <p className="text-sm font-medium">{member.role}</p>
-                        <div className="mt-4 text-white max-w-xs">
+                        <div className="mt-4 max-w-xs" style={{ color: 'var(--foreground)' }}>
                             {member.bio && <PortableText value={member.bio} />}
                         </div>
                     </div>

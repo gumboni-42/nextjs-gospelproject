@@ -47,7 +47,7 @@ export default async function GospelprojectTerminePage() {
             <div className="container mx-auto px-4 py-16">
                 <div className="max-w-4xl mx-auto">
                     {data.subtitle && (
-                        <h2 className="text-2xl text-gray-300 mb-10 font-medium text-center">
+                        <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
                             {data.subtitle}
                         </h2>
                     )}

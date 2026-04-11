@@ -112,12 +112,12 @@ export function SignupFormGospelverein() {
             {/* Personal Info Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                    <label htmlFor="vorname" className="block text-sm font-medium text-gray-300">Vorname *</label>
+                    <label htmlFor="vorname" className="block text-sm font-medium text-[var(--text-secondary)]">Vorname *</label>
                     <input type="text" id="vorname" name="vorname" required value={formData.vorname} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-300">Name *</label>
+                    <label htmlFor="name" className="block text-sm font-medium text-[var(--text-secondary)]">Name *</label>
                     <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
@@ -125,19 +125,19 @@ export function SignupFormGospelverein() {
 
             {/* Address */}
             <div className="space-y-2">
-                <label htmlFor="adresse" className="block text-sm font-medium text-gray-300">Adresse / Strasse und Nummer *</label>
+                <label htmlFor="adresse" className="block text-sm font-medium text-[var(--text-secondary)]">Adresse / Strasse und Nummer *</label>
                 <input type="text" id="adresse" name="adresse" required value={formData.adresse} onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div className="space-y-2 sm:col-span-1">
-                    <label htmlFor="plz" className="block text-sm font-medium text-gray-300">PLZ *</label>
+                    <label htmlFor="plz" className="block text-sm font-medium text-[var(--text-secondary)]">PLZ *</label>
                     <input type="text" id="plz" name="plz" required value={formData.plz} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
                 <div className="space-y-2 sm:col-span-2">
-                    <label htmlFor="ort" className="block text-sm font-medium text-gray-300">Ort *</label>
+                    <label htmlFor="ort" className="block text-sm font-medium text-[var(--text-secondary)]">Ort *</label>
                     <input type="text" id="ort" name="ort" required value={formData.ort} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
@@ -145,7 +145,7 @@ export function SignupFormGospelverein() {
 
             {/* Dob */}
             <div className="space-y-2">
-                <label htmlFor="geburtsdatum" className="block text-sm font-medium text-gray-300">Geburtstag *</label>
+                <label htmlFor="geburtsdatum" className="block text-sm font-medium text-[var(--text-secondary)]">Geburtstag *</label>
                 <input type="date" id="geburtsdatum" name="geburtsdatum" required value={formData.geburtsdatum} onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
             </div>
@@ -153,12 +153,12 @@ export function SignupFormGospelverein() {
             {/* Contact */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300">E-Mail-Adresse *</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-[var(--text-secondary)]">E-Mail-Adresse *</label>
                     <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
                 <div className="space-y-2">
-                    <label htmlFor="telefon" className="block text-sm font-medium text-gray-300">Telefonnummer *</label>
+                    <label htmlFor="telefon" className="block text-sm font-medium text-[var(--text-secondary)]">Telefonnummer *</label>
                     <input type="tel" id="telefon" name="telefon" required value={formData.telefon} onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
                 </div>
@@ -166,7 +166,7 @@ export function SignupFormGospelverein() {
 
             {/* Message */}
             <div className="space-y-2">
-                <label htmlFor="mitteilung" className="block text-sm font-medium text-gray-300">Mitteilung (optional)</label>
+                <label htmlFor="mitteilung" className="block text-sm font-medium text-[var(--text-secondary)]">Mitteilung (optional)</label>
                 <textarea id="mitteilung" name="mitteilung" rows={4} value={formData.mitteilung} onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-y" />
             </div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { ReCaptchaProvider } from "@/components/ReCaptchaProvider";
 import { Footer } from "@/components/Footer";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 
@@ -25,15 +26,25 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        {/* Prevent flash of wrong theme */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark');document.documentElement.classList.add('light')}}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body
         className={`${lato.variable} antialiased flex flex-col min-h-screen`}
       >
-        <ReCaptchaProvider>
-          <Navigation />
-          <div className="flex-1">{children}</div>
-          <Footer />
-        </ReCaptchaProvider>
+        <ThemeProvider>
+          <ReCaptchaProvider>
+            <Navigation />
+            <div className="flex-1">{children}</div>
+            <Footer />
+          </ReCaptchaProvider>
+        </ThemeProvider>
         {await (async () => {
           try {
             return (await draftMode()).isEnabled && <VisualEditing />;

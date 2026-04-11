@@ -69,11 +69,11 @@ export default async function ZusammenklangPage() {
                     )}
 
                     {/* Form Section */}
-                    <div className="border-t border-gray-700 pt-12">
-                        <h2 className="text-2xl font-bold mb-8 text-center text-white">
+                    <div className="border-t pt-12" style={{ borderColor: 'var(--border-color)' }}>
+                        <h2 className="text-2xl font-bold mb-8 text-center" style={{ color: 'var(--foreground)' }}>
                             Anmeldung als Sponsor oder Spender
                         </h2>
-                        <div className="bg-gray-800/50 rounded-2xl p-8 sm:p-12">
+                        <div className="rounded-2xl p-8 sm:p-12" style={{ backgroundColor: 'var(--surface)' }}>
                             <ZusammenklangForm introText={data.formIntroText} />
                         </div>
                     </div>
