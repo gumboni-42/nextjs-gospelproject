@@ -16,7 +16,7 @@ export const HeroSection = ({ title, image, logo, size = 'default', overlay = tr
     const backgroundUrl = getImageUrl(image);
     const logoUrl = getImageUrl(logo);
 
-    const matchSize = !backgroundUrl ? 'h-auto min-h-0 pb-8 pt-48 items-center' : (size === 'large' ? 'h-[60vh] md:h-[80vh] items-end pb-16 md:pb-24' : 'h-[45vh] min-h-[400px] items-end pb-16 md:pb-24');
+    const matchSize = !backgroundUrl ? 'h-auto min-h-0 pb-8 pt-48 items-center' : (size === 'large' ? 'h-[60vh] md:h-[80vh] items-center' : 'h-[45vh] min-h-[400px] items-center');
 
     return (
         <section className={`relative w-full ${matchSize} flex justify-center overflow-hidden`}>
@@ -37,7 +37,7 @@ export const HeroSection = ({ title, image, logo, size = 'default', overlay = tr
 
             {/* Content */}
             {(title || logoUrl) && (
-                <div className="relative z-10 container mx-auto px-4 text-center">
+                <div className={`relative z-10 container mx-auto px-4 text-center ${!logoUrl ? 'mt-[40px]' : ''}`}>
                     {logoUrl && (
                         <div className="mb-6 flex justify-center">
                             <Image
@@ -55,6 +55,7 @@ export const HeroSection = ({ title, image, logo, size = 'default', overlay = tr
                             <h1 className="text-4xl md:text-4xl text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
                                 {title}
                             </h1>
+                            {!logoUrl && <hr className="my-6 w-2/3 mx-auto" style={{ borderColor: 'var(--gospel-primary)' }} />}
                         </>
                     )}
                 </div>

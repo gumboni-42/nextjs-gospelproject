@@ -79,7 +79,7 @@ export function FooterContent({ data }: { data: FooterData }) {
 
                 {/* Sponsors & Partners */}
                 {(data?.sponsors?.length || data?.mediaPartner) && (
-                    <div className="container mx-auto px-6 py-10">
+                    <div className="container mx-auto px-6 py-2">
                         <div className="flex flex-wrap items-left justify-left gap-12">
                             {data?.sponsors && data.sponsors.length > 0 && (
                                 <div className="flex flex-col items-left gap-4">
@@ -90,24 +90,25 @@ export function FooterContent({ data }: { data: FooterData }) {
                                                 href={sponsor.url || '#'}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="bg-white p-4 rounded-md opacity-100 hover:opacity-80 transition-opacity block"
+                                                className="rounded-md opacity-100 hover:opacity-80 transition-opacity block overflow-hidden"
+                                                style={{ backgroundColor: 'var(--partner-logo-bg)' }}
                                                 title={sponsor.name}
                                             >
                                                 {sponsor.logo?.public_id ? (
                                                     <Image
-                                                        src={sponsor.logo.secure_url || ''}
+                                                        src={(sponsor.logo.secure_url || '').replace('/upload/', '/upload/c_pad,b_auto,w_240,h_160/')}
                                                         alt={sponsor.name}
-                                                        width={200}
-                                                        height={48}
-                                                        className="h-12 w-auto object-contain"
+                                                        width={240}
+                                                        height={160}
+                                                        unoptimized={true}
+                                                        className="h-15 w-[100px] mx-2 object-contain rounded-md"
                                                     />
                                                 ) : (
-                                                    <span className="text-black font-semibold">{sponsor.name}</span>
+                                                    <span className="text-black font-semibold bg-white px-3 block h-20 w-[100px] mx-4 flex text-xs items-center justify-center text-center">{sponsor.name}</span>
                                                 )}
                                             </a>
                                         ))}
                                     </div>
-                                    <p className="prose prose-invert text-white">Mit freundlicher Unterstützung</p>
                                 </div>
                             )}
 
@@ -118,23 +119,24 @@ export function FooterContent({ data }: { data: FooterData }) {
                                             href={data.mediaPartner.url || '#'}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="bg-white p-4 rounded-md opacity-100 hover:opacity-80 transition-opacity block"
+                                            className="rounded-md opacity-100 hover:opacity-80 transition-opacity block overflow-hidden"
+                                            style={{ backgroundColor: 'var(--partner-logo-bg)' }}
                                             title={data.mediaPartner.name}
                                         >
                                             {data.mediaPartner.logo?.public_id ? (
                                                 <Image
-                                                    src={data.mediaPartner.logo.secure_url || ''}
+                                                    src={(data.mediaPartner.logo.secure_url || '').replace('/upload/', '/upload/c_pad,b_auto,w_240,h_120/')}
                                                     alt={data.mediaPartner.name}
-                                                    width={200}
-                                                    height={48}
-                                                    className="h-12 w-auto object-contain"
+                                                    width={240}
+                                                    height={120}
+                                                    unoptimized={true}
+                                                    className="h-15 w-[120px] object-contain rounded-md"
                                                 />
                                             ) : (
-                                                <span className="text-black font-semibold">{data.mediaPartner.name}</span>
+                                                <span className="text-black font-semibold bg-white px-3 block h-20 w-[120px] flex text-xs items-center justify-center text-center">{data.mediaPartner.name}</span>
                                             )}
                                         </a>
                                     </div>
-                                    <p className="prose prose-invert text-white">Medienpartner</p>
                                 </div>
                             )}
                         </div>
