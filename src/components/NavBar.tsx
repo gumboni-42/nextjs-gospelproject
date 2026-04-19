@@ -99,12 +99,14 @@ export function NavBar({ routes }: NavBarProps) {
                                 )}
                             </div>
                         ))}
-                        <ThemeToggle />
+                        {/* Theme Toggle separated slightly to denote it's an action, not a link */}
+                        <div className="pl-4 md:border-l md:border-white/10">
+                            <ThemeToggle />
+                        </div>
                     </nav>
 
-                    {/* Mobile: Theme Toggle + Menu Button */}
-                    <div className="md:hidden flex items-center gap-2">
-                        <ThemeToggle />
+                    {/* Mobile: Menu Button */}
+                    <div className="md:hidden flex items-center">
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             className="p-2 bg-transparent"
@@ -160,6 +162,12 @@ export function NavBar({ routes }: NavBarProps) {
                                 ))}
                             </div>
                         ))}
+                    </div>
+                    {/* Theme Toggle placed at the very bottom of the mobile menu */}
+                    <div className="p-4 border-t" style={{ borderColor: 'var(--border-color)' }}>
+                        <div className="flex justify-end">
+                            <ThemeToggle />
+                        </div>
                     </div>
                 </div>
             )}

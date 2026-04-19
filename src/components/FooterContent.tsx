@@ -61,10 +61,10 @@ function AppleMusicIcon() {
 
 export function FooterContent({ data }: { data: FooterData }) {
     return (
-        <footer className="bg-black mt-auto flex flex-col md:relative md:min-h-[25vw] md:justify-end">
+        <footer className="bg-black mt-auto flex flex-col relative overflow-hidden md:min-h-[25vw] md:justify-end">
 
-            {/* Background image — stacks above content on mobile, fills footer on desktop */}
-            <div className="w-full md:absolute md:inset-0 pointer-events-none">
+            {/* Background image — fills footer completely */}
+            <div className="absolute inset-0 w-full pointer-events-none">
                 <Image
                     src="/footer-lines.png"
                     alt=""
@@ -74,7 +74,7 @@ export function FooterContent({ data }: { data: FooterData }) {
                 />
             </div>
 
-            {/* Footer content — sits on top of image on desktop */}
+            {/* Footer content — sits on top of image */}
             <div className="relative z-10">
 
                 {/* Sponsors & Partners */}
