@@ -52,8 +52,9 @@ body {
 }
 
 h1 {
-  font-size: 48px;
-  font-weight: 600;
+  /*font-size: 48px;*/
+  /*font-size: 6vw;*/
+  /*font-weight: 400;*/
 }
 
 h2 {

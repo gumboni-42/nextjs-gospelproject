@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 export async function POST(request: Request) {
     try {
-        const { name, email, message, captcha } = await request.json();
+        const { name, email, message, captcha, formSubject } = await request.json();
 
         if (!name || !email || !message || !captcha) {
             return NextResponse.json(
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
             from: `"${name}" <${process.env.EMAIL_USER || "[EMAIL_ADDRESS]"}>`, // Sender address
             to: "webformular@gospelproject.ch", // List of receivers
             replyTo: email,
-            subject: `Neue Mitteilung von ${name} via gospelproject.ch`,
+            subject: formSubject || `Neue Mitteilung von ${name} via gospelproject.ch`,
             text: `Name: ${name}\nEmail: ${email}\n\nNachricht:\n${message}`,
             html: `
         <h3>Neue Mitteilung von ${name} via gospelproject.ch</h3>

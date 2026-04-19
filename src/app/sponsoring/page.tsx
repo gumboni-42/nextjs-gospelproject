@@ -2,6 +2,7 @@ import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
+import { PageLogo } from "@/components/PageLogo";
 import Image from "next/image";
 import { getImageUrl } from "@/sanity/client";
 import Link from "next/link";
@@ -9,6 +10,7 @@ import Link from "next/link";
 const SPONSORING_QUERY = `*[_type == "sponsoringPage"][0]{
   ...,
   "heroImage": heroImage,
+  "logo": logo,
   "qrCodeImage": qrCodeImage,
   "pastMainSponsors": pastMainSponsors[]{
     "name": sponsor.name,
@@ -52,6 +54,7 @@ export default async function SponsoringPage() {
 
             <div className={`container mx-auto px-4 ${data.heroImage ? 'py-16' : 'pt-32 pb-16'}`}>
                 <div className="max-w-xl mx-auto">
+                    <PageLogo logo={data.logo} title={data.title} />
                     {!data.heroImage && (
                         <h1 className="text-4xl font-bold mb-8 text-center">{data.title}</h1>
                     )}

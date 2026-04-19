@@ -2,6 +2,7 @@ import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
 import { GalleryView } from "@/components/GalleryView";
 import { HeroSection } from "@/components/HeroSection";
+import { PageLogo } from "@/components/PageLogo";
 import { VideoGallery } from "@/components/VideoGallery";
 
 interface CloudinaryAsset {
@@ -84,8 +85,10 @@ export default async function ImpressionenPage() {
             <HeroSection
                 title={galleryData.title || 'Impressionen'}
                 image={galleryData.heroImage}
-                logo={galleryData.logo}
             />
+            <div className="container mx-auto px-4 pt-16 -mb-8">
+                <PageLogo logo={galleryData.logo} title={galleryData.title} />
+            </div>
             <VideoGallery videos={galleryData.videos} />
             <GalleryView data={galleryData} />
 

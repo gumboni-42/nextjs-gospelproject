@@ -2,6 +2,7 @@ import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
+import { PageLogo } from "@/components/PageLogo";
 import { CallToAction } from "@/components/CallToAction";
 import { SignupFormGospelverein } from "@/components/SignupFormGospelverein";
 import Image from "next/image";
@@ -46,10 +47,10 @@ export default async function GospelvereinPage() {
             <HeroSection
                 title={data.title}
                 image={data.heroImage}
-                logo={data.logo}
             />
             <div className="container mx-auto px-4 py-16">
                 <div className="max-w-2xl mx-auto">
+                    <PageLogo logo={data.logo} title={data.title} />
                     {data.subtitle && (
                         <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
                             {data.subtitle}
@@ -113,8 +114,8 @@ export default async function GospelvereinPage() {
                     <div className="rounded-2xl p-8 sm:p-12 mb-16 relative overflow-hidden" style={{ backgroundColor: 'var(--surface)', color: 'var(--foreground)' }}>
                         <div className="relative z-10">
                             <h2 className="text-3xl font-bold mb-4 text-center">Gönner werden</h2>
-                            <p className="text-center mb-8 max-w-xl mx-auto" style={{ color: 'var(--text-muted)' }}>
-                                Möchtest Du als Gönner unsere Gospeln ideel und finanziell unterstützen? Ab CHF 50.– im Jahr bist du dabei.
+                            <p className="text-center mb-8 max-w-xl mx-auto">
+                                Möchtest Du als Gönner unsere Gospeln ideell und finanziell unterstützen? <br />    Ab CHF 50.– im Jahr bist du dabei.
                             </p>
                             <SignupFormGospelverein />
                         </div>

@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { captcha, ...formData } = body;
+        const { captcha, formSubject, ...formData } = body;
 
         if (!formData.firmaName || !formData.email || !captcha) {
             return NextResponse.json(
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
             from: `"Zusammenklang Formular" <${process.env.EMAIL_USER || "[EMAIL_ADDRESS]"}>`,
             to: "webformular@gospelproject.ch",
             replyTo: formData.email,
-            subject: `Neue Sponsoring-Anmeldung von ${formData.firmaName} via gospelproject.ch`,
+            subject: formSubject || `Neue Sponsoring-Anmeldung von ${formData.firmaName} via gospelproject.ch`,
             text: textContent,
             html: htmlContent,
         });

@@ -41,6 +41,7 @@ export default function ContactForm() {
                     email,
                     message,
                     captcha: captchaValue,
+                    formSubject: `Nachricht von Kontaktformular: ${name}`,
                 }),
             });
 

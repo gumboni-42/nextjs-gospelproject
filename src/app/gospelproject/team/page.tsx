@@ -1,6 +1,7 @@
 import { sanityFetch } from '@/sanity/fetch';
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
+import { PageLogo } from "@/components/PageLogo";
 
 const TEAM_QUERY = `{
   "sections": {
@@ -26,10 +27,15 @@ export default async function TeamPage() {
             <HeroSection
                 title={page?.title || "Unser Team"}
                 image={page?.heroImage}
-                logo={page?.logo}
             />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto px-4">
+                    <PageLogo logo={page?.logo} title={page?.title} />
+                    {page?.subtitle && (
+                        <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
+                            {page.subtitle}
+                        </h2>
+                    )}
                     <Section title="Solo" members={sections.soloists} />
                     <Section title="Band" members={sections.band} />
                     <Section title="Team" members={sections.team} />
@@ -43,10 +49,16 @@ export default async function TeamPage() {
 function Section({ title, members }: { title: string, members: any[] }) {
     if (!members || members.length === 0) return null;
 
+    const count = members.length;
+    const lgGridCols = count === 1 ? 'lg:grid-cols-1' :
+                      count === 2 ? 'lg:grid-cols-2' :
+                      count === 3 ? 'lg:grid-cols-3' :
+                      count === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3';
+
     return (
         <div className="mb-16 text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-10" style={{ color: 'var(--foreground)' }}>{title}</h2>
-            <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
+            <div className={`grid grid-cols-1 gap-12 sm:grid-cols-2 ${lgGridCols}`}>
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {members.map((member: any) => (
                     <div key={member._id} className="flex flex-col items-center">

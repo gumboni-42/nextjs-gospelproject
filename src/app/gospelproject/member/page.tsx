@@ -2,6 +2,7 @@ import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
+import { PageLogo } from "@/components/PageLogo";
 import { CallToAction } from "@/components/CallToAction";
 import { MemberPasswordGate } from "@/components/MemberPasswordGate";
 import { cookies } from "next/headers";
@@ -49,10 +50,10 @@ export default async function GospelprojectMemberPage() {
             <HeroSection
                 title={data.title}
                 image={data.heroImage}
-                logo={data.logo}
             />
             <div className="container mx-auto px-4 py-16">
                 <div className="max-w-2xl mx-auto">
+                    <PageLogo logo={data.logo} title={data.title} />
                     {data.subtitle && (
                         <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
                             {data.subtitle}

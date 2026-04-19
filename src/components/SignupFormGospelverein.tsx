@@ -61,6 +61,7 @@ export function SignupFormGospelverein() {
             const submitData = {
                 token,
                 formType: 'gospelverein_goenner',
+                formSubject: `Neue Gönneranmeldung: ${formData.vorname} ${formData.name}`,
                 ...formData
             };
 
@@ -107,7 +108,7 @@ export function SignupFormGospelverein() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-8 mt-12 mb-16">
+        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-8 mt-8">
 
             {/* Personal Info Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -1,6 +1,7 @@
 import { PortableText, type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
 import { HeroSection } from "@/components/HeroSection";
+import { PageLogo } from "@/components/PageLogo";
 import Image from "next/image";
 
 interface AgendaItem extends SanityDocument {
@@ -38,10 +39,10 @@ export default async function AgendaPage() {
             <HeroSection
                 title={page?.title || "Upcoming Gigs"}
                 image={page?.heroImage}
-                logo={page?.logo}
             />
 
             <div className="container mx-auto px-4 py-16 max-w-4xl">
+                <PageLogo logo={page?.logo} title={page?.title} />
                 {agendaItems.length === 0 ? (
                     <div className="text-center text-(--text-secondary) py-12">
                         <p className="text-xl">No upcoming events at the moment.</p>

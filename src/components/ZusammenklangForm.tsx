@@ -81,7 +81,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
             const res = await fetch("/api/zusammenklang", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ...formData, captcha: captchaValue }),
+                body: JSON.stringify({ ...formData, captcha: captchaValue, formSubject: `Neue Sponsoringanfrage: ${formData.firmaName}` }),
             });
 
             const data = await res.json();

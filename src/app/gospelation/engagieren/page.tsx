@@ -4,6 +4,7 @@ import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { HeroSection } from "@/components/HeroSection";
 import { ThreeImageSection } from "@/components/ThreeImageSection";
+import { PageLogo } from "@/components/PageLogo";
 import { CallToAction } from "@/components/CallToAction";
 
 const GOSPELATION_ENGAGIEREN_QUERY = `*[_type == "gospelationEngagierenPage"][0]{
@@ -42,10 +43,10 @@ export default async function GospelationEngagierenPage() {
             <HeroSection
                 title={data.title}
                 image={data.heroImage}
-                logo={data.logo}
             />
             <div className="container mx-auto px-4 py-16">
                 <div className="max-w-2xl mx-auto">
+                    <PageLogo logo={data.logo} title={data.title} />
                     {data.subtitle && (
                         <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
                             {data.subtitle}

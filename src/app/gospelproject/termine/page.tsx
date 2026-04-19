@@ -2,6 +2,7 @@ import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
+import { PageLogo } from "@/components/PageLogo";
 import { CallToAction } from "@/components/CallToAction";
 
 const TERMINE_QUERY = `*[_type == "gospelprojectTerminePage"][0]{
@@ -42,10 +43,10 @@ export default async function GospelprojectTerminePage() {
             <HeroSection
                 title={data.title}
                 image={data.heroImage}
-                logo={data.logo}
             />
             <div className="container mx-auto px-4 py-16">
                 <div className="max-w-4xl mx-auto">
+                    <PageLogo logo={data.logo} title={data.title} />
                     {data.subtitle && (
                         <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
                             {data.subtitle}
@@ -73,10 +74,12 @@ export default async function GospelprojectTerminePage() {
 
                     {data.htmlTable && (
                         <div
-                            className="prose max-w-none mb-12 html-table-container"
+                            className="prose max-w-none mb-6 html-table-container"
                             dangerouslySetInnerHTML={{ __html: data.htmlTable }}
                         />
                     )}
+                    <p className="text-sm">* Zeit entspricht dem Beginn der Veranstaltung, Chor trifft sich zur Vorprobe jeweils schon 2 Stunden früher</p>
+                    <p className="text-sm text-[var(--text-muted)]">Version vom 04.05.2026</p>
 
                     <CallToAction data={data.callToAction} />
                 </div>

@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { token, formType, vorname, name, adresse, plz, ort, geburtsdatum, telefon, email, mitteilung } = body;
+        const { token, formType, formSubject, vorname, name, adresse, plz, ort, geburtsdatum, telefon, email, mitteilung } = body;
 
         if (!token || !vorname || !name || !adresse || !plz || !ort || !geburtsdatum || !telefon || !email) {
             return NextResponse.json(
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
             from: `"${vorname} ${name}" <${process.env.EMAIL_USER || "noreply@gospelproject.ch"}>`,
             to: "webformular@gospelproject.ch", // Set to contact form's destination
             replyTo: email,
-            subject: `Neue Gönner-Anmeldung: ${vorname} ${name} via gospelproject.ch`,
+            subject: formSubject || `Neue Gönner-Anmeldung: ${vorname} ${name} via gospelproject.ch`,
             text: `Neue Gönner-Anmeldung\n\nName: ${vorname} ${name}\nAdresse: ${adresse}, ${plz} ${ort}\nGeburtsdatum: ${formattedGeburtsdatum}\nTelefon: ${telefon}\nE-Mail: ${email}\n\nMitteilung:\n${mitteilung || '-'}`,
             html: `
         <h3>Neue Gönner-Anmeldung via gospelproject.ch</h3>
