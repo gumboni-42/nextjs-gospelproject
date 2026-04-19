@@ -57,7 +57,7 @@ export default async function SponsoringPage() {
                     )}
 
                     {data.subtitle && (
-                        <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
+                        <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--tw-prose-headings)' }}>
                             {data.subtitle}
                         </h2>
                     )}
@@ -119,7 +119,7 @@ export default async function SponsoringPage() {
 
                     {data.mediaPartner?.name && getImageUrl(data.mediaPartner?.logo) && (
                         <div className="mb-8 border-t pt-16">
-                            <h3 className="text-xl font-medium mb-8 text-center text-gray-500 uppercase tracking-widest">Medienpartner</h3>
+                            <h3 className="text-xl font-medium mb-8 text-center text-(--tw-prose-headings) uppercase tracking-widest">Medienpartner</h3>
                             <div className="flex justify-center">
                                 <div className="w-full max-w-[200px] relative aspect-square flex items-center justify-center">
                                     {data.mediaPartner.url ? (

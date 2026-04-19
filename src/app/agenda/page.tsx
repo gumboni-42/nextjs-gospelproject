@@ -43,7 +43,7 @@ export default async function AgendaPage() {
 
             <div className="container mx-auto px-4 py-16 max-w-4xl">
                 {agendaItems.length === 0 ? (
-                    <div className="text-center text-gray-500 py-12">
+                    <div className="text-center text-(--text-secondary) py-12">
                         <p className="text-xl">No upcoming events at the moment.</p>
                         <p>Check back soon!</p>
                     </div>

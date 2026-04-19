@@ -89,7 +89,7 @@ export const VideoGallery = ({ videos }: VideoGalleryProps) => {
                                         />
                                     ) : (
                                         <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: 'var(--surface)' }}>
-                                            <span className="text-gray-500">No Thumbnail</span>
+                                            <span className="text-(--text-secondary)">No Thumbnail</span>
                                         </div>
                                     )}
 

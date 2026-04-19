@@ -98,7 +98,7 @@ export function GalleryView({ data }: GalleryViewProps) {
 
     if (!data?.years || data.years.length === 0) {
         return (
-            <div className="text-center py-20 text-gray-500">
+            <div className="text-center py-20 text-(--text-secondary)">
                 <p>No images found in the gallery.</p>
             </div>
         );
@@ -167,7 +167,7 @@ export function GalleryView({ data }: GalleryViewProps) {
                             ))}
                         </div>
                         {(!entry.images || entry.images.length === 0) && (
-                            <p className="text-gray-500 italic">No images for this year.</p>
+                            <p className="text-(--text-secondary) italic">No images for this year.</p>
                         )}
                     </div>
                 ))}

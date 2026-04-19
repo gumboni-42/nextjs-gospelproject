@@ -149,7 +149,7 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                         </button>
                     </div>
 
-                    <p className="text-xs text-gray-500 text-center mt-6">
+                    <p className="text-xs text-(--text-secondary) text-center mt-6">
                         {initialPageData?.footerText || "Durch das Abonnieren erklärst du dich damit einverstanden, Gospelupdates zu erhalten. Wir versprechen, dass wir deine Daten nicht an Dritte weitergeben und du dich jederzeit abmelden kannst."}
                     </p>
                 </form>

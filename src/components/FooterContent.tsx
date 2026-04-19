@@ -206,7 +206,7 @@ export function FooterContent({ data }: { data: FooterData }) {
                         </div>
 
                         {/* Legal, Newsletter & Copyright */}
-                        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-400">
+                        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-(--text-secondary)">
                             <Link
                                 href="/newsletter"
                                 className="hover:text-white transition-colors font-medium"
