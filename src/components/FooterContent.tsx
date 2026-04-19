@@ -61,7 +61,7 @@ function AppleMusicIcon() {
 
 export function FooterContent({ data }: { data: FooterData }) {
     return (
-        <footer className="bg-black mt-auto flex flex-col relative overflow-hidden md:min-h-[25vw] md:justify-end">
+        <footer className="bg-(--var(--background)) mt-auto flex flex-col relative overflow-hidden md:min-h-[25vw] md:justify-end">
 
             {/* Background image — fills footer completely */}
             <div className="absolute inset-0 w-full pointer-events-none">
