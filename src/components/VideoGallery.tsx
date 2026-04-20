@@ -84,7 +84,7 @@ export const VideoGallery = ({ videos }: VideoGalleryProps) => {
                                             src={thumbnailUrl}
                                             alt={altText}
                                             fill
-                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                            className="object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
                                             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                         />
                                     ) : (
@@ -105,12 +105,6 @@ export const VideoGallery = ({ videos }: VideoGalleryProps) => {
                                             </svg>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div className="py-4">
-                                    <p className="line-clamp-2" style={{ color: 'var(--foreground)' }}>
-                                        {video.title}
-                                    </p>
                                 </div>
                             </Link>
                         );

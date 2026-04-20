@@ -86,9 +86,6 @@ export default async function ImpressionenPage() {
                 title={galleryData.title || 'Impressionen'}
                 image={galleryData.heroImage}
             />
-            <div className="container mx-auto px-4 pt-16 -mb-8">
-                <PageLogo logo={galleryData.logo} title={galleryData.title} />
-            </div>
             <VideoGallery videos={galleryData.videos} />
             <GalleryView data={galleryData} />
 

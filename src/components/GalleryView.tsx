@@ -106,8 +106,9 @@ export function GalleryView({ data }: GalleryViewProps) {
 
     return (
         <div className="min-h-screen">
+            <h2 className="mb-12 text-center">Fotos</h2>
             {/* Sticky Navigation & Controls */}
-            <div className="sticky top-16 z-40 backdrop-blur-md border-b py-4" style={{ backgroundColor: 'color-mix(in srgb, var(--background) 90%, transparent)', borderColor: 'var(--border-color)' }}>
+            <div className="sticky top-16 z-40 backdrop-blur-md border-t border-b py-4" style={{ backgroundColor: 'color-mix(in srgb, var(--background) 90%, transparent)', borderColor: 'var(--border-color)' }}>
                 <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                     {/* Year Links */}
                     <div className="flex flex-wrap items-center gap-2 overflow-x-auto max-w-full pb-2 sm:pb-0 scrollbar-hide">
@@ -140,9 +141,10 @@ export function GalleryView({ data }: GalleryViewProps) {
                 {sortedYears.map((entry) => (
                     <div key={entry._key} id={`year-${entry.year}`} className="mb-20 scroll-mt-32">
                         <div className="flex items-center gap-4 mb-8">
-                            <h2 className="text-4xl font-bold">
+                            <div className="h-px flex-grow" style={{ backgroundColor: 'var(--border-color)' }}></div>
+                            <h3 className="text-4xl font-bold text-center">
                                 {entry.year}
-                            </h2>
+                            </h3>
                             <div className="h-px flex-grow" style={{ backgroundColor: 'var(--border-color)' }}></div>
                         </div>
 
@@ -150,7 +152,7 @@ export function GalleryView({ data }: GalleryViewProps) {
                             {entry.images?.map((image) => (
                                 <div
                                     key={image.public_id}
-                                    className="relative aspect-[4/3] group overflow-hidden rounded-xl cursor-pointer" style={{ backgroundColor: 'var(--surface)' }}
+                                    className="relative aspect-[4/3] group overflow-hidden rounded-lg cursor-pointer" style={{ backgroundColor: 'var(--surface)' }}
                                     onClick={() => {
                                         const index = allImages.findIndex(img => img.asset.public_id === image.public_id);
                                         setSelectedIndex(index);
