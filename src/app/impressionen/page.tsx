@@ -2,7 +2,6 @@ import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
 import { GalleryView } from "@/components/GalleryView";
 import { HeroSection } from "@/components/HeroSection";
-import { PageLogo } from "@/components/PageLogo";
 import { VideoGallery } from "@/components/VideoGallery";
 
 interface CloudinaryAsset {

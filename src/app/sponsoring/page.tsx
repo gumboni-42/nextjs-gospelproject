@@ -13,14 +13,14 @@ const SPONSORING_QUERY = `*[_type == "sponsoringPage"][0]{
   "logo": logo,
   "qrCodeImage": qrCodeImage,
   "pastMainSponsors": pastMainSponsors[]{
-    "name": sponsor.name,
-    "logo": sponsor.logo,
-    "url": sponsor.url
+    name,
+    logo,
+    url
   },
-  "mediaPartner": {
-    "name": mediaPartner.name,
-    "logo": mediaPartner.logo,
-    "url": mediaPartner.url
+  "mediaPartner": mediaPartner {
+    name,
+    logo,
+    url
   }
 }`;
 
