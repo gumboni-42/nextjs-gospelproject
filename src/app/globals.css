@@ -77,6 +77,15 @@ tr td.break {
   color: var(--foreground);
 }
 
+tr.highlight-konzert {
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.light tr.highlight-konzert {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
 .prose {
   --tw-prose-body: var(--foreground);
   --tw-prose-headings: var(--foreground);
