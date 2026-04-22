@@ -42,7 +42,7 @@ export default async function AgendaPage() {
             />
 
             <div className="container mx-auto px-4 py-16 max-w-4xl">
-                <PageLogo logo={page?.logo} title={page?.title} />
+                <PageLogo logo={page?.logo} title={page?.title} show={page?.showLogo} />
                 {agendaItems.length === 0 ? (
                     <div className="text-center text-(--text-secondary) py-12">
                         <p className="text-xl">No upcoming events at the moment.</p>

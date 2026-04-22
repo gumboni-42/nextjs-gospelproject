@@ -5,12 +5,13 @@ export type PageLogoProps = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logo?: any;
     title?: string;
+    show?: boolean;
 };
 
-export const PageLogo = ({ logo, title }: PageLogoProps) => {
+export const PageLogo = ({ logo, title, show = true }: PageLogoProps) => {
     const logoUrl = getImageUrl(logo);
 
-    if (!logoUrl) {
+    if (!logoUrl || !show) {
         return null;
     }
 

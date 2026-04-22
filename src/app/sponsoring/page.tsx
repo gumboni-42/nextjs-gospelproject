@@ -54,7 +54,7 @@ export default async function SponsoringPage() {
 
             <div className={`container mx-auto px-4 ${data.heroImage ? 'py-16' : 'pt-32 pb-16'}`}>
                 <div className="max-w-xl mx-auto">
-                    <PageLogo logo={data.logo} title={data.title} />
+                    <PageLogo logo={data.logo} title={data.title} show={data.showLogo} />
                     {!data.heroImage && (
                         <h1 className="text-4xl font-bold mb-8 text-center">{data.title}</h1>
                     )}

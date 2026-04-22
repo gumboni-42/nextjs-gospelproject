@@ -30,7 +30,7 @@ export default async function TeamPage() {
             />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto px-4">
-                    <PageLogo logo={page?.logo} title={page?.title} />
+                    <PageLogo logo={page?.logo} title={page?.title} show={page?.showLogo} />
                     {page?.subtitle && (
                         <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
                             {page.subtitle}

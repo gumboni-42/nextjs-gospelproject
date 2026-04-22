@@ -18,12 +18,12 @@ export function FeatureSection({ title, logo, text, linkUrl, linkText }: Feature
     return (
         <div className="flex flex-col p-8 h-full">
             {logoUrl && (
-                <div className="h-32 mb-6 w-full">
+                <div className="h-20 mb-3 w-full flex justify-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={logoUrl}
                         alt={title || "Logo"}
-                        className="w-[21rem] max-w-full h-full object-contain object-left"
+                        className="w-[21rem] max-w-full h-full object-contain object-center"
                     />
                 </div>
             )}

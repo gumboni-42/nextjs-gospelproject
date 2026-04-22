@@ -17,7 +17,7 @@ export function NewsBar({ items }: NewsBarProps) {
 
     return (
         <div className="w-full bg-[color:var(--gospel-primary)] text-foreground overflow-hidden py-3">
-            <div className="whitespace-nowrap flex gap-12 px-4 justify-center items-center">
+            <div className="flex flex-wrap gap-x-12 gap-y-2 px-4 justify-center items-center">
                 {items.map((item, index) => {
                     const text = typeof item === 'string' ? item : item.text;
                     const link = typeof item === 'string' ? null : item.internalLink;
@@ -31,7 +31,7 @@ export function NewsBar({ items }: NewsBarProps) {
                     );
 
                     return (
-                        <span key={typeof item === 'string' ? index : item._key || index} className="inline-block mx-8 shrink-0">
+                        <span key={typeof item === 'string' ? index : item._key || index} className="inline-block mx-8">
                             {link ? (
                                 <Link href={link} className="hover:underline decoration-white underline-offset-4">
                                     {content}
