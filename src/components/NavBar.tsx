@@ -21,6 +21,13 @@ export function NavBar({ routes }: NavBarProps) {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+    // Check if a route or any of its children match the current path
+    const isRouteActive = (route: Route): boolean => {
+        if (pathname === route.path) return true;
+        if (route.children?.some(child => pathname === child.path)) return true;
+        return false;
+    };
+
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 10);
@@ -37,32 +44,76 @@ export function NavBar({ routes }: NavBarProps) {
                 }`}
             style={{ backgroundColor: 'var(--nav-bg)' }}
         >
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
-                    <Link href="/">
-                        <CldImage
-                            width="337"
-                            height="26"
-                            src="logo_gospelproject"
-                            alt="Gospel Project Logo"
-                            crop="fill"
-                            className="block md:hidden lg:block pr-10"
-                        />
-                        <CldImage
-                            width="26"
-                            height="26"
-                            src="the-g.svg"
-                            alt="Gospel Project Icon"
-                            crop="fill"
-                            className="hidden md:block md:mx-10 lg:hidden"
-                        />
-                    </Link>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-2 min-[900px]:py-0">
+                <div className="flex h-20 items-center justify-between">
+                    {/* Mobile logos — stacked */}
+                    <div className="flex flex-col gap-0 min-[900px]:hidden py-2">
+                        <Link href="/">
+                            <CldImage
+                                width="240"
+                                height="18"
+                                src="logo_gospelproject"
+                                alt="Gospel Project Logo"
+                                crop="fill"
+                            />
+                        </Link>
+                        <Link href="/gospelation">
+                            <CldImage
+                                width="150"
+                                height="48"
+                                src="logo_gospelation"
+                                alt="Gospelation Logo"
+                                crop="fill"
+                            />
+                        </Link>
+                    </div>
+
+                    {/* Desktop logos - side by side */}
+                    <div className="hidden min-[900px]:flex items-center gap-4 pr-8 shrink-0">
+                        <Link href="/">
+                            <CldImage
+                                width="260"
+                                height="20"
+                                src="logo_gospelproject"
+                                alt="Gospel Project Logo"
+                                crop="fill"
+                                className="hidden xl:block"
+                            />
+                            <CldImage
+                                width="26"
+                                height="26"
+                                src="the-g.svg"
+                                alt="Gospel Project Icon"
+                                crop="fill"
+                                className="block xl:hidden"
+                            />
+                        </Link>
+                        <div className="w-px h-5 bg-white/20" />
+                        <Link href="/gospelation">
+                            <CldImage
+                                width="150"
+                                height="50"
+                                src="logo_gospelation"
+                                alt="Gospelation Logo"
+                                crop="fill"
+                                className="hidden xl:block"
+                            />
+                            <CldImage
+                                width="26"
+                                height="26"
+                                src="the-small-g"
+                                alt="Gospelation Icon"
+                                crop="fill"
+                                className="block xl:hidden"
+                            />
+                        </Link>
+                    </div>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-8">
+                    <nav className="hidden min-[900px]:flex items-center gap-8">
                         {routes.map((route) => (
                             <div key={route.path} className="relative group">
-                                {pathname === route.path ? (
+                                {isRouteActive(route) ? (
                                     <span
                                         className="text-sm font-bold cursor-default"
                                         style={{ color: 'var(--gospel-primary)' }}
@@ -106,11 +157,16 @@ export function NavBar({ routes }: NavBarProps) {
                     </nav>
 
                     {/* Mobile: Menu Button */}
-                    <div className="md:hidden flex items-center">
+                    <div className="min-[900px]:hidden flex items-center">
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="p-2 bg-transparent"
-                            style={{ color: 'var(--nav-text)' }}
+                            className="p-2 border rounded-md"
+                            style={{ 
+                                backgroundColor: 'transparent', 
+                                borderColor: 'color-mix(in srgb, var(--foreground), transparent 50%)',
+                                color: 'var(--foreground)',
+                                background: 'none'
+                            }}
                         >
                             <span className="sr-only">Open menu</span>
                             {mobileMenuOpen ? (
@@ -130,7 +186,7 @@ export function NavBar({ routes }: NavBarProps) {
             {/* Mobile Navigation */}
             {mobileMenuOpen && (
                 <div
-                    className="md:hidden backdrop-blur-xl border-t"
+                    className="min-[900px]:hidden backdrop-blur-xl border-t"
                     style={{
                         backgroundColor: 'var(--mobile-menu-bg)',
                         borderColor: 'var(--border-color)',
@@ -143,7 +199,7 @@ export function NavBar({ routes }: NavBarProps) {
                                 <Link
                                     href={route.path}
                                     className="block rounded-lg px-4 py-2 text-base font-semibold transition-colors"
-                                    style={{ color: 'var(--foreground)' }}
+                                    style={{ color: isRouteActive(route) ? 'var(--gospel-primary)' : 'var(--foreground)' }}
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     {route.title}
@@ -154,7 +210,7 @@ export function NavBar({ routes }: NavBarProps) {
                                         key={child.path}
                                         href={child.path}
                                         className="block rounded-lg px-8 py-2 text-sm transition-colors"
-                                        style={{ color: 'var(--text-muted)' }}
+                                        style={{ color: pathname === child.path ? 'var(--gospel-primary)' : 'var(--text-muted)' }}
                                         onClick={() => setMobileMenuOpen(false)}
                                     >
                                         {child.title}

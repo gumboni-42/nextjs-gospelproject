@@ -8,7 +8,13 @@ export function ThemeToggle() {
     return (
         <button
             onClick={toggleTheme}
-            className="p-2 transition-colors rounded-lg border border-[var(--border-color)] bg-[var(--background)] text-[var(--foreground)] md:!bg-transparent md:border-transparent md:p-1 md:mt-[5px]"
+            className="p-2 transition-colors rounded-md border"
+            style={{ 
+                backgroundColor: 'transparent', 
+                borderColor: 'color-mix(in srgb, var(--foreground), transparent 50%)',
+                color: 'var(--foreground)',
+                background: 'none'
+            }}
             aria-label={theme === "dark" ? "Zu hellem Modus wechseln" : "Zu dunklem Modus wechseln"}
             title={theme === "dark" ? "Helles Design" : "Dunkles Design"}
         >
