@@ -62,7 +62,7 @@ export default async function GospelvereinPage() {
                     </div>
 
                     {data.organigramm && (
-                        <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-white py-16 mb-12 px-4 shadow-sm">
+                        <div className="w-[100vw] relative left-1/2 -translate-x-1/2 py-16 mb-12 px-4 shadow-sm">
                             <div className="max-w-2xl mx-auto">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
@@ -92,19 +92,19 @@ export default async function GospelvereinPage() {
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
-                                Statuten Herunterladen
+                                Statuten herunterladen
                             </a>
                         </div>
                     )}
 
                     {data.gospelFriends && (
-                        <div className="w-[100vw] relative left-1/2 -translate-x-1/2 bg-white py-16 mb-16 px-4 shadow-sm">
+                        <div className="w-[100vw] relative left-1/2 -translate-x-1/2 py-16 mb-16 px-4 shadow-sm">
                             <div className="max-w-2xl mx-auto">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.gospelFriends.public_id}`}
                                     alt="GospelFriends"
-                                    className="w-full h-auto rounded-2xl shadow-lg"
+                                    className="w-full h-auto bg-white rounded-2xl shadow-lg"
                                     loading="lazy"
                                 />
                             </div>

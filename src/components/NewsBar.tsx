@@ -31,7 +31,7 @@ export function NewsBar({ items }: NewsBarProps) {
                     );
 
                     return (
-                        <span key={typeof item === 'string' ? index : item._key || index} className="inline-block mx-8">
+                        <span key={typeof item === 'string' ? index : item._key || index} className="inline-block text-center mx-8">
                             {link ? (
                                 <Link href={link} className="hover:underline decoration-white underline-offset-4">
                                     {content}
