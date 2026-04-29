@@ -5,7 +5,6 @@ import { HeroSection } from "@/components/HeroSection";
 import { PageLogo } from "@/components/PageLogo";
 import { CallToAction } from "@/components/CallToAction";
 import { SignupFormGospelverein } from "@/components/SignupFormGospelverein";
-import Image from "next/image";
 
 const GOSPELVEREIN_QUERY = `*[_type == "gospelvereinPage"][0]{
   ...,
@@ -14,6 +13,9 @@ const GOSPELVEREIN_QUERY = `*[_type == "gospelvereinPage"][0]{
   "twintImage": twintImage,
   "statutenFile": statutenFile.asset->url,
   "organigramm": organigramm,
+  "goennerText": goennerText,
+  "twintImage": twintImage,
+  "twintText": twintText,
   "gospelFriends": gospelFriends,
   "callToAction": callToAction {
     text,
@@ -68,7 +70,7 @@ export default async function GospelvereinPage() {
                                 <img
                                     src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.organigramm.public_id}`}
                                     alt="Organigramm"
-                                    className="w-full h-auto rounded-2xl shadow-lg"
+                                    className="w-full h-auto rounded-2xl shadow-lg opacity-70 hover:opacity-100 transition-opacity duration-300 ease-in-out"
                                     loading="lazy"
                                 />
                             </div>
@@ -104,16 +106,21 @@ export default async function GospelvereinPage() {
                                 <img
                                     src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.gospelFriends.public_id}`}
                                     alt="GospelFriends"
-                                    className="w-full h-auto bg-white rounded-2xl shadow-lg"
+                                    className="w-full h-auto bg-white rounded-2xl shadow-lg opacity-70 hover:opacity-100 transition-opacity duration-300 ease-in-out"
                                     loading="lazy"
                                 />
                             </div>
                         </div>
                     )}
 
+                    {data.goennerText && (
+                        <div className="prose max-w-none mb-12">
+                            <PortableText value={data.goennerText} />
+                        </div>
+                    )}
+
                     <div className="rounded-2xl p-8 sm:p-12 mb-16 relative overflow-hidden" style={{ backgroundColor: 'var(--surface)', color: 'var(--foreground)' }}>
                         <div className="relative z-10">
-                            <h2 className="text-3xl font-bold mb-4 text-center">Gönner werden</h2>
                             <p className="text-center mb-8 max-w-xl mx-auto">
                                 Möchtest Du als Gönner unsere Gospeln ideell und finanziell unterstützen? <br />    Ab CHF 50.– im Jahr bist du dabei.
                             </p>
@@ -122,17 +129,15 @@ export default async function GospelvereinPage() {
                     </div>
 
                     {data.twintImage && (
-                        <div className="mb-16 text-center max-w-md mx-auto">
-                            <h2 className="text-2xl font-bold mb-6">Spende per Twint</h2>
-                            <p className="mb-6" style={{ color: 'var(--text-muted)' }}>
-                                Wenn du lieber eine einmalige Spende vornehmen möchtest, kannst du dazu unkompliziert den folgenden Twint-QR-Code benutzen. DANKE für deine Unterstützung!
-                            </p>
+                        <div className="mb-16 text-center w-full max-w-none mx-auto">
+
+                            <PortableText value={data.twintText} />
                             <div className="bg-white p-4 rounded-xl inline-block shadow-lg">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.twintImage.public_id}`}
                                     alt="Twint QR Code für Spenden"
-                                    className="w-full max-w-[250px] h-auto object-contain mx-auto"
+                                    className="w-full h-auto object-contain mx-auto"
                                     loading="lazy"
                                 />
                             </div>
