@@ -303,7 +303,7 @@ export function SignupForm() {
                             checked={formData.bedingungenAkzeptiert} onChange={handleChange}
                             className="w-5 h-5 text-primary rounded border-gray-300 focus:ring-primary" />
                     </div>
-                    <span className="text-sm text-[var(--text-secondary)] leading-relaxed group-hover:text-gray-900 transition-colors">
+                    <span className="text-sm text-[var(--text-secondary)] leading-relaxed transition-colors">
                         Mit dieser Anmeldung akzeptiere ich die <Link href="/gospelproject/teilnahmebedingungen" className="text-primary underline hover:text-primary-hover">Teilnahmebedingungen</Link> inklusive der <Link href="/datenschutz" className="text-primary underline hover:text-primary-hover">Datenschutzbestimmungen</Link> *
                     </span>
                 </label>

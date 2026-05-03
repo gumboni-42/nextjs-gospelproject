@@ -17,6 +17,7 @@ interface CloudinaryAsset {
 interface YearEntry {
     _key: string;
     year: string;
+    eventName?: string;
     images: CloudinaryAsset[];
 }
 
@@ -112,13 +113,13 @@ export function GalleryView({ data }: GalleryViewProps) {
                 <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                     {/* Year Links */}
                     <div className="flex flex-wrap items-center gap-2 overflow-x-auto max-w-full pb-2 sm:pb-0 scrollbar-hide">
-                        {sortedYears.map((entry) => (
+                        {Array.from(new Set(sortedYears.map(entry => entry.year))).map((year) => (
                             <button
-                                key={entry._key}
-                                onClick={() => scrollToYear(entry.year)}
+                                key={year}
+                                onClick={() => scrollToYear(year)}
                                 className="px-3 py-1 text-sm font-bold rounded-md cursor-pointer transition-colors whitespace-nowrap"
                             >
-                                {entry.year}
+                                {year}
                             </button>
                         ))}
                     </div>
@@ -140,12 +141,19 @@ export function GalleryView({ data }: GalleryViewProps) {
             <div className="container mx-auto px-4 py-8">
                 {sortedYears.map((entry) => (
                     <div key={entry._key} id={`year-${entry.year}`} className="mb-20 scroll-mt-32">
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="h-px flex-grow" style={{ backgroundColor: 'var(--border-color)' }}></div>
-                            <h3 className="text-4xl font-bold text-center">
-                                {entry.year}
-                            </h3>
-                            <div className="h-px flex-grow" style={{ backgroundColor: 'var(--border-color)' }}></div>
+                        <div className="mb-8">
+                            <div className="flex items-center gap-4">
+                                <div className="h-px flex-grow" style={{ backgroundColor: 'var(--border-color)' }}></div>
+                                <h3 className="text-4xl font-bold text-center">
+                                    {entry.year}
+                                </h3>
+                                <div className="h-px flex-grow" style={{ backgroundColor: 'var(--border-color)' }}></div>
+                            </div>
+                            {entry.eventName && (
+                                <p className="text-center text-lg mt-2 text-[var(--text-muted)]">
+                                    {entry.eventName}
+                                </p>
+                            )}
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

@@ -18,6 +18,7 @@ interface CloudinaryAsset {
 interface YearEntry {
     _key: string;
     year: string;
+    eventName?: string;
     images: CloudinaryAsset[];
 }
 

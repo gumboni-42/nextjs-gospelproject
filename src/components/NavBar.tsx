@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { CldImage } from 'next-cloudinary';
-import { ThemeToggle } from "./ThemeToggle";
+// import { ThemeToggle } from "./ThemeToggle";
 
 export interface Route {
     title: string;
@@ -151,9 +151,9 @@ export function NavBar({ routes }: NavBarProps) {
                             </div>
                         ))}
                         {/* Theme Toggle separated slightly to denote it's an action, not a link */}
-                        <div className="pl-4 md:border-l md:border-white/10">
+                        {/* <div className="pl-4 md:border-l md:border-white/10">
                             <ThemeToggle />
-                        </div>
+                        </div> */}
                     </nav>
 
                     {/* Mobile: Menu Button */}
@@ -220,11 +220,11 @@ export function NavBar({ routes }: NavBarProps) {
                         ))}
                     </div>
                     {/* Theme Toggle placed at the very bottom of the mobile menu */}
-                    <div className="p-4 border-t" style={{ borderColor: 'var(--border-color)' }}>
+                    {/* <div className="p-4 border-t" style={{ borderColor: 'var(--border-color)' }}>
                         <div className="flex justify-end">
                             <ThemeToggle />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             )}
         </header>

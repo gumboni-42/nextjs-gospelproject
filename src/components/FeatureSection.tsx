@@ -37,7 +37,7 @@ export function FeatureSection({ title, logo, text, linkUrl, linkText }: Feature
             </p>
             <Link
                 href={linkUrl}
-                className="text-[var(--gospel-contrast)] hover:text-[var(--gospel-hover)] hover:underline transition-colors"
+                className="text-[var(--gospel-primary)] hover:text-[var(--gospel-hover)] font-bold hover:underline transition-colors"
             >
                 {linkText}
             </Link>
