@@ -101,8 +101,7 @@ export function FooterContent({ data }: { data: FooterData }) {
                                                         alt={sponsor.name}
                                                         width={240}
                                                         height={160}
-                                                        crop="pad"
-                                                        background="auto"
+                                                        crop="fit"
                                                         className="h-15 w-[100px] mx-2 object-contain rounded-md"
                                                     />
                                                 ) : (
@@ -131,8 +130,7 @@ export function FooterContent({ data }: { data: FooterData }) {
                                                     alt={data.mediaPartner.name}
                                                     width={240}
                                                     height={120}
-                                                    crop="pad"
-                                                    background="auto"
+                                                    crop="fit"
                                                     className="h-15 w-[120px] object-contain rounded-md"
                                                 />
                                             ) : (

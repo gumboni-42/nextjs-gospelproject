@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lato } from "next/font/google";
+import { Lato, Amatic_SC } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { ReCaptchaProvider } from "@/components/ReCaptchaProvider";
@@ -15,12 +15,18 @@ const lato = Lato({
   style: ["normal", "italic"],
 });
 
+const amaticSC = Amatic_SC({
+  variable: "--font-amatic",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Gospelproject",
     template: "%s - Gospelproject",
   },
-  description: "Gospelproject – Gemeinsam Gospel singen und erleben in der Schweiz. Konzerte, Events und mehr.",
+  description: "Gospelproject - gemeinsam Gospel erleben!",
 };
 
 export default async function RootLayout({
@@ -29,7 +35,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="de" className="dark" suppressHydrationWarning>
       <head>
         {/* Prevent flash of wrong theme */}
         <script
@@ -39,7 +45,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${lato.variable} antialiased flex flex-col min-h-screen`}
+        className={`${lato.variable} ${amaticSC.variable} antialiased flex flex-col min-h-screen`}
       >
         <ThemeProvider>
           <ReCaptchaProvider>

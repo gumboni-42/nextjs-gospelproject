@@ -1,11 +1,5 @@
 import Image from 'next/image';
 import { getImageUrl } from '@/sanity/client';
-import { Amatic_SC } from 'next/font/google';
-
-const amaticSC = Amatic_SC({
-    subsets: ['latin'],
-    weight: ['400', '700'],
-});
 
 export type HeroSectionProps = {
     title?: string;
@@ -14,7 +8,6 @@ export type HeroSectionProps = {
     size?: 'default' | 'large';
     overlay?: boolean;
 };
-
 export const HeroSection = ({ title, image, size = 'default', overlay = true }: HeroSectionProps) => {
 
     const backgroundUrl = getImageUrl(image);
@@ -41,7 +34,7 @@ export const HeroSection = ({ title, image, size = 'default', overlay = true }: 
             {/* Content */}
             {title && (
                 <div className={`relative z-10 container mx-auto mb-8 px-4 text-center`}>
-                    <h1 className={`${amaticSC.className} text-6xl md:text-8xl text-foreground drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]`}>
+                    <h1 className="font-amatic text-6xl md:text-8xl text-foreground drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
                         {title}
                     </h1>
                 </div>

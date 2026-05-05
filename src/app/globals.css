@@ -39,6 +39,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-lato);
+  --font-amatic: var(--font-amatic);
   --font-mono: var(--font-geist-mono);
   --color-primary: var(--gospel-primary);
   --color-primary-hover: var(--gospel-secondary);
