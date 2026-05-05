@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { CldImage } from 'next-cloudinary';
+import CldImage from '@/components/CloudinaryImage';
 // import { ThemeToggle } from "./ThemeToggle";
 
 export interface Route {

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import CldImage from '@/components/CloudinaryImage';
 
 interface CloudinaryAsset {
     _key: string;
@@ -79,7 +80,15 @@ export const VideoGallery = ({ videos }: VideoGalleryProps) => {
                                 className="group relative block overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
                             >
                                 <div className="relative aspect-video w-full" style={{ backgroundColor: 'var(--surface)' }}>
-                                    {thumbnailUrl ? (
+                                    {video.thumbnail?.public_id ? (
+                                        <CldImage
+                                            src={video.thumbnail.public_id}
+                                            alt={altText}
+                                            fill
+                                            className="object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        />
+                                    ) : thumbnailUrl ? (
                                         <Image
                                             src={thumbnailUrl}
                                             alt={altText}

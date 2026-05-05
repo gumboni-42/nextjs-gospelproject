@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import CldImage from '@/components/CloudinaryImage';
 
 interface CloudinaryAsset {
     _key: string;
@@ -31,13 +32,7 @@ export function GalleryView({ data }: GalleryViewProps) {
     const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-    const getLightboxUrl = (url: string) => {
-        return url.replace('/upload/', '/upload/w_1200,h_900,c_limit,f_auto,q_auto/');
-    };
-
-    const getThumbnailUrl = (url: string) => {
-        return url.replace('/upload/', '/upload/w_600,h_450,c_fill,f_auto,q_auto/');
-    };
+    // Removed manual URL transformations since CldImage handles optimization
 
     const sortedYears = useMemo(() => {
         if (!data?.years) return [];
@@ -166,11 +161,13 @@ export function GalleryView({ data }: GalleryViewProps) {
                                         setSelectedIndex(index);
                                     }}
                                 >
-                                    <img
-                                        src={getThumbnailUrl(image.secure_url)}
+                                    <CldImage
+                                        src={image.public_id}
+                                        width={600}
+                                        height={450}
+                                        crop="fill"
                                         alt={image.context?.custom?.alt || `Gallery image ${entry.year}`}
                                         className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
-                                        loading="lazy"
                                     />
                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 pointer-events-none" />
                                 </div>
@@ -229,11 +226,15 @@ export function GalleryView({ data }: GalleryViewProps) {
                         className="relative max-w-6xl max-h-screen w-full h-full flex items-center justify-center p-2"
                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image area
                     >
-                        <img
-                            key={allImages[selectedIndex].asset.public_id} // Key to force re-render/animation if desired, or at least update src
-                            src={getLightboxUrl(allImages[selectedIndex].asset.secure_url)}
+                        <CldImage
+                            key={allImages[selectedIndex].asset.public_id}
+                            src={allImages[selectedIndex].asset.public_id}
+                            width={1200}
+                            height={900}
+                            crop="limit"
+                            preserveTransformations={true}
                             alt={allImages[selectedIndex].asset.context?.custom?.alt || "Gallery Image"}
-                            className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl animate-fade-in"
                         />
                     </div>
                 </div>

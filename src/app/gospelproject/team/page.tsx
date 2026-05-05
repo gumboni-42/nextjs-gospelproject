@@ -2,6 +2,7 @@ import { sanityFetch } from '@/sanity/fetch';
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
 import { PageLogo } from "@/components/PageLogo";
+import CldImage from '@/components/CloudinaryImage';
 
 const TEAM_QUERY = `{
   "sections": {
@@ -62,10 +63,13 @@ function Section({ title, members }: { title: string, members: any[] }) {
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {members.map((member: any) => (
                     <div key={member._id} className="flex flex-col items-center">
-                        {member.image && member.image.secure_url && (
+                        {member.image && member.image.public_id && (
                             // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                                src={member.image.secure_url}
+                            <CldImage
+                                src={member.image.public_id}
+                                width={800}
+                                height={450}
+                                crop="fill"
                                 alt={member.name}
                                 className="w-128 aspect-[16/9] rounded-md object-cover shadow-lg"
                             />

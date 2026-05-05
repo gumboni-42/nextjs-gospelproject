@@ -4,6 +4,7 @@ import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
 import { PageLogo } from "@/components/PageLogo";
 import { CallToAction } from "@/components/CallToAction";
+import CldImage from '@/components/CloudinaryImage';
 import { SignupFormGospelverein } from "@/components/SignupFormGospelverein";
 
 const GOSPELVEREIN_QUERY = `*[_type == "gospelvereinPage"][0]{
@@ -103,11 +104,12 @@ export default async function GospelvereinPage() {
                         <div className="w-[100vw] relative left-1/2 -translate-x-1/2 py-16 mb-16 px-4 shadow-sm">
                             <div className="max-w-2xl mx-auto">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img
-                                    src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.gospelFriends.public_id}`}
+                                <CldImage
+                                    src={data.gospelFriends.public_id}
+                                    width={800}
+                                    height={300}
                                     alt="GospelFriends"
                                     className="w-full h-auto bg-white rounded-2xl shadow-lg opacity-70 hover:opacity-100 transition-opacity duration-300 ease-in-out"
-                                    loading="lazy"
                                 />
                             </div>
                         </div>
@@ -134,11 +136,14 @@ export default async function GospelvereinPage() {
                             <PortableText value={data.twintText} />
                             <div className="bg-white p-4 rounded-xl inline-block shadow-lg">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img
-                                    src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.twintImage.public_id}`}
+                                <CldImage
+                                    src={data.twintImage.public_id}
+                                    width={300}
+                                    height={300}
+                                    crop="limit"
+                                    preserveTransformations={true}
                                     alt="Twint QR Code für Spenden"
                                     className="w-full h-auto object-contain mx-auto"
-                                    loading="lazy"
                                 />
                             </div>
                         </div>

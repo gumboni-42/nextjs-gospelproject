@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getImageUrl } from '@/sanity/client';
+import CldImage from '@/components/CloudinaryImage';
 
 interface FeatureSectionProps {
     title?: string;
@@ -17,7 +18,18 @@ export function FeatureSection({ title, logo, text, linkUrl, linkText }: Feature
 
     return (
         <div className="flex flex-col p-8 h-full">
-            {logoUrl && (
+            {logo && logo.public_id ? (
+                <div className="h-20 mb-3 w-full flex justify-center">
+                    <CldImage
+                        src={logo.public_id}
+                        width={400}
+                        height={100}
+                        crop="limit"
+                        alt={title || "Logo"}
+                        className="w-[21rem] max-w-full h-full object-contain object-center"
+                    />
+                </div>
+            ) : logoUrl ? (
                 <div className="h-20 mb-3 w-full flex justify-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -26,7 +38,7 @@ export function FeatureSection({ title, logo, text, linkUrl, linkText }: Feature
                         className="w-[21rem] max-w-full h-full object-contain object-center"
                     />
                 </div>
-            )}
+            ) : null}
             {!logoUrl && title && (
                 <h3 className="text-2xl font-bold mb-4">
                     {title}

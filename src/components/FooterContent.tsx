@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import CldImage from '@/components/CloudinaryImage';
 
 
 export interface Sponsor {
@@ -95,12 +96,13 @@ export function FooterContent({ data }: { data: FooterData }) {
                                                 title={sponsor.name}
                                             >
                                                 {sponsor.logo?.public_id ? (
-                                                    <Image
-                                                        src={(sponsor.logo.secure_url || '').replace('/upload/', '/upload/c_pad,b_auto,w_240,h_160/')}
+                                                    <CldImage
+                                                        src={sponsor.logo.public_id}
                                                         alt={sponsor.name}
                                                         width={240}
                                                         height={160}
-                                                        unoptimized={true}
+                                                        crop="pad"
+                                                        background="auto"
                                                         className="h-15 w-[100px] mx-2 object-contain rounded-md"
                                                     />
                                                 ) : (
@@ -124,12 +126,13 @@ export function FooterContent({ data }: { data: FooterData }) {
                                             title={data.mediaPartner.name}
                                         >
                                             {data.mediaPartner.logo?.public_id ? (
-                                                <Image
-                                                    src={(data.mediaPartner.logo.secure_url || '').replace('/upload/', '/upload/c_pad,b_auto,w_240,h_120/')}
+                                                <CldImage
+                                                    src={data.mediaPartner.logo.public_id}
                                                     alt={data.mediaPartner.name}
                                                     width={240}
                                                     height={120}
-                                                    unoptimized={true}
+                                                    crop="pad"
+                                                    background="auto"
                                                     className="h-15 w-[120px] object-contain rounded-md"
                                                 />
                                             ) : (
