@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { getImageUrl } from '@/sanity/client';
+import CldImage from '@/components/CloudinaryImage';
 
 export type HeroSectionProps = {
     title?: string;
@@ -17,19 +17,29 @@ export const HeroSection = ({ title, image, size = 'default', overlay = true }: 
     return (
         <section className={`relative w-full ${matchSize} flex justify-center overflow-hidden`}>
             {/* Background Image */}
-            {backgroundUrl && (
+            {image?.public_id ? (
                 <div className="absolute inset-0 w-full h-full">
-                    <Image
-                        src={backgroundUrl}
+                    <CldImage
+                        src={image.public_id}
                         alt={title || 'Hero Background'}
                         fill
                         className="object-cover object-center"
                         priority
                         sizes="100vw"
                     />
-                    {overlay && <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />} {/* Gradient overlay for contrast */}
+                    {overlay && <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />}
                 </div>
-            )}
+            ) : backgroundUrl ? (
+                <div className="absolute inset-0 w-full h-full">
+                    {/* Fallback for non-cloudinary images or if public_id is missing */}
+                    <img
+                        src={backgroundUrl}
+                        alt={title || 'Hero Background'}
+                        className="w-full h-full object-cover object-center"
+                    />
+                    {overlay && <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />}
+                </div>
+            ) : null}
 
             {/* Content */}
             {title && (

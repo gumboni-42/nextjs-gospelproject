@@ -68,11 +68,12 @@ export default async function GospelvereinPage() {
                         <div className="w-[100vw] relative left-1/2 -translate-x-1/2 py-16 mb-12 px-4 shadow-sm">
                             <div className="max-w-2xl mx-auto">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img
-                                    src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${data.organigramm.public_id}`}
+                                <CldImage
+                                    src={data.organigramm.public_id}
+                                    width={800}
+                                    height={600}
                                     alt="Organigramm"
                                     className="w-full h-auto rounded-2xl shadow-lg opacity-70 hover:opacity-100 transition-opacity duration-300 ease-in-out"
-                                    loading="lazy"
                                 />
                             </div>
                         </div>

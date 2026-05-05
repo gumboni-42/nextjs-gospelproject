@@ -3,7 +3,7 @@ import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
 import { PageLogo } from "@/components/PageLogo";
-import Image from "next/image";
+import CldImage from '@/components/CloudinaryImage';
 import { getImageUrl } from "@/sanity/client";
 import Link from "next/link";
 
@@ -69,18 +69,26 @@ export default async function SponsoringPage() {
                         {data.body && <PortableText value={data.body} />}
                     </div>
 
-                    {getImageUrl(data.qrCodeImage) && (
+                    {data.qrCodeImage?.public_id ? (
                         <div className="mb-16 flex flex-col items-center">
-                            <Image
+                            <CldImage
+                                src={data.qrCodeImage.public_id}
+                                alt="TWINT QR Code für Gospelproject"
+                                width={600}
+                                height={600}
+                                crop="limit"
+                                preserveTransformations={true}
+                                className="object-contain rounded-lg w-full h-auto"
+                            />
+                        </div>
+                    ) : getImageUrl(data.qrCodeImage) && (
+                        <div className="mb-16 flex flex-col items-center">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
                                 src={getImageUrl(data.qrCodeImage) as string}
                                 alt="TWINT QR Code für Gospelproject"
-                                width={0}
-                                height={0}
-                                sizes="100vw"
-                                style={{ width: '100%', height: 'auto' }}
-                                className="object-contain rounded-lg"
+                                className="object-contain rounded-lg w-full h-auto"
                             />
-
                         </div>
                     )}
 
@@ -93,23 +101,39 @@ export default async function SponsoringPage() {
                                     <div key={index} className="w-full max-w-[240px] relative aspect-[3/2] flex items-center justify-center">
                                         {sponsor.url ? (
                                             <Link href={sponsor.url} target="_blank" rel="noopener noreferrer" className="block w-full h-full relative group">
-                                                {getImageUrl(sponsor.logo) && (
-                                                    <Image
-                                                        src={getImageUrl(sponsor.logo) as string}
+                                                {sponsor.logo?.public_id ? (
+                                                    <CldImage
+                                                        src={sponsor.logo.public_id}
                                                         alt={sponsor.name}
                                                         fill
+                                                        crop="fit"
                                                         className="object-contain group-hover:scale-105 transition-transform duration-300"
+                                                    />
+                                                ) : getImageUrl(sponsor.logo) && (
+                                                    /* eslint-disable-next-line @next/next/no-img-element */
+                                                    <img
+                                                        src={getImageUrl(sponsor.logo) as string}
+                                                        alt={sponsor.name}
+                                                        className="object-contain group-hover:scale-105 transition-transform duration-300 w-full h-full"
                                                     />
                                                 )}
                                             </Link>
                                         ) : (
                                             <div className="w-full h-full relative">
-                                                {getImageUrl(sponsor.logo) && (
-                                                    <Image
-                                                        src={getImageUrl(sponsor.logo) as string}
+                                                {sponsor.logo?.public_id ? (
+                                                    <CldImage
+                                                        src={sponsor.logo.public_id}
                                                         alt={sponsor.name}
                                                         fill
+                                                        crop="fit"
                                                         className="object-contain"
+                                                    />
+                                                ) : getImageUrl(sponsor.logo) && (
+                                                    /* eslint-disable-next-line @next/next/no-img-element */
+                                                    <img
+                                                        src={getImageUrl(sponsor.logo) as string}
+                                                        alt={sponsor.name}
+                                                        className="object-contain w-full h-full"
                                                     />
                                                 )}
                                             </div>
@@ -127,21 +151,41 @@ export default async function SponsoringPage() {
                                 <div className="w-full max-w-[200px] relative aspect-square flex items-center justify-center">
                                     {data.mediaPartner.url ? (
                                         <Link href={data.mediaPartner.url} target="_blank" rel="noopener noreferrer" className="block w-full h-full relative group opacity-80 hover:opacity-100 transition-opacity">
-                                            <Image
-                                                src={getImageUrl(data.mediaPartner.logo) as string}
-                                                alt={data.mediaPartner.name}
-                                                fill
-                                                className="object-contain"
-                                            />
+                                            {data.mediaPartner.logo?.public_id ? (
+                                                <CldImage
+                                                    src={data.mediaPartner.logo.public_id}
+                                                    alt={data.mediaPartner.name}
+                                                    fill
+                                                    crop="fit"
+                                                    className="object-contain"
+                                                />
+                                            ) : getImageUrl(data.mediaPartner.logo) && (
+                                                /* eslint-disable-next-line @next/next/no-img-element */
+                                                <img
+                                                    src={getImageUrl(data.mediaPartner.logo) as string}
+                                                    alt={data.mediaPartner.name}
+                                                    className="object-contain w-full h-full"
+                                                />
+                                            )}
                                         </Link>
                                     ) : (
                                         <div className="w-full h-full relative opacity-80">
-                                            <Image
-                                                src={getImageUrl(data.mediaPartner.logo) as string}
-                                                alt={data.mediaPartner.name}
-                                                fill
-                                                className="object-contain"
-                                            />
+                                            {data.mediaPartner.logo?.public_id ? (
+                                                <CldImage
+                                                    src={data.mediaPartner.logo.public_id}
+                                                    alt={data.mediaPartner.name}
+                                                    fill
+                                                    crop="fit"
+                                                    className="object-contain"
+                                                />
+                                            ) : getImageUrl(data.mediaPartner.logo) && (
+                                                /* eslint-disable-next-line @next/next/no-img-element */
+                                                <img
+                                                    src={getImageUrl(data.mediaPartner.logo) as string}
+                                                    alt={data.mediaPartner.name}
+                                                    className="object-contain w-full h-full"
+                                                />
+                                            )}
                                         </div>
                                     )}
                                 </div>

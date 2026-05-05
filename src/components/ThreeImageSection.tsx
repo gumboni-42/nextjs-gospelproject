@@ -1,6 +1,6 @@
 "use client";
 
-import { CldImage } from 'next-cloudinary';
+import CldImage from '@/components/CloudinaryImage';
 
 interface CloudinaryAsset {
     public_id: string;
