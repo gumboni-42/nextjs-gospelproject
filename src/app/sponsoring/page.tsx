@@ -119,7 +119,7 @@ export default async function SponsoringPage() {
                                                 )}
                                             </Link>
                                         ) : (
-                                            <div className="w-full h-full relative">
+                                            <div className="w-full h-full bg-white rounded-lg relative">
                                                 {sponsor.logo?.public_id ? (
                                                     <CldImage
                                                         src={sponsor.logo.public_id}

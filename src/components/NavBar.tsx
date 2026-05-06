@@ -115,7 +115,7 @@ export function NavBar({ routes }: NavBarProps) {
                             <div key={route.path} className="relative group">
                                 {isRouteActive(route) ? (
                                     <span
-                                        className="text-sm font-bold cursor-default"
+                                        className="text-base font-bold cursor-default"
                                         style={{ color: 'var(--gospel-primary)' }}
                                     >
                                         {route.title}
@@ -123,7 +123,7 @@ export function NavBar({ routes }: NavBarProps) {
                                 ) : (
                                     <Link
                                         href={route.path}
-                                        className="nav-bar-link text-sm font-bold transition-colors"
+                                        className="nav-bar-link text-base font-semibold transition-colors"
                                     >
                                         {route.title}
                                     </Link>
@@ -138,7 +138,7 @@ export function NavBar({ routes }: NavBarProps) {
                                                     <Link
                                                         key={child.path}
                                                         href={child.path}
-                                                        className={`block rounded-lg px-4 py-2 text-sm !text-white hover:bg-gray-800 ${pathname === child.path && "bg-gray-800/60"
+                                                        className={`block rounded-lg px-4 py-2 text-base font-regular !text-white hover:bg-gray-800 ${pathname === child.path && "bg-gray-800/60"
                                                             }`}
                                                     >
                                                         {child.title}
@@ -161,8 +161,8 @@ export function NavBar({ routes }: NavBarProps) {
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             className="p-2 border rounded-md"
-                            style={{ 
-                                backgroundColor: 'transparent', 
+                            style={{
+                                backgroundColor: 'transparent',
                                 borderColor: 'color-mix(in srgb, var(--foreground), transparent 50%)',
                                 color: 'var(--foreground)',
                                 background: 'none'
@@ -198,7 +198,7 @@ export function NavBar({ routes }: NavBarProps) {
                             <div key={route.path}>
                                 <Link
                                     href={route.path}
-                                    className="block rounded-lg px-4 py-2 text-base font-semibold transition-colors"
+                                    className="block rounded-lg px-4 py-2 text-lg font-semibold transition-colors"
                                     style={{ color: isRouteActive(route) ? 'var(--gospel-primary)' : 'var(--foreground)' }}
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
@@ -209,7 +209,7 @@ export function NavBar({ routes }: NavBarProps) {
                                     <Link
                                         key={child.path}
                                         href={child.path}
-                                        className="block rounded-lg px-8 py-2 text-sm transition-colors"
+                                        className="block rounded-lg px-8 py-2 text-lg font-regular transition-colors"
                                         style={{ color: pathname === child.path ? 'var(--gospel-primary)' : 'var(--text-muted)' }}
                                         onClick={() => setMobileMenuOpen(false)}
                                     >
