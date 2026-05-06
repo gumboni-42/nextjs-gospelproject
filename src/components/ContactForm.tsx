@@ -70,7 +70,7 @@ export default function ContactForm() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label htmlFor="firstName" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
-                        Vorname
+                        Vorname *
                     </label>
                     <div className="mt-1">
                         <input
@@ -86,7 +86,7 @@ export default function ContactForm() {
 
                 <div>
                     <label htmlFor="lastName" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
-                        Nachname
+                        Nachname *
                     </label>
                     <div className="mt-1">
                         <input
@@ -103,7 +103,7 @@ export default function ContactForm() {
 
             <div>
                 <label htmlFor="email" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    E-Mail
+                    E-Mail *
                 </label>
                 <div className="mt-1">
                     <input
@@ -126,7 +126,6 @@ export default function ContactForm() {
                         type="text"
                         name="betreff"
                         id="betreff"
-                        required
                         value={betreff}
                         onChange={(e) => setBetreff(e.target.value)}
                     />
@@ -135,7 +134,7 @@ export default function ContactForm() {
 
             <div>
                 <label htmlFor="message" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    Nachricht
+                    Nachricht *
                 </label>
                 <div className="mt-1">
                     <textarea

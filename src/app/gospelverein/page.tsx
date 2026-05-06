@@ -85,7 +85,7 @@ export default async function GospelvereinPage() {
                         </div>
                     )}
 
-{/* {data.statutenFile && (
+                    {/* {data.statutenFile && (
                         <div className="mb-12 text-center">
                             <a
                                 href={data.statutenFile}
@@ -124,9 +124,7 @@ export default async function GospelvereinPage() {
 
                     <div className="rounded-2xl p-8 sm:p-12 mb-16 relative overflow-hidden" style={{ backgroundColor: 'var(--surface)', color: 'var(--foreground)' }}>
                         <div className="relative z-10">
-                            <p className="text-center mb-8 max-w-xl mx-auto">
-                                Möchtest Du als Gönner unsere Gospeln ideell und finanziell unterstützen? <br />    Ab CHF 50.– im Jahr bist du dabei.
-                            </p>
+                            <h4 className="text-xl font-bold mb-4">Ja, ich werde Gospel Gönner:</h4>
                             <SignupFormGospelverein />
                         </div>
                     </div>
