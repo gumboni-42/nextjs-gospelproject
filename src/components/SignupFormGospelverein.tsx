@@ -47,7 +47,7 @@ export function SignupFormGospelverein() {
 
         if (!executeRecaptcha && process.env.NODE_ENV === 'production') {
             setStatus('error');
-            setErrorMessage('reCAPTCHA ist noch nicht geladen. Bitte versuchen Sie es in wenigen Sekunden erneut.');
+            setErrorMessage('reCAPTCHA ist noch nicht geladen. Bitte versuche es in wenigen Sekunden erneut.');
             return;
         }
 
@@ -85,7 +85,7 @@ export function SignupFormGospelverein() {
         } catch (error: unknown) {
             console.error('Signup submit error:', error);
             setStatus('error');
-            setErrorMessage(error instanceof Error ? error.message : 'Leider gab es ein Problem bei der Anmeldung. Bitte versuchen Sie es später noch einmal.');
+            setErrorMessage(error instanceof Error ? error.message : 'Leider gab es ein Problem bei der Anmeldung. Bitte versuche es später noch einmal.');
         }
     };
 
@@ -95,8 +95,8 @@ export function SignupFormGospelverein() {
                 <svg className="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 className="text-2xl font-bold mb-4">Vielen Dank für Ihre Gönnerschaft!</h3>
-                <p className="text-lg">Wir haben Ihre Daten erfolgreich erhalten. Sie erhalten von uns in Kürze weitere Informationen.</p>
+                <h3 className="text-2xl font-bold mb-4">Herzlichen Dank für deine Gönnerschaft und willkommen in unserem Trägerkreis!</h3>
+                <p className="text-lg">Du erhältst in Kürze eine Bestätigung und weitere Infos per E-Mail. Sollte diese ausbleiben, melde dich gerne an [EMAIL_ADDRESS]</p>
                 <button
                     onClick={() => setStatus('idle')}
                     className="mt-8 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
@@ -114,62 +114,53 @@ export function SignupFormGospelverein() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                     <label htmlFor="vorname" className="block text-sm font-medium text-[var(--text-secondary)]">Vorname *</label>
-                    <input type="text" id="vorname" name="vorname" required value={formData.vorname} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
+                    <input type="text" id="vorname" name="vorname" required value={formData.vorname} onChange={handleChange} />
                 </div>
                 <div className="space-y-2">
                     <label htmlFor="name" className="block text-sm font-medium text-[var(--text-secondary)]">Name *</label>
-                    <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
+                    <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange} />
                 </div>
             </div>
 
             {/* Address */}
             <div className="space-y-2">
                 <label htmlFor="adresse" className="block text-sm font-medium text-[var(--text-secondary)]">Adresse / Strasse und Nummer *</label>
-                <input type="text" id="adresse" name="adresse" required value={formData.adresse} onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
+                <input type="text" id="adresse" name="adresse" required value={formData.adresse} onChange={handleChange} />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div className="space-y-2 sm:col-span-1">
                     <label htmlFor="plz" className="block text-sm font-medium text-[var(--text-secondary)]">PLZ *</label>
-                    <input type="text" id="plz" name="plz" required value={formData.plz} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
+                    <input type="text" id="plz" name="plz" required value={formData.plz} onChange={handleChange} />
                 </div>
                 <div className="space-y-2 sm:col-span-2">
                     <label htmlFor="ort" className="block text-sm font-medium text-[var(--text-secondary)]">Ort *</label>
-                    <input type="text" id="ort" name="ort" required value={formData.ort} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
+                    <input type="text" id="ort" name="ort" required value={formData.ort} onChange={handleChange} />
                 </div>
             </div>
 
             {/* Dob */}
             <div className="space-y-2">
                 <label htmlFor="geburtsdatum" className="block text-sm font-medium text-[var(--text-secondary)]">Geburtstag *</label>
-                <input type="date" id="geburtsdatum" name="geburtsdatum" required value={formData.geburtsdatum} onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
+                <input type="date" id="geburtsdatum" name="geburtsdatum" required value={formData.geburtsdatum} onChange={handleChange} />
             </div>
 
             {/* Contact */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                     <label htmlFor="email" className="block text-sm font-medium text-[var(--text-secondary)]">E-Mail-Adresse *</label>
-                    <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
+                    <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} />
                 </div>
                 <div className="space-y-2">
                     <label htmlFor="telefon" className="block text-sm font-medium text-[var(--text-secondary)]">Telefonnummer *</label>
-                    <input type="tel" id="telefon" name="telefon" required value={formData.telefon} onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
+                    <input type="tel" id="telefon" name="telefon" required value={formData.telefon} onChange={handleChange} />
                 </div>
             </div>
 
             {/* Message */}
             <div className="space-y-2">
                 <label htmlFor="mitteilung" className="block text-sm font-medium text-[var(--text-secondary)]">Mitteilung (optional)</label>
-                <textarea id="mitteilung" name="mitteilung" rows={4} value={formData.mitteilung} onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-y" />
+                <textarea id="mitteilung" name="mitteilung" rows={4} value={formData.mitteilung} onChange={handleChange} />
             </div>
 
             {/* Hinweis zum Datenschutz as a text note below, not a checkbox as per requirement */}
@@ -200,7 +191,7 @@ export function SignupFormGospelverein() {
                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            Wird gesendet...
+                            Wird gesendet …
                         </>
                     ) : (
                         "Jetzt Gönner werden"

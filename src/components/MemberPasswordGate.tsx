@@ -64,8 +64,6 @@ export function MemberPasswordGate() {
                             required
                             autoFocus
                             placeholder="••••••••"
-                            className="w-full px-4 py-3 rounded-lg border placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
-                            style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                         />
                     </div>
 

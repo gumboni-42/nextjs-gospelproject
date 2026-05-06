@@ -4,7 +4,7 @@ import ObfuscatedEmail from "@/components/ObfuscatedEmail";
 import { sanityFetch } from "@/sanity/fetch";
 import { type SanityDocument } from "next-sanity";
 import { PageLogo } from "@/components/PageLogo";
-import { PortableText } from "next-sanity";
+
 
 const KONTAKT_QUERY = `*[_type == "kontaktPage"][0]{
   ...,

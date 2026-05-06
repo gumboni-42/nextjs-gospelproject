@@ -86,8 +86,6 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                             required
                             value={formData.firstName}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                            style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                             placeholder={initialPageData?.vornameLabel || "Dein Vorname"}
                         />
                     </div>
@@ -102,8 +100,6 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                             required
                             value={formData.lastName}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                            style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                             placeholder={initialPageData?.nachnameLabel || "Dein Nachname"}
                         />
                     </div>
@@ -118,8 +114,6 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
                             required
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                            style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                             placeholder="deine@email.ch"
                         />
                     </div>

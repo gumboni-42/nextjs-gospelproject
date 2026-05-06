@@ -149,6 +149,33 @@ button:hover {
   background-color: var(--surface-hover);
 }
 
+/* Global Form Styles */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+input[type="number"],
+input[type="password"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--surface);
+  color: var(--foreground);
+  transition: all 0.2s ease-in-out;
+  outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--gospel-primary);
+}
+
 /* Hide Google reCAPTCHA badge */
 .grecaptcha-badge {
   visibility: hidden !important;

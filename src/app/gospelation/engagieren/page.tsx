@@ -1,6 +1,6 @@
 import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
-import { PortableText } from "next-sanity";
+import { PortableText } from "@/components/CustomPortableText";
 import Link from "next/link";
 import { HeroSection } from "@/components/HeroSection";
 import { ThreeImageSection } from "@/components/ThreeImageSection";

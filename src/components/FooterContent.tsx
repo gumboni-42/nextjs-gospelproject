@@ -222,7 +222,7 @@ export function FooterContent({ data }: { data: FooterData }) {
                                 Impressum
                             </Link>
                             <span style={{ color: 'var(--foreground)' }}>
-                                © {new Date().getFullYear()} Gospelproject
+                                © {new Date().getFullYear()} Gospelverein
                             </span>
                         </div>
                     </div>

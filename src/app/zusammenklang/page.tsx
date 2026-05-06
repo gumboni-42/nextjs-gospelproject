@@ -1,6 +1,6 @@
 import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
-import { PortableText } from "next-sanity";
+import { PortableText } from "@/components/CustomPortableText";
 import { YouTubeHero } from "@/components/YouTubeHero";
 import ZusammenklangForm from "@/components/ZusammenklangForm";
 

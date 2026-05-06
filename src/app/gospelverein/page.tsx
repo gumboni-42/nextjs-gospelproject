@@ -1,6 +1,6 @@
 import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
-import { PortableText } from "next-sanity";
+import { PortableText } from "@/components/CustomPortableText";
 import { HeroSection } from "@/components/HeroSection";
 import { PageLogo } from "@/components/PageLogo";
 import { CallToAction } from "@/components/CallToAction";
@@ -85,7 +85,7 @@ export default async function GospelvereinPage() {
                         </div>
                     )}
 
-                    {data.statutenFile && (
+{/* {data.statutenFile && (
                         <div className="mb-12 text-center">
                             <a
                                 href={data.statutenFile}
@@ -99,7 +99,7 @@ export default async function GospelvereinPage() {
                                 Statuten herunterladen
                             </a>
                         </div>
-                    )}
+                    )} */}
 
                     {data.gospelFriends && (
                         <div className="w-[100vw] relative left-1/2 -translate-x-1/2 py-16 mb-16 px-4 shadow-sm">

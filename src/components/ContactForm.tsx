@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export default function ContactForm() {
-    const [name, setName] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [betreff, setBetreff] = useState("");
     const [message, setMessage] = useState("");
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [errorMessage, setErrorMessage] = useState("");
@@ -37,11 +39,12 @@ export default function ContactForm() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name,
+                    name: `${firstName} ${lastName}`.trim(),
                     email,
+                    betreff,
                     message,
                     captcha: captchaValue,
-                    formSubject: `Nachricht von Kontaktformular: ${name}`,
+                    formSubject: `${betreff || 'Kontaktformular'}: ${firstName} ${lastName}`.trim(),
                 }),
             });
 
@@ -52,7 +55,8 @@ export default function ContactForm() {
             }
 
             setStatus("success");
-            setName("");
+            setFirstName("");
+            setLastName("");
             setEmail("");
             setMessage("");
         } catch (error: unknown) {
@@ -63,21 +67,37 @@ export default function ContactForm() {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto">
-            <div>
-                <label htmlFor="name" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    Name
-                </label>
-                <div className="mt-1">
-                    <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        required
-                        className="block w-full rounded-md shadow-sm focus:border-primary focus:ring-2 focus:ring-primary sm:text-sm p-3 border"
-                        style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label htmlFor="firstName" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                        Vorname
+                    </label>
+                    <div className="mt-1">
+                        <input
+                            type="text"
+                            name="firstName"
+                            id="firstName"
+                            required
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                        Nachname
+                    </label>
+                    <div className="mt-1">
+                        <input
+                            type="text"
+                            name="lastName"
+                            id="lastName"
+                            required
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -91,10 +111,24 @@ export default function ContactForm() {
                         name="email"
                         id="email"
                         required
-                        className="block w-full rounded-md shadow-sm focus:border-primary focus:ring-2 focus:ring-primary sm:text-sm p-3 border"
-                        style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+            </div>
+
+            <div>
+                <label htmlFor="betreff" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                    Betreff
+                </label>
+                <div className="mt-1">
+                    <input
+                        type="text"
+                        name="betreff"
+                        id="betreff"
+                        required
+                        value={betreff}
+                        onChange={(e) => setBetreff(e.target.value)}
                     />
                 </div>
             </div>
@@ -109,8 +143,6 @@ export default function ContactForm() {
                         name="message"
                         rows={4}
                         required
-                        className="block w-full rounded-md shadow-sm focus:border-primary focus:ring-2 focus:ring-primary sm:text-sm p-3 border"
-                        style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)', color: 'var(--foreground)' }}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                     />
@@ -137,7 +169,7 @@ export default function ContactForm() {
                         </div>
                         <div className="ml-3">
                             <p className="text-sm font-medium text-green-600">
-                                Message sent successfully! We&apos;ll get back to you soon.
+                                Nachricht erfolgreich verschickt!
                             </p>
                         </div>
                     </div>
@@ -154,7 +186,7 @@ export default function ContactForm() {
                         </div>
                         <div className="ml-3">
                             <p className="text-sm font-medium text-red-500">
-                                {errorMessage || "Failed to send message. Please try again."}
+                                {errorMessage || "Fehler beim Senden der Nachricht. Bitte versuche es erneut."}
                             </p>
                         </div>
                     </div>

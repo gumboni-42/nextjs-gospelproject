@@ -110,7 +110,6 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
         }
     };
 
-    const inputClasses = "w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none";
     const labelClasses = "block text-sm font-medium text-[var(--text-secondary)] mb-1";
 
     return (
@@ -141,43 +140,43 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
             {/* Text Fields */}
             <div>
                 <label htmlFor="zk-firmaName" className={labelClasses}>Firma / Name *</label>
-                <input type="text" id="zk-firmaName" name="firmaName" required value={formData.firmaName} onChange={handleChange} className={inputClasses} />
+                <input type="text" id="zk-firmaName" name="firmaName" required value={formData.firmaName} onChange={handleChange} className="" />
             </div>
 
             <div>
                 <label htmlFor="zk-kontaktperson" className={labelClasses}>Kontaktperson</label>
-                <input type="text" id="zk-kontaktperson" name="kontaktperson" value={formData.kontaktperson} onChange={handleChange} className={inputClasses} />
+                <input type="text" id="zk-kontaktperson" name="kontaktperson" value={formData.kontaktperson} onChange={handleChange} />
             </div>
 
             <div>
                 <label htmlFor="zk-adresse" className={labelClasses}>Adresse</label>
-                <input type="text" id="zk-adresse" name="adresse" value={formData.adresse} onChange={handleChange} className={inputClasses} />
+                <input type="text" id="zk-adresse" name="adresse" value={formData.adresse} onChange={handleChange} />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
                 <div>
                     <label htmlFor="zk-plz" className={labelClasses}>PLZ</label>
-                    <input type="text" id="zk-plz" name="plz" value={formData.plz} onChange={handleChange} className={inputClasses} />
+                    <input type="text" id="zk-plz" name="plz" value={formData.plz} onChange={handleChange} />
                 </div>
                 <div>
                     <label htmlFor="zk-ort" className={labelClasses}>Ort</label>
-                    <input type="text" id="zk-ort" name="ort" value={formData.ort} onChange={handleChange} className={inputClasses} />
+                    <input type="text" id="zk-ort" name="ort" value={formData.ort} onChange={handleChange} />
                 </div>
             </div>
 
             <div>
                 <label htmlFor="zk-telefon" className={labelClasses}>Telefon</label>
-                <input type="tel" id="zk-telefon" name="telefon" value={formData.telefon} onChange={handleChange} className={inputClasses} />
+                <input type="tel" id="zk-telefon" name="telefon" value={formData.telefon} onChange={handleChange} />
             </div>
 
             <div>
                 <label htmlFor="zk-email" className={labelClasses}>E-Mail-Adresse *</label>
-                <input type="email" id="zk-email" name="email" required value={formData.email} onChange={handleChange} className={inputClasses} />
+                <input type="email" id="zk-email" name="email" required value={formData.email} onChange={handleChange} />
             </div>
 
             <div>
                 <label htmlFor="zk-beitrag" className={labelClasses}>Beitrag CHF</label>
-                <input type="text" id="zk-beitrag" name="beitrag" value={formData.beitrag} onChange={handleChange} className={inputClasses} />
+                <input type="text" id="zk-beitrag" name="beitrag" value={formData.beitrag} onChange={handleChange} />
             </div>
 
             {/* Publikation Programmheft */}
@@ -223,7 +222,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
             {/* Aufführen als */}
             <div>
                 <label htmlFor="zk-auffuehrenAls" className={labelClasses}>Als Spender oder Sponsor so aufführen (z.B. Sponsor GmbH Rüti)</label>
-                <input type="text" id="zk-auffuehrenAls" name="auffuehrenAls" value={formData.auffuehrenAls} onChange={handleChange} className={inputClasses} />
+                <input type="text" id="zk-auffuehrenAls" name="auffuehrenAls" value={formData.auffuehrenAls} onChange={handleChange} />
             </div>
 
             {/* Logo / Inserat */}
@@ -249,7 +248,7 @@ export default function ZusammenklangForm({ introText }: ZusammenklangFormProps)
             {/* Mitteilung */}
             <div>
                 <label htmlFor="zk-mitteilung" className={labelClasses}>Mitteilung</label>
-                <textarea id="zk-mitteilung" name="mitteilung" rows={4} value={formData.mitteilung} onChange={handleChange} className={inputClasses} />
+                <textarea id="zk-mitteilung" name="mitteilung" rows={4} value={formData.mitteilung} onChange={handleChange} />
             </div>
 
             {/* Submit */}
