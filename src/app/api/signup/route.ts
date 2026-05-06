@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { client } from '@/sanity/client';
 import crypto from 'crypto';
+import nodemailer from 'nodemailer';
+import { getSignupEmailContent } from '@/components/signup/SignupEmail';
 
 export async function POST(request: Request) {
     try {
@@ -171,6 +173,35 @@ export async function POST(request: Request) {
                 await writeClient.patch(_id).setIfMissing({ signupCount: 0 }).inc({ signupCount: 1 }).commit();
             } else if (!process.env.SANITY_API_WRITE_TOKEN) {
                 console.warn('SANITY_API_WRITE_TOKEN is not defined, cannot increment signupCount.');
+            }
+
+            // Send Email Confirmation
+            try {
+                const transporter = nodemailer.createTransport({
+                    host: process.env.EMAIL_HOST || "smtp.example.com",
+                    port: parseInt(process.env.EMAIL_PORT || "587"),
+                    secure: process.env.EMAIL_SECURE === "true",
+                    auth: {
+                        user: process.env.EMAIL_USER,
+                        pass: process.env.EMAIL_PASS,
+                    },
+                });
+
+                const { subject, htmlContent, textContent } = getSignupEmailContent(formData);
+
+                await transporter.sendMail({
+                    from: `"Gospelproject" <${process.env.EMAIL_USER || "noreply@gospelproject.ch"}>`,
+                    to: formData.email,
+                    bcc: "webformular@gospelproject.ch",
+                    replyTo: "info@gospelproject.ch",
+                    subject: subject,
+                    text: textContent,
+                    html: htmlContent,
+                });
+            } catch (emailError) {
+                console.error("Failed to send confirmation email:", emailError);
+                // We don't throw here to ensure the user still sees a success message 
+                // since their data WAS successfully stored in Mailchimp/Sheets.
             }
 
             return NextResponse.json({ message: 'Signup received successfully' }, { status: 200 });

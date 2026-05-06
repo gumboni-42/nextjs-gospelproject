@@ -132,19 +132,21 @@ export default async function GospelvereinPage() {
                     </div>
 
                     {data.twintImage && (
-                        <div className="mb-16 text-center w-full max-w-none mx-auto">
-
-                            <PortableText value={data.twintText} />
-                            <div className="bg-white p-4 rounded-xl inline-block shadow-lg">
+                        <div className="mb-16 w-full max-w-none mx-auto">
+                            <div className="prose max-w-none mb-12">
+                                <PortableText value={data.twintText} />
+                            </div>
+                            <div className="w-full p-1 rounded-xl inline-block shadow-lg" style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border-color)' }}>
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <CldImage
                                     src={data.twintImage.public_id}
-                                    width={300}
-                                    height={300}
+                                    width={500}
+                                    height={500}
                                     crop="limit"
+                                    invertInDarkMode={true}
                                     preserveTransformations={true}
                                     alt="Twint QR Code für Spenden"
-                                    className="w-full h-auto object-contain mx-auto"
+                                    className="w-full h-auto rounded-lg object-contain mx-auto"
                                 />
                             </div>
                         </div>
