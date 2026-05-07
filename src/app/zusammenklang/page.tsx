@@ -9,6 +9,7 @@ const ZUSAMMENKLANG_QUERY = `*[_type == "zusammenklangPage"][0]{
   subtitle,
   youtubeUrl,
   body,
+  contact,
   "sponsoringKonzeptPdf": sponsoringKonzeptPdf.asset->url,
   formIntroText
 }`;
@@ -67,6 +68,11 @@ export default async function ZusammenklangPage() {
                             </a>
                         </div>
                     )}
+
+                    {/* contact content */}
+                    <div className="prose max-w-none mb-12">
+                        {data.contact && <PortableText value={data.contact} />}
+                    </div>
 
                     {/* Form Section */}
                     <div className="border-t pt-12" style={{ borderColor: 'var(--border-color)' }}>
