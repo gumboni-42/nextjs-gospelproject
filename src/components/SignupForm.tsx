@@ -59,7 +59,7 @@ export function SignupForm() {
         e.preventDefault();
 
         if (!formData.bedingungenAkzeptiert) {
-            setErrorMessage('Bitte akzeptieren Sie die Teilnahmebedingungen.');
+            setErrorMessage('Bitte akzeptiere die Teilnahmebedingungen.');
             return;
         }
 

@@ -82,13 +82,23 @@ export async function POST(request: Request) {
             }
 
             const mcUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`;
-            
+
             const mcData = {
                 email_address: formData.email,
                 status: "subscribed",
                 merge_fields: {
                     FNAME: formData.vorname,
                     LNAME: formData.name,
+                    ANREDE: formData.anrede || "",
+                    STRASSE: formData.strasse || "",
+                    PLZ: formData.plz || "",
+                    ORT: formData.ort || "",
+                    PHONE: formData.telefon || "",
+                    BDAY: formData.geburtsdatum || "",
+                    SCHONDABEI: formData.schonDabei || "",
+                    STIMMLAGE: formData.stimmlage || "",
+                    DEMO: formData.demoAufnahme || "",
+                    MITTEILUNG: formData.mitteilung || ""
                 },
                 tags: mailchimpTags || []
             };
@@ -103,7 +113,7 @@ export async function POST(request: Request) {
             });
 
             const mcResult = await mcRes.json();
-            
+
             if (mcRes.ok || mcResult.title === "Member Exists") {
                 // If member exists, we need to apply tags via PUT instead of POST if they already exist
                 if (mcResult.title === "Member Exists" && mailchimpTags && mailchimpTags.length > 0) {
@@ -145,7 +155,7 @@ export async function POST(request: Request) {
                     'Content-Type': 'text/plain;charset=utf-8',
                 },
                 body: JSON.stringify(formData),
-                redirect: 'follow', 
+                redirect: 'follow',
             });
 
             if (!googleRes.ok) {

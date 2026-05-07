@@ -13,7 +13,7 @@ export default function ImpressumPage() {
                 <div className="prose max-w-none">
                     <h2>Verantwortlich</h2>
                     <p>
-                        <strong>Gospelverein</strong>
+                        <strong>Gospelverein</strong><br />
                         Postfach<br />
                         8608 Bubikon<br />
                         Schweiz
