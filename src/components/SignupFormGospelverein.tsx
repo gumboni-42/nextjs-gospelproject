@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import Link from 'next/link';
+import { linkify } from '@/utils/linkify';
 
 interface SignupFormData {
     vorname: string;
@@ -28,11 +29,18 @@ const initialFormData: SignupFormData = {
     mitteilung: '',
 };
 
-export function SignupFormGospelverein() {
+export function SignupFormGospelverein({ successTitle, successText }: { successTitle?: string; successText?: string }) {
     const { executeRecaptcha } = useGoogleReCaptcha();
+    const containerRef = useRef<HTMLDivElement>(null);
     const [formData, setFormData] = useState<SignupFormData>(initialFormData);
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        if (status === 'success' && containerRef.current) {
+            containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, [status]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -91,12 +99,17 @@ export function SignupFormGospelverein() {
 
     if (status === 'success') {
         return (
-            <div className="mx-auto my-12">
+            <div ref={containerRef} className="mx-auto my-12 text-center scroll-mt-24">
                 <svg className="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 className="text-2xl font-bold mb-4">Herzlichen Dank für deine Gönnerschaft und willkommen in unserem Trägerkreis!</h3>
-                <p className="text-lg">Du erhältst in Kürze eine Bestätigung und weitere Infos per E-Mail. Sollte diese ausbleiben, melde dich gerne an [EMAIL_ADDRESS]</p>
+                <h3 className="text-2xl font-bold mb-4">{successTitle || "Herzlichen Dank für deine Gönnerschaft und willkommen in unserem Trägerkreis!"}</h3>
+                <p className="text-lg">
+                    {successText 
+                        ? linkify(successText) 
+                        : linkify("Du erhältst in Kürze eine Bestätigung und weitere Infos per E-Mail. Sollte diese ausbleiben, melde dich gerne an info@gospelverein.ch")
+                    }
+                </p>
                 <button
                     onClick={() => setStatus('idle')}
                     className="mt-8 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"

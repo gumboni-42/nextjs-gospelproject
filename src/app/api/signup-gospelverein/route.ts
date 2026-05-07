@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import crypto from 'crypto';
+import { client } from '@/sanity/client';
+import fs from 'fs';
 
 export async function POST(request: Request) {
     try {
@@ -36,6 +39,79 @@ export async function POST(request: Request) {
                     { status: 400 }
                 );
             }
+        }
+
+        // Mailchimp Submission
+        const API_KEY = process.env.MAILCHIMP_API_KEY;
+        const API_SERVER = process.env.MAILCHIMP_API_SERVER;
+        
+        const pageData = await client.fetch(`*[_type == "gospelprojectAnmeldungPage"][0]{
+            mailchimpAudienceId
+        }`);
+        const AUDIENCE_ID = pageData?.mailchimpAudienceId || process.env.MAILCHIMP_AUDIENCE_ID;
+
+        if (!API_KEY || !AUDIENCE_ID || !API_SERVER) {
+            console.error('Mailchimp configuration missing');
+            return NextResponse.json({ message: 'Mailchimp Server configuration error' }, { status: 500 });
+        }
+
+        const mailchimpTags = ["Gönner"];
+        const subscriberHash = crypto.createHash('md5').update(email.toLowerCase()).digest('hex');
+        const mcUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members/${subscriberHash}`;
+        
+        const mcData = {
+            email_address: email,
+            status_if_new: "subscribed",
+            merge_fields: {
+                FNAME: vorname,
+                LNAME: name,
+                STRASSE: adresse || "",
+                PLZ: plz || "",
+                ORT: ort || "",
+                PHONE: telefon || "",
+                BDAY: geburtsdatum || "",
+                MITTEILUNG: mitteilung || ""
+            }
+        };
+
+        const mcRes = await fetch(mcUrl, {
+            method: "PUT",
+            headers: {
+                Authorization: `apikey ${API_KEY}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(mcData),
+        });
+
+        const mcResult = await mcRes.json();
+        
+        fs.appendFileSync('/tmp/mc_debug.log', JSON.stringify({ action: 'PUT_MEMBER', mcData, mcResOk: mcRes.ok, mcResult }) + '\n');
+        
+        if (!mcRes.ok) {
+            console.error('Mailchimp error:', mcResult);
+            throw new Error(mcResult.title || 'Mailchimp error');
+        }
+
+        // Apply tags reliably
+        const tagsUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members/${subscriberHash}/tags`;
+        const tagsData = {
+            tags: mailchimpTags.map((tag: string) => ({ name: tag, status: 'active' }))
+        };
+        const tagsRes = await fetch(tagsUrl, {
+            method: "POST",
+            headers: {
+                Authorization: `apikey ${API_KEY}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(tagsData),
+        });
+        
+        const tagsResult = await tagsRes.json().catch(() => ({}));
+        fs.appendFileSync('/tmp/mc_debug.log', JSON.stringify({ action: 'POST_TAGS', tagsData, tagsResOk: tagsRes.ok, tagsResult }) + '\n');
+
+        if (!tagsRes.ok) {
+            console.error('Mailchimp tags error:', await tagsRes.json());
+            // We don't throw here to avoid failing the whole signup if just the tag fails
         }
 
         // Create Transporter

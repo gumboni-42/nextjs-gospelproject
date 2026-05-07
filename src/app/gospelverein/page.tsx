@@ -125,7 +125,10 @@ export default async function GospelvereinPage() {
                     <div className="rounded-2xl p-8 sm:p-12 mb-16 relative overflow-hidden" style={{ backgroundColor: 'var(--surface)', color: 'var(--foreground)' }}>
                         <div className="relative z-10">
                             <h4 className="text-xl font-bold mb-4">Ja, ich werde Gospel Gönner:</h4>
-                            <SignupFormGospelverein />
+                            <SignupFormGospelverein 
+                                successTitle={data.successTitle}
+                                successText={data.successText}
+                            />
                         </div>
                     </div>
 

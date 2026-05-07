@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import Link from 'next/link';
+import { PortableText } from "@/components/CustomPortableText";
+import { linkify } from '@/utils/linkify';
 
 interface SignupFormData {
     anrede: string;
@@ -38,11 +40,18 @@ const initialFormData: SignupFormData = {
     mitteilung: '',
 };
 
-export function SignupForm() {
+export function SignupForm({ successTitle, successText, formText, formTitle }: { successTitle?: string; successText?: string; formText?: any; formTitle?: string }) {
     const { executeRecaptcha } = useGoogleReCaptcha();
+    const containerRef = useRef<HTMLDivElement>(null);
     const [formData, setFormData] = useState<SignupFormData>(initialFormData);
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        if (status === 'success' && containerRef.current) {
+            containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, [status]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -120,12 +129,17 @@ export function SignupForm() {
 
     if (status === 'success') {
         return (
-            <div className="mx-auto my-12">
+            <div ref={containerRef} className="mx-auto my-12 text-center scroll-mt-24">
                 <svg className="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 className="text-2xl font-bold mb-4">Vielen Dank für Deine Anmeldung!</h3>
-                <p className="text-lg">Wir haben Deine Daten erfolgreich erhalten und freuen uns, dass Du beim nächsten Gospelproject dabei bist.</p>
+                <h3 className="text-2xl font-bold mb-4">{successTitle || "Vielen Dank für Deine Anmeldung!"}</h3>
+                <p className="text-lg">
+                    {successText 
+                        ? linkify(successText) 
+                        : linkify("Wir haben Deine Daten erfolgreich erhalten und freuen uns, dass Du beim nächsten Gospelproject dabei bist.")
+                    }
+                </p>
                 <button
                     onClick={() => setStatus('idle')}
                     className="mt-8 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
@@ -137,7 +151,16 @@ export function SignupForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-8 mt-12 mb-16">
+        <>
+            <h2 className="text-3xl font-bold mb-2 text-center">{formTitle || "Jetzt Anmelden"}</h2>
+            <div className="text-center mb-8 max-w-xl mx-auto" style={{ color: 'var(--text-muted)' }}>
+                {formText ? (
+                    <PortableText value={formText} />
+                ) : (
+                    <p>Fülle das Formular aus, um dich für das nächste Gospelproject anzumelden.</p>
+                )}
+            </div>
+            <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-8 mt-12 mb-16">
 
             {/* Anrede */}
             <fieldset className="space-y-3">
@@ -329,5 +352,6 @@ export function SignupForm() {
             </div>
 
         </form>
-    );
+    </>
+);
 }
