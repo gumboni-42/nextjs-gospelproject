@@ -132,7 +132,7 @@ export function NavBar({ routes }: NavBarProps) {
                                 {/* Dropdown — always dark */}
                                 {route.children && route.children.length > 0 && (
                                     <div className="absolute left-0 -ml-5 top-full mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out transform translate-y-2 group-hover:translate-y-0">
-                                        <div className="overflow-hidden rounded-xl bg-gray-900 shadow-xl ring-1 ring-white/10">
+                                        <div className="overflow-hidden rounded-xl bg-slate-950 shadow-xl ring-1 ring-white/10">
                                             <div className="p-1">
                                                 {route.children.map((child) => (
                                                     <Link

@@ -3,13 +3,12 @@ import { HeroSection } from "@/components/HeroSection";
 import ObfuscatedEmail from "@/components/ObfuscatedEmail";
 import { sanityFetch } from "@/sanity/fetch";
 import { type SanityDocument } from "next-sanity";
-import { PageLogo } from "@/components/PageLogo";
-
+import { PortableText } from "@/components/CustomPortableText";
 
 const KONTAKT_QUERY = `*[_type == "kontaktPage"][0]{
   ...,
   "heroImage": heroImage,
-  "logo": logo
+  "contactText": contactText,
 }`;
 
 export const metadata = {
@@ -29,14 +28,22 @@ export default async function ContactPage() {
                 image={data.heroImage}
             />
             <div className="container mx-auto px-4 py-16">
-                <div className="text-center mb-12">
-                    <p>
-                        Schreib uns direkt an <ObfuscatedEmail /> oder füll das untenstehende Formular aus 🙂
-                    </p>
-                </div>
+                <div className="max-w-2xl mx-auto">
+                    <div className="text-center mb-12">
+                        <p>
+                            Schreib uns direkt an <ObfuscatedEmail /> oder füll das untenstehende Formular aus 🙂
+                        </p>
+                    </div>
 
-                <div className="shadow-xl rounded-2xl overflow-hidden p-8 sm:p-12" style={{ backgroundColor: 'var(--surface)' }}>
-                    <ContactForm />
+                    <div className="rounded-2xl overflow-hidden p-8 sm:p-12" style={{ backgroundColor: 'var(--surface)' }}>
+                        <ContactForm />
+                    </div>
+
+                    {data.contactText && (
+                        <div className="mt-16 text-center">
+                            <PortableText value={data.contactText} />
+                        </div>
+                    )}
                 </div>
             </div>
         </main>

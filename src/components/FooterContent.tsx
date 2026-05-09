@@ -86,57 +86,62 @@ export function FooterContent({ data }: { data: FooterData }) {
                                 <div className="flex flex-col items-left gap-4">
                                     <div className="flex flex-wrap items-center gap-8">
                                         {data.sponsors.map((sponsor, i) => (
-                                            <a
-                                                key={i}
-                                                href={sponsor.url || '#'}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="rounded-md opacity-100 hover:opacity-80 transition-opacity block overflow-hidden"
-                                                style={{ backgroundColor: 'var(--partner-logo-bg)' }}
-                                                title={sponsor.name}
-                                            >
-                                                {sponsor.logo?.public_id ? (
-                                                    <CldImage
-                                                        src={sponsor.logo.public_id}
-                                                        alt={sponsor.name}
-                                                        width={240}
-                                                        height={160}
-                                                        crop="fit"
-                                                        className="h-15 w-[100px] mx-2 object-contain rounded-md"
-                                                    />
-                                                ) : (
-                                                    <span className="text-black font-semibold bg-white px-3 block h-20 w-[100px] mx-4 flex text-xs items-center justify-center text-center">{sponsor.name}</span>
-                                                )}
-                                            </a>
+                                            <div key={i} className="flex flex-col items-leftcenter gap-1">
+                                                <a
+                                                    href={sponsor.url || '#'}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="rounded-md opacity-100 hover:opacity-80 transition-opacity block overflow-hidden"
+                                                    style={{ backgroundColor: 'var(--partner-logo-bg)' }}
+                                                    title={sponsor.name}
+                                                >
+                                                    {sponsor.logo?.public_id ? (
+                                                        <CldImage
+                                                            src={sponsor.logo.public_id}
+                                                            alt={sponsor.name}
+                                                            width={240}
+                                                            height={160}
+                                                            crop="fit"
+                                                            className="h-15 w-[100px] mx-2 object-contain rounded-md"
+                                                        />
+                                                    ) : (
+                                                        <span className="text-black font-semibold bg-white px-3 block h-20 w-[100px] mx-4 flex text-xs items-center justify-center text-center">{sponsor.name}</span>
+                                                    )}
+                                                </a>
+                                                <span className="text-[9px] text-white/40 text-left uppercase tracking-tight">Hauptsponsor</span>
+                                            </div>
                                         ))}
                                     </div>
                                 </div>
                             )}
 
                             {data?.mediaPartner && (
-                                <div className="flex flex-col items-start gap-4">
-                                    <div className="flex flex-wrap items-center gap-8">
-                                        <a
-                                            href={data.mediaPartner.url || '#'}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="rounded-md opacity-100 hover:opacity-80 transition-opacity block overflow-hidden"
-                                            style={{ backgroundColor: 'var(--partner-logo-bg)' }}
-                                            title={data.mediaPartner.name}
-                                        >
-                                            {data.mediaPartner.logo?.public_id ? (
-                                                <CldImage
-                                                    src={data.mediaPartner.logo.public_id}
-                                                    alt={data.mediaPartner.name}
-                                                    width={240}
-                                                    height={120}
-                                                    crop="fit"
-                                                    className="h-15 w-[120px] object-contain rounded-md"
-                                                />
-                                            ) : (
-                                                <span className="text-black font-semibold bg-white px-3 block h-20 w-[120px] flex text-xs items-center justify-center text-center">{data.mediaPartner.name}</span>
-                                            )}
-                                        </a>
+                                <div className="flex flex-col items-left gap-4">
+                                    <div className="flex flex-wrap items-left gap-8">
+                                        <div className="flex flex-col items-left gap-1">
+                                            <a
+                                                href={data.mediaPartner.url || '#'}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="rounded-md opacity-100 hover:opacity-80 transition-opacity block overflow-hidden"
+                                                style={{ backgroundColor: 'var(--partner-logo-bg)' }}
+                                                title={data.mediaPartner.name}
+                                            >
+                                                {data.mediaPartner.logo?.public_id ? (
+                                                    <CldImage
+                                                        src={data.mediaPartner.logo.public_id}
+                                                        alt={data.mediaPartner.name}
+                                                        width={240}
+                                                        height={120}
+                                                        crop="fit"
+                                                        className="h-15 w-[120px] object-contain rounded-md"
+                                                    />
+                                                ) : (
+                                                    <span className="text-black font-semibold bg-white px-3 block h-20 w-[120px] flex text-xs items-center justify-center text-center">{data.mediaPartner.name}</span>
+                                                )}
+                                            </a>
+                                            <span className="text-[9px] text-white/50 uppercase tracking-tight">Medienpartner</span>
+                                        </div>
                                     </div>
                                 </div>
                             )}

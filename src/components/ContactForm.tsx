@@ -66,7 +66,7 @@ export default function ContactForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6 max-w-lg mx-auto">
+        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label htmlFor="firstName" className="block text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
