@@ -113,21 +113,13 @@ export function NavBar({ routes }: NavBarProps) {
                     <nav className="hidden min-[900px]:flex items-center gap-8">
                         {routes.map((route) => (
                             <div key={route.path} className="relative group">
-                                {isRouteActive(route) ? (
-                                    <span
-                                        className="text-base font-bold cursor-default"
-                                        style={{ color: 'var(--gospel-primary)' }}
-                                    >
-                                        {route.title}
-                                    </span>
-                                ) : (
-                                    <Link
-                                        href={route.path}
-                                        className="nav-bar-link text-base font-semibold transition-colors"
-                                    >
-                                        {route.title}
-                                    </Link>
-                                )}
+                                <Link
+                                    href={route.path}
+                                    className={`nav-bar-link text-base transition-colors ${isRouteActive(route) ? 'font-bold' : 'font-semibold'}`}
+                                    style={isRouteActive(route) ? { color: 'var(--gospel-primary)' } : undefined}
+                                >
+                                    {route.title}
+                                </Link>
 
                                 {/* Dropdown — always dark */}
                                 {route.children && route.children.length > 0 && (

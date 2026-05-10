@@ -52,7 +52,7 @@ export default function NewsletterForm({ initialPageData }: NewsletterFormProps)
             <main className="min-h-screen pt-24 pb-16 px-4 flex items-center justify-center">
                 <div className="max-w-2xl text-center p-8 md:p-12 rounded-2xl border shadow-2xl" style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border-color)' }}>
                     <h1 className="text-xl font-bold mb-6">
-                        Du bist angemeldet
+                        Du bist jetzt für unseren Newsletter angemeldet. Du kannst dich jederzeit wieder  abmelden.
                     </h1>
                     <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                         {message}
