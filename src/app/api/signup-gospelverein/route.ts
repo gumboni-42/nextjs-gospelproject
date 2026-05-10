@@ -56,12 +56,11 @@ export async function POST(request: Request) {
         }
 
         const mailchimpTags = ["Gönner"];
-        const subscriberHash = crypto.createHash('md5').update(email.toLowerCase()).digest('hex');
-        const mcUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members/${subscriberHash}`;
+        const mcUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`;
         
         const mcData = {
             email_address: email,
-            status_if_new: "subscribed",
+            status: "subscribed",
             merge_fields: {
                 FNAME: vorname,
                 LNAME: name,
@@ -71,11 +70,12 @@ export async function POST(request: Request) {
                 PHONE: telefon || "",
                 BDAY: geburtsdatum || "",
                 MITTEILUNG: mitteilung || ""
-            }
+            },
+            tags: mailchimpTags
         };
 
         const mcRes = await fetch(mcUrl, {
-            method: "PUT",
+            method: "POST",
             headers: {
                 Authorization: `apikey ${API_KEY}`,
                 "Content-Type": "application/json",
@@ -85,33 +85,44 @@ export async function POST(request: Request) {
 
         const mcResult = await mcRes.json();
         
-        fs.appendFileSync('/tmp/mc_debug.log', JSON.stringify({ action: 'PUT_MEMBER', mcData, mcResOk: mcRes.ok, mcResult }) + '\n');
+        fs.appendFileSync('/tmp/mc_debug.log', JSON.stringify({ action: 'POST_MEMBER_GOSPELVEREIN', mcData, mcResOk: mcRes.ok, mcResult }) + '\n');
         
-        if (!mcRes.ok) {
+        if (mcRes.ok || mcResult.title === "Member Exists") {
+            if (mcResult.title === "Member Exists") {
+                const subscriberHash = crypto.createHash('md5').update(email.toLowerCase()).digest('hex');
+                
+                // Update the existing member's data (merge fields)
+                const updateUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members/${subscriberHash}`;
+                await fetch(updateUrl, {
+                    method: "PATCH",
+                    headers: {
+                        Authorization: `apikey ${API_KEY}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        merge_fields: mcData.merge_fields
+                    }),
+                });
+
+                // Also apply tags since the initial POST failed
+                const tagsUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members/${subscriberHash}/tags`;
+                const tagsData = {
+                    tags: mailchimpTags.map((tag: string) => ({ name: tag, status: 'active' }))
+                };
+                const tagsRes = await fetch(tagsUrl, {
+                    method: "POST",
+                    headers: {
+                        Authorization: `apikey ${API_KEY}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(tagsData),
+                });
+                
+                fs.appendFileSync('/tmp/mc_debug.log', JSON.stringify({ action: 'POST_TAGS_GOSPELVEREIN', tagsData, tagsResOk: tagsRes.ok }) + '\n');
+            }
+        } else {
             console.error('Mailchimp error:', mcResult);
             throw new Error(mcResult.title || 'Mailchimp error');
-        }
-
-        // Apply tags reliably
-        const tagsUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members/${subscriberHash}/tags`;
-        const tagsData = {
-            tags: mailchimpTags.map((tag: string) => ({ name: tag, status: 'active' }))
-        };
-        const tagsRes = await fetch(tagsUrl, {
-            method: "POST",
-            headers: {
-                Authorization: `apikey ${API_KEY}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(tagsData),
-        });
-        
-        const tagsResult = await tagsRes.json().catch(() => ({}));
-        fs.appendFileSync('/tmp/mc_debug.log', JSON.stringify({ action: 'POST_TAGS', tagsData, tagsResOk: tagsRes.ok, tagsResult }) + '\n');
-
-        if (!tagsRes.ok) {
-            console.error('Mailchimp tags error:', await tagsRes.json());
-            // We don't throw here to avoid failing the whole signup if just the tag fails
         }
 
         // Create Transporter
