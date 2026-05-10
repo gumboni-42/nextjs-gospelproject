@@ -46,21 +46,21 @@ export async function POST(request: Request) {
         const sponsorType = formData.sponsorType || 'Nicht angegeben';
         const htmlContent = `
             <h3>Neue Sponsoring-Anmeldung via gospelproject.ch</h3>
-            <table style="border-collapse: collapse; width: 100%;">
-                <tr><td style="padding: 6px; font-weight: bold;">Sponsor-Typ:</td><td style="padding: 6px;">${sponsorType}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Firma / Name:</td><td style="padding: 6px;">${formData.firmaName}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Kontaktperson:</td><td style="padding: 6px;">${formData.kontaktperson || '-'}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Adresse:</td><td style="padding: 6px;">${formData.adresse || '-'}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">PLZ:</td><td style="padding: 6px;">${formData.plz || '-'}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Ort:</td><td style="padding: 6px;">${formData.ort || '-'}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Telefon:</td><td style="padding: 6px;">${formData.telefon || '-'}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">E-Mail:</td><td style="padding: 6px;">${formData.email}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Beitrag CHF:</td><td style="padding: 6px;">${formData.beitrag || '-'}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Publikation Programmheft:</td><td style="padding: 6px;">${formData.publikationProgrammheft || '-'}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Publikation Website:</td><td style="padding: 6px;">${formData.publikationWebsite || '-'}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Aufführen als:</td><td style="padding: 6px;">${formData.auffuehrenAls || '-'}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Logo / Inserat:</td><td style="padding: 6px;">${formData.logoInserat || '-'}</td></tr>
-                <tr><td style="padding: 6px; font-weight: bold;">Mitteilung:</td><td style="padding: 6px;">${(formData.mitteilung || '-').replace(/\n/g, "<br>")}</td></tr>
+            <table style="border-collapse: separate; border-spacing: 1px; width: 100%;">
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold; width: 30%;">Sponsor-Typ:</td><td style="padding: 10px; background-color: #f9f9f9;">${sponsorType}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Firma / Name:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.firmaName}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Kontaktperson:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.kontaktperson || '-'}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Adresse:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.adresse || '-'}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">PLZ:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.plz || '-'}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Ort:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.ort || '-'}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Telefon:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.telefon || '-'}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">E-Mail:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.email}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Beitrag CHF:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.beitrag || '-'}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Publikation Programmheft:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.publikationProgrammheft || '-'}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Publikation Website:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.publikationWebsite || '-'}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Aufführen als:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.auffuehrenAls || '-'}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Logo / Inserat:</td><td style="padding: 10px; background-color: #f9f9f9;">${formData.logoInserat || '-'}</td></tr>
+                <tr><td style="padding: 10px; background-color: #f9f9f9; font-weight: bold;">Mitteilung:</td><td style="padding: 10px; background-color: #f9f9f9;">${(formData.mitteilung || '-').replace(/\n/g, "<br>")}</td></tr>
             </table>
         `;
 
@@ -68,7 +68,8 @@ export async function POST(request: Request) {
 
         await transporter.sendMail({
             from: `"Zusammenklang Formular" <${process.env.EMAIL_USER || "[EMAIL_ADDRESS]"}>`,
-            to: "webformular@gospelproject.ch",
+            to: "sponsoring@gospelproject.ch",
+            bcc: "matthias.zuerrer@gmail.com",
             replyTo: formData.email,
             subject: formSubject || `Neue Sponsoring-Anmeldung von ${formData.firmaName} via gospelproject.ch`,
             text: textContent,

@@ -1,4 +1,5 @@
 import React from 'react';
+import ObfuscatedContact from '@/components/ObfuscatedContact';
 
 export function linkify(text: string) {
     if (!text) return text;
@@ -20,9 +21,7 @@ export function linkify(text: string) {
         
         if (emailMatch) {
             parts.push(
-                <a key={match.index} href={`mailto:${emailMatch}`} className="underline hover:text-primary-hover">
-                    {emailMatch}
-                </a>
+                <ObfuscatedContact key={match.index} type="email" value={emailMatch} className="underline hover:text-primary-hover" />
             );
         } else if (urlMatch) {
             parts.push(
@@ -41,3 +40,4 @@ export function linkify(text: string) {
     
     return parts.length > 0 ? parts : text;
 }
+

@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import Link from 'next/link';
 import { linkify } from '@/utils/linkify';
+import ObfuscatedContact from '@/components/ObfuscatedContact';
 
 interface SignupFormData {
     vorname: string;
@@ -178,7 +179,7 @@ export function SignupFormGospelverein({ successTitle, successText }: { successT
 
             {/* Hinweis zum Datenschutz as a text note below, not a checkbox as per requirement */}
             <div className="text-sm text-(--text-secondary)">
-                <p><strong>Hinweis zum Datenschutz:</strong> Wir verwenden deine Adressdaten ausschliesslich im Zusammenhang mit deiner Mitgliedschaft als Gönnerin oder Gönner. Für alle Fragen in Hinsicht auf Datenschutz oder einen Antrag auf komplette Löschung aller deiner personenbezogenen Daten kannst du dich jederzeit gerne an uns wenden: <a href="mailto:datenschutz@gospelverein.ch" className="underline hover:text-primary-hover">datenschutz@gospelverein.ch</a></p>
+                <p><strong>Hinweis zum Datenschutz:</strong> Wir verwenden deine Adressdaten ausschliesslich im Zusammenhang mit deiner Mitgliedschaft als Gönnerin oder Gönner. Für alle Fragen in Hinsicht auf Datenschutz oder einen Antrag auf komplette Löschung aller deiner personenbezogenen Daten kannst du dich jederzeit gerne an uns wenden: <ObfuscatedContact type="email" value="datenschutz@gospelverein.ch" className="underline hover:text-primary-hover" /></p>
                 <p className="mt-2 text-xs">
                     Mit dem Absenden des Formulars akzeptierst du die <Link href="/datenschutz" className="underline hover:text-primary-hover">Datenschutzbestimmungen</Link>.
                 </p>
