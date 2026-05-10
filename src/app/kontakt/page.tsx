@@ -4,6 +4,7 @@ import ObfuscatedEmail from "@/components/ObfuscatedEmail";
 import { sanityFetch } from "@/sanity/fetch";
 import { type SanityDocument } from "next-sanity";
 import { PortableText } from "@/components/CustomPortableText";
+import BannerNewsletter from "@/components/BannerNewsletter";
 
 const KONTAKT_QUERY = `*[_type == "kontaktPage"][0]{
   ...,
@@ -46,6 +47,8 @@ export default async function ContactPage() {
                     )}
                 </div>
             </div>
+            
+            <BannerNewsletter />
         </main>
     );
 }
