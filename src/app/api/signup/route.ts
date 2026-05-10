@@ -115,21 +115,37 @@ export async function POST(request: Request) {
             const mcResult = await mcRes.json();
 
             if (mcRes.ok || mcResult.title === "Member Exists") {
-                // If member exists, we need to apply tags via PUT instead of POST if they already exist
-                if (mcResult.title === "Member Exists" && mailchimpTags && mailchimpTags.length > 0) {
+                if (mcResult.title === "Member Exists") {
                     const subscriberHash = crypto.createHash('md5').update(formData.email.toLowerCase()).digest('hex');
-                    const tagsUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members/${subscriberHash}/tags`;
-                    const tagsData = {
-                        tags: mailchimpTags.map((tag: string) => ({ name: tag, status: 'active' }))
-                    };
-                    await fetch(tagsUrl, {
-                        method: "POST",
+                    
+                    // Update the existing member's data (merge fields)
+                    const updateUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members/${subscriberHash}`;
+                    await fetch(updateUrl, {
+                        method: "PATCH",
                         headers: {
                             Authorization: `apikey ${API_KEY}`,
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify(tagsData),
+                        body: JSON.stringify({
+                            merge_fields: mcData.merge_fields
+                        }),
                     });
+
+                    // Also apply tags if they exist
+                    if (mailchimpTags && mailchimpTags.length > 0) {
+                        const tagsUrl = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members/${subscriberHash}/tags`;
+                        const tagsData = {
+                            tags: mailchimpTags.map((tag: string) => ({ name: tag, status: 'active' }))
+                        };
+                        await fetch(tagsUrl, {
+                            method: "POST",
+                            headers: {
+                                Authorization: `apikey ${API_KEY}`,
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(tagsData),
+                        });
+                    }
                 }
                 mailchimpSuccess = true;
             } else {
