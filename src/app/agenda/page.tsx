@@ -57,10 +57,12 @@ export default async function AgendaPage() {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric',
+                                timeZone: 'Europe/Zurich',
                             });
                             const time = date.toLocaleTimeString('de-CH', {
                                 hour: '2-digit',
                                 minute: '2-digit',
+                                timeZone: 'Europe/Zurich',
                             });
 
                             return (
