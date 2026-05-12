@@ -50,6 +50,12 @@ export async function POST(request: Request) {
         }`);
         const AUDIENCE_ID = pageData?.mailchimpAudienceId || process.env.MAILCHIMP_AUDIENCE_ID;
 
+        const gospelvereinPageData = await client.fetch(`*[_type == "gospelvereinPage"][0]{
+            confirmationEmailMessage,
+            "pdfUrl": paymentInformationPdf.asset->url,
+            "pdfFilename": paymentInformationPdf.asset->originalFilename
+        }`);
+
         if (!API_KEY || !AUDIENCE_ID || !API_SERVER) {
             console.error('Mailchimp configuration missing');
             return NextResponse.json({ message: 'Mailchimp Server configuration error' }, { status: 500 });
@@ -136,7 +142,7 @@ export async function POST(request: Request) {
             },
         });
 
-        // Send Email
+        // Send Email to Admin
         await transporter.sendMail({
             from: `"${vorname} ${name}" <${process.env.EMAIL_USER || "noreply@gospelproject.ch"}>`,
             to: "webformular@gospelproject.ch", // Set to contact form's destination
@@ -155,6 +161,33 @@ export async function POST(request: Request) {
         <p><strong>Mitteilung:</strong></p>
         <p>${mitteilung ? mitteilung.replace(/\\n/g, "<br>") : '-'}</p>
       `,
+        });
+
+        // Prepare attachments
+        let attachments = [];
+        if (gospelvereinPageData?.pdfUrl) {
+            try {
+                const pdfRes = await fetch(gospelvereinPageData.pdfUrl);
+                const pdfBuffer = await pdfRes.arrayBuffer();
+                attachments.push({
+                    filename: gospelvereinPageData.pdfFilename || 'Zahlungsinformationen.pdf',
+                    content: Buffer.from(pdfBuffer),
+                    contentType: 'application/pdf'
+                });
+            } catch (err) {
+                console.error("Failed to fetch PDF for attachment:", err);
+            }
+        }
+
+        // Send Confirmation Email to Submitter
+        const confirmationMessage = gospelvereinPageData?.confirmationEmailMessage || 'Vielen Dank für deine Anmeldung als Gönner. Im Anhang findest du die Zahlungsinformationen.';
+        await transporter.sendMail({
+            from: `"Gospelverein" <${process.env.EMAIL_USER || "noreply@gospelproject.ch"}>`,
+            to: email,
+            subject: "Anmeldebestätigung: Gospelverein Gönner",
+            text: confirmationMessage,
+            html: `<p>${confirmationMessage.replace(/\\n/g, '<br>')}</p>`,
+            attachments: attachments
         });
 
         return NextResponse.json({ message: "Nachricht erfolgreich versendet" }, { status: 200 });
