@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import crypto from 'crypto';
 import { client } from '@/sanity/client';
 import fs from 'fs';
+import { toHTML } from '@portabletext/to-html';
 
 export async function POST(request: Request) {
     try {
@@ -180,13 +181,33 @@ export async function POST(request: Request) {
         }
 
         // Send Confirmation Email to Submitter
-        const confirmationMessage = gospelvereinPageData?.confirmationEmailMessage || 'Vielen Dank für deine Anmeldung als Gönner. Im Anhang findest du die Zahlungsinformationen.';
+        const rawConfirmationMessage = gospelvereinPageData?.confirmationEmailMessage;
+        let htmlConfirmationMessage = '<p>Vielen Dank für deine Anmeldung als Gönner. Im Anhang findest du die Zahlungsinformationen.</p>';
+        let textConfirmationMessage = 'Vielen Dank für deine Anmeldung als Gönner. Im Anhang findest du die Zahlungsinformationen.';
+
+        if (rawConfirmationMessage) {
+            if (Array.isArray(rawConfirmationMessage)) {
+                htmlConfirmationMessage = toHTML(rawConfirmationMessage);
+                // Extract plain text from portable text blocks
+                textConfirmationMessage = rawConfirmationMessage.map(block => {
+                    if (block._type !== 'block' || !block.children) {
+                        return '';
+                    }
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    return block.children.map((child: any) => child.text).join('');
+                }).filter(text => text).join('\n\n');
+            } else if (typeof rawConfirmationMessage === 'string') {
+                htmlConfirmationMessage = `<p>${rawConfirmationMessage.replace(/\\n/g, '<br>')}</p>`;
+                textConfirmationMessage = rawConfirmationMessage;
+            }
+        }
+
         await transporter.sendMail({
             from: `"Gospelverein" <${process.env.EMAIL_USER || "noreply@gospelproject.ch"}>`,
             to: email,
             subject: "Anmeldebestätigung: Gospelverein Gönner",
-            text: confirmationMessage,
-            html: `<p>${confirmationMessage.replace(/\\n/g, '<br>')}</p>`,
+            text: textConfirmationMessage,
+            html: htmlConfirmationMessage,
             attachments: attachments
         });
 
