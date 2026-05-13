@@ -106,7 +106,12 @@ export async function Navigation() {
         client.fetch<{
             singletons: Array<{ _id: string; visible: boolean | null }>;
             navigationOrder: Array<{ id: string; title: string | null; children: Array<{ id: string; title: string | null }> | null }> | null;
-        }>(VISIBILITY_QUERY, { ids: SINGLETON_IDS }),
+        }>(VISIBILITY_QUERY, { ids: SINGLETON_IDS }, {
+            next: {
+                revalidate: 3600,
+                tags: ['navigationSettings', ...SINGLETON_IDS],
+            },
+        }),
         Promise.resolve([
             ...getRoutes(APP_DIR),
         ] as Route[]),
