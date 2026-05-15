@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -61,6 +62,9 @@ export default async function RootLayout({
             return null;
           }
         })()}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </body>
     </html>
   );
