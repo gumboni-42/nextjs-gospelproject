@@ -190,15 +190,33 @@ export async function POST(request: Request) {
 
         // If either method was chosen and succeeded, increment Sanity count
         if (mailchimpSuccess || googleSheetsSuccess) {
-            if (_id && process.env.SANITY_API_WRITE_TOKEN) {
-                const writeClient = client.withConfig({
-                    token: process.env.SANITY_API_WRITE_TOKEN,
-                    useCdn: false
-                });
+            try {
+                if (_id && process.env.SANITY_API_WRITE_TOKEN) {
+                    const writeClient = client.withConfig({
+                        token: process.env.SANITY_API_WRITE_TOKEN,
+                        useCdn: false
+                    });
 
-                await writeClient.patch(_id).setIfMissing({ signupCount: 0 }).inc({ signupCount: 1 }).commit();
-            } else if (!process.env.SANITY_API_WRITE_TOKEN) {
-                console.warn('SANITY_API_WRITE_TOKEN is not defined, cannot increment signupCount.');
+                    const publishedId = _id.replace(/^drafts\./, '');
+
+                    // Always increment the published document
+                    await writeClient.patch(publishedId).setIfMissing({ signupCount: 0 }).inc({ signupCount: 1 }).commit();
+                    console.log(`signupCount incremented for published document ${publishedId}`);
+
+                    // Also try to increment the draft (if one exists) to prevent
+                    // Studio publish from overwriting the count with a stale value
+                    try {
+                        await writeClient.patch(`drafts.${publishedId}`).setIfMissing({ signupCount: 0 }).inc({ signupCount: 1 }).commit();
+                        console.log(`signupCount also incremented for draft document`);
+                    } catch {
+                        // Draft doesn't exist — that's fine
+                    }
+                } else if (!process.env.SANITY_API_WRITE_TOKEN) {
+                    console.warn('SANITY_API_WRITE_TOKEN is not defined, cannot increment signupCount.');
+                }
+            } catch (countError) {
+                // Don't fail the signup just because the count increment failed
+                console.error('Failed to increment signupCount in Sanity:', countError);
             }
 
             // Send Email Confirmation
