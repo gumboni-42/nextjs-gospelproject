@@ -1,10 +1,10 @@
 import { type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
 import { PortableText } from "@/components/CustomPortableText";
-import Link from "next/link";
 import { HeroSection } from "@/components/HeroSection";
 import { PageLogo } from "@/components/PageLogo";
 import { CallToAction } from "@/components/CallToAction";
+import { PopupModal } from "@/components/PopupModal";
 
 const GOSPELATION_QUERY = `*[_type == "gospelationPage"][0]{
   ...,
@@ -15,6 +15,11 @@ const GOSPELATION_QUERY = `*[_type == "gospelationPage"][0]{
     linkType,
     internalLink,
     url
+  },
+  "popupModal": popupModal {
+    buttonText,
+    image,
+    text
   }
 }`;
 
@@ -45,6 +50,13 @@ export default async function GospelationPage() {
             />
             <div className="container mx-auto px-4 py-16">
                 <div className="max-w-2xl mx-auto">
+                    {data.popupModal && (
+                        <PopupModal
+                            buttonText={data.popupModal.buttonText}
+                            image={data.popupModal.image}
+                            text={data.popupModal.text}
+                        />
+                    )}
                     <PageLogo logo={data.logo} title={data.title} show={data.showLogo} />
                     {data.subtitle && (
                         <h2 className="text-2xl mb-10 text-center">
