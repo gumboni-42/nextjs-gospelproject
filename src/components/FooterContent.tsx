@@ -60,7 +60,7 @@ function AppleMusicIcon() {
     )
 }
 
-export function FooterContent({ data }: { data: FooterData }) {
+export function FooterContent({ data, memberPageVisible }: { data: FooterData; memberPageVisible?: boolean }) {
     return (
         <footer className="bg-(--var(--background)) mt-auto flex flex-col relative overflow-hidden md:min-h-[25vw] md:justify-end">
 
@@ -213,6 +213,15 @@ export function FooterContent({ data }: { data: FooterData }) {
 
                         {/* Legal, Newsletter & Copyright */}
                         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-(--text-secondary)">
+                            {memberPageVisible && (
+                                <Link
+                                    href="/gospelproject/member"
+                                    className="hover:text-white transition-colors font-medium"
+                                    style={{ color: 'var(--gospel-primary)' }}
+                                >
+                                    Member-Bereich
+                                </Link>
+                            )}
                             <Link
                                 href="/newsletter"
                                 className="hover:text-white transition-colors font-medium"
