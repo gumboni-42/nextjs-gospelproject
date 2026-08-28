@@ -58,8 +58,10 @@ export default function CloudinaryImage(props: CloudinaryImageProps) {
             style={style}
             {...(finalEffects.length > 0 ? { effects: finalEffects } : {})}
             onError={(e) => {
-                console.warn(`[CloudinaryImage] Failed to load image "${cleanSrc}" — check that this asset exists in Cloudinary.`);
-                setHasError(true);
+                if (mounted) {
+                    console.warn(`[CloudinaryImage] Failed to load image "${cleanSrc}" — check that this asset exists in Cloudinary.`);
+                    setHasError(true);
+                }
                 onError?.(e);
             }}
         />
