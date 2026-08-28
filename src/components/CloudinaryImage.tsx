@@ -7,10 +7,11 @@ import { useEffect, useState } from 'react';
 
 interface CloudinaryImageProps extends CldImageProps {
     invertInDarkMode?: boolean;
+    fallbackSrc?: string;
 }
 
 export default function CloudinaryImage(props: CloudinaryImageProps) {
-    const { invertInDarkMode, effects, src, onError, ...rest } = props;
+    const { invertInDarkMode, fallbackSrc, effects, src, onError, alt, width, height, className, style, ...rest } = props;
     const { theme } = useTheme();
     const [mounted, setMounted] = useState(false);
     const [hasError, setHasError] = useState(false);
@@ -30,12 +31,31 @@ export default function CloudinaryImage(props: CloudinaryImageProps) {
         finalEffects.push({ negate: true });
     }
 
-    if (!cleanSrc || hasError) return null;
+    if (hasError || !cleanSrc) {
+        if (fallbackSrc) {
+            return (
+                <img
+                    src={fallbackSrc}
+                    alt={alt || ''}
+                    width={typeof width === 'number' || typeof width === 'string' ? width : undefined}
+                    height={typeof height === 'number' || typeof height === 'string' ? height : undefined}
+                    className={className}
+                    style={style}
+                />
+            );
+        }
+        return null;
+    }
 
     return (
         <CldImage 
             {...rest} 
             src={cleanSrc} 
+            alt={alt}
+            width={width}
+            height={height}
+            className={className}
+            style={style}
             {...(finalEffects.length > 0 ? { effects: finalEffects } : {})}
             onError={(e) => {
                 console.warn(`[CloudinaryImage] Failed to load image "${cleanSrc}" — check that this asset exists in Cloudinary.`);
