@@ -65,8 +65,31 @@ export default async function SponsoringPage() {
                         </h2>
                     )}
 
-                    <div className="prose max-w-none mb-16">
+                    <div className="prose max-w-none mb-10">
                         {data.body && <PortableText value={data.body} />}
+                    </div>
+
+                    {/* Wunschliste CTA */}
+                    <div className="mb-16 rounded-2xl p-8 text-center"
+                        style={{ background: "var(--surface)", border: "1px solid var(--border-color)" }}>
+                        <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-3"
+                            style={{ color: "var(--gospel-primary)" }}>
+                            Gezielt unterstützen
+                        </p>
+                        <h3 className="text-2xl font-bold mb-3">Unsere Wunschliste</h3>
+                        <p className="text-sm mb-6 max-w-sm mx-auto" style={{ color: "var(--text-muted)" }}>
+                            Wähle selbst aus, welchen Teil des Gospelprojects du finanzieren möchtest – von der Eventtechnik bis zu einzelnen Songs.
+                        </p>
+                        <Link
+                            href="/sponsoring/wunschliste"
+                            className="inline-flex items-center gap-2 px-7 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
+                            style={{ background: "var(--gospel-primary)", color: "#fff" }}
+                        >
+                            Zur Wunschliste
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </Link>
                     </div>
 
                     {data.qrCodeImage?.public_id ? (
