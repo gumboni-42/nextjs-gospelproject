@@ -3,6 +3,8 @@ import { sanityFetch } from "@/sanity/fetch";
 import { GalleryView } from "@/components/GalleryView";
 import { HeroSection } from "@/components/HeroSection";
 import { VideoGallery } from "@/components/VideoGallery";
+import { PortableText } from "@/components/CustomPortableText";
+import { PageLogo } from "@/components/PageLogo";
 
 interface CloudinaryAsset {
     _key: string;
@@ -32,10 +34,14 @@ interface GalleryDocument extends SanityDocument {
         thumbnail?: CloudinaryAsset;
     }[];
     title?: string;
+    subtitle?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    body?: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     heroImage?: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logo?: any;
+    showLogo?: boolean;
 }
 
 const GALLERY_QUERY = `*[_type == "impressionenPage" && _id == "impressionenPage"][0]{
@@ -86,6 +92,23 @@ export default async function ImpressionenPage() {
                 title={galleryData.title || 'Impressionen'}
                 image={galleryData.heroImage}
             />
+            {(galleryData.body || galleryData.subtitle || (galleryData.showLogo && galleryData.logo)) && (
+                <div className="container mx-auto px-4 py-16">
+                    <div className="max-w-2xl mx-auto">
+                        <PageLogo logo={galleryData.logo} title={galleryData.title} show={galleryData.showLogo} />
+                        {galleryData.subtitle && (
+                            <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
+                                {galleryData.subtitle}
+                            </h2>
+                        )}
+                        {galleryData.body && (
+                            <div className="prose max-w-none">
+                                <PortableText value={galleryData.body} />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
             <VideoGallery videos={galleryData.videos} />
             <GalleryView data={galleryData} />
 
