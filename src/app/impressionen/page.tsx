@@ -1,10 +1,12 @@
 import { type SanityDocument } from "next-sanity";
+import Link from "next/link";
 import { sanityFetch } from "@/sanity/fetch";
 import { GalleryView } from "@/components/GalleryView";
 import { HeroSection } from "@/components/HeroSection";
 import { VideoGallery } from "@/components/VideoGallery";
 import { PortableText } from "@/components/CustomPortableText";
 import { PageLogo } from "@/components/PageLogo";
+import CldImage from "@/components/CloudinaryImage";
 
 interface CloudinaryAsset {
     _key: string;
@@ -22,6 +24,18 @@ interface YearEntry {
     year: string;
     eventName?: string;
     images: CloudinaryAsset[];
+}
+
+interface CDItem {
+    _key?: string;
+    image?: CloudinaryAsset;
+    title?: string;
+    link?: string;
+}
+
+interface CDPromo {
+    title?: string;
+    cds?: CDItem[];
 }
 
 interface GalleryDocument extends SanityDocument {
@@ -42,9 +56,10 @@ interface GalleryDocument extends SanityDocument {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logo?: any;
     showLogo?: boolean;
+    cdPromo?: CDPromo;
 }
 
-const GALLERY_QUERY = `*[_type == "impressionenPage" && _id == "impressionenPage"][0]{
+const GALLERY_QUERY = `*[_type == "impressionenPage"][0]{
   ...,
   years[]{
     ...,
@@ -63,6 +78,18 @@ const GALLERY_QUERY = `*[_type == "impressionenPage" && _id == "impressionenPage
       "secure_url": secure_url,
       "public_id": public_id,
       "context": context
+    }
+  },
+  cdPromo{
+    ...,
+    cds[]{
+      ...,
+      image{
+        ...,
+        "secure_url": secure_url,
+        "public_id": public_id,
+        "context": context
+      }
     }
   }
 }`;
@@ -93,7 +120,7 @@ export default async function ImpressionenPage() {
                 image={galleryData.heroImage}
             />
             <VideoGallery videos={galleryData.videos} />
-            {(galleryData.body || galleryData.subtitle || (galleryData.showLogo && galleryData.logo)) && (
+            {(galleryData.body || galleryData.subtitle || (galleryData.showLogo && galleryData.logo) || (galleryData.cdPromo?.cds && galleryData.cdPromo.cds.length > 0)) && (
                 <div className="container mx-auto px-4 py-16">
                     <div className="max-w-2xl mx-auto">
                         <PageLogo logo={galleryData.logo} title={galleryData.title} show={galleryData.showLogo} />
@@ -105,6 +132,57 @@ export default async function ImpressionenPage() {
                         {galleryData.body && (
                             <div className="prose max-w-none">
                                 <PortableText value={galleryData.body} />
+                            </div>
+                        )}
+
+                        {galleryData.cdPromo?.cds && galleryData.cdPromo.cds.length > 0 && (
+                            <div className={galleryData.body ? 'mt-12' : ''}>
+                                {galleryData.cdPromo.title && (
+                                    <h3 className="text-xl font-bold text-center mb-6">
+                                        {galleryData.cdPromo.title}
+                                    </h3>
+                                )}
+                                <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-lg mx-auto">
+                                    {galleryData.cdPromo.cds.map((cd, index) => {
+                                        const publicId = cd.image?.public_id;
+                                        if (!publicId) return null;
+
+                                        const cardContent = (
+                                            <div className="group flex flex-col items-center">
+                                                <div className="relative aspect-square w-full overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300" style={{ backgroundColor: 'var(--surface)' }}>
+                                                    <CldImage
+                                                        src={publicId}
+                                                        alt={cd.title || `CD ${index + 1}`}
+                                                        fill
+                                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                                        sizes="(max-width: 640px) 50vw, 250px"
+                                                    />
+                                                </div>
+                                                {cd.title && (
+                                                    <p className="mt-2.5 text-center text-sm font-medium text-(--text-secondary) group-hover:text-(--text-primary) transition-colors">
+                                                        {cd.title}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        );
+
+                                        return cd.link ? (
+                                            <Link
+                                                key={cd._key || index}
+                                                href={cd.link}
+                                                target={cd.link.startsWith('http') ? '_blank' : undefined}
+                                                rel={cd.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                                className="block"
+                                            >
+                                                {cardContent}
+                                            </Link>
+                                        ) : (
+                                            <div key={cd._key || index}>
+                                                {cardContent}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
                         )}
                     </div>

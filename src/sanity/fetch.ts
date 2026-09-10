@@ -30,7 +30,7 @@ export async function sanityFetch<QueryResponse>({
             stega: true,
         }),
         next: {
-            revalidate: isDraftMode ? 0 : 3600, // 1 hour backup
+            revalidate: (isDraftMode || process.env.NODE_ENV === 'development') ? 0 : 3600, // Fresh data in dev/draft, 1 hour backup in prod
             tags, // This connects the fetch to your webhook!
         },
     });
