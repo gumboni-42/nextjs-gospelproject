@@ -113,6 +113,10 @@ export default async function ImpressionenPage() {
         );
     }
 
+    const hasCds = Boolean(galleryData.cdPromo?.cds && galleryData.cdPromo.cds.length > 0);
+    const hasBody = Boolean(galleryData.body);
+    const hasBoth = hasBody && hasCds;
+
     return (
         <main className="min-h-screen">
             <HeroSection
@@ -120,71 +124,79 @@ export default async function ImpressionenPage() {
                 image={galleryData.heroImage}
             />
             <VideoGallery videos={galleryData.videos} />
-            {(galleryData.body || galleryData.subtitle || (galleryData.showLogo && galleryData.logo) || (galleryData.cdPromo?.cds && galleryData.cdPromo.cds.length > 0)) && (
+            {(hasBody || galleryData.subtitle || (galleryData.showLogo && galleryData.logo) || hasCds) && (
                 <div className="container mx-auto px-4 py-16">
-                    <div className="max-w-2xl mx-auto">
+                    <div className={`${hasBoth ? 'max-w-5xl' : 'max-w-2xl'} mx-auto`}>
                         <PageLogo logo={galleryData.logo} title={galleryData.title} show={galleryData.showLogo} />
                         {galleryData.subtitle && (
                             <h2 className="text-2xl mb-10 font-medium text-center" style={{ color: 'var(--text-secondary)' }}>
                                 {galleryData.subtitle}
                             </h2>
                         )}
-                        {galleryData.body && (
-                            <div className="prose max-w-none">
-                                <PortableText value={galleryData.body} />
-                            </div>
-                        )}
 
-                        {galleryData.cdPromo?.cds && galleryData.cdPromo.cds.length > 0 && (
-                            <div className={galleryData.body ? 'mt-12' : ''}>
-                                {galleryData.cdPromo.title && (
-                                    <h3 className="text-xl font-bold text-center mb-6">
-                                        {galleryData.cdPromo.title}
-                                    </h3>
-                                )}
-                                <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-lg mx-auto">
-                                    {galleryData.cdPromo.cds.map((cd, index) => {
-                                        const publicId = cd.image?.public_id;
-                                        if (!publicId) return null;
-
-                                        const cardContent = (
-                                            <div className="group flex flex-col items-center">
-                                                <div className="relative aspect-square w-full overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300" style={{ backgroundColor: 'var(--surface)' }}>
-                                                    <CldImage
-                                                        src={publicId}
-                                                        alt={cd.title || `CD ${index + 1}`}
-                                                        fill
-                                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                                        sizes="(max-width: 640px) 50vw, 250px"
-                                                    />
-                                                </div>
-                                                {cd.title && (
-                                                    <p className="mt-2.5 text-center text-sm font-medium text-(--text-secondary) group-hover:text-(--text-primary) transition-colors">
-                                                        {cd.title}
-                                                    </p>
-                                                )}
-                                            </div>
-                                        );
-
-                                        return cd.link ? (
-                                            <Link
-                                                key={cd._key || index}
-                                                href={cd.link}
-                                                target={cd.link.startsWith('http') ? '_blank' : undefined}
-                                                rel={cd.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                                className="block"
-                                            >
-                                                {cardContent}
-                                            </Link>
-                                        ) : (
-                                            <div key={cd._key || index}>
-                                                {cardContent}
-                                            </div>
-                                        );
-                                    })}
+                        <div className={hasBoth ? 'grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center' : ''}>
+                            {hasBody && (
+                                <div className="prose max-w-none">
+                                    <PortableText value={galleryData.body} />
                                 </div>
-                            </div>
-                        )}
+                            )}
+
+                            {hasCds && (
+                                <div className={`w-full ${!hasBoth && hasBody ? 'mt-12' : ''}`}>
+                                    {galleryData.cdPromo?.title && (
+                                        <h3 className="text-xl font-bold text-center mb-6">
+                                            {galleryData.cdPromo.title}
+                                        </h3>
+                                    )}
+                                    <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-md mx-auto">
+                                        {galleryData.cdPromo?.cds?.map((cd, index) => {
+                                            const publicId = cd.image?.public_id;
+                                            if (!publicId) return null;
+
+                                            const cardContent = (
+                                                <div className="group flex flex-col items-center">
+                                                    <div
+                                                        className="relative aspect-square w-full overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-2 sm:p-3 flex items-center justify-center"
+                                                        style={{ backgroundColor: 'var(--surface)' }}
+                                                    >
+                                                        <div className="relative w-full h-full">
+                                                            <CldImage
+                                                                src={publicId}
+                                                                alt={cd.title || `CD ${index + 1}`}
+                                                                fill
+                                                                className="object-contain transition-transform duration-500 group-hover:scale-105"
+                                                                sizes="(max-width: 640px) 50vw, 250px"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    {cd.title && (
+                                                        <p className="mt-2.5 text-center text-sm font-medium text-(--text-secondary) group-hover:text-(--text-primary) transition-colors">
+                                                            {cd.title}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            );
+
+                                            return cd.link ? (
+                                                <Link
+                                                    key={cd._key || index}
+                                                    href={cd.link}
+                                                    target={cd.link.startsWith('http') ? '_blank' : undefined}
+                                                    rel={cd.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                                    className="block"
+                                                >
+                                                    {cardContent}
+                                                </Link>
+                                            ) : (
+                                                <div key={cd._key || index}>
+                                                    {cardContent}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
