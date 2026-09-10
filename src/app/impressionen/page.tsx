@@ -92,6 +92,7 @@ export default async function ImpressionenPage() {
                 title={galleryData.title || 'Impressionen'}
                 image={galleryData.heroImage}
             />
+            <VideoGallery videos={galleryData.videos} />
             {(galleryData.body || galleryData.subtitle || (galleryData.showLogo && galleryData.logo)) && (
                 <div className="container mx-auto px-4 py-16">
                     <div className="max-w-2xl mx-auto">
@@ -109,7 +110,6 @@ export default async function ImpressionenPage() {
                     </div>
                 </div>
             )}
-            <VideoGallery videos={galleryData.videos} />
             <GalleryView data={galleryData} />
 
         </main>
