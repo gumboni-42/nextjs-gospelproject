@@ -52,13 +52,12 @@ export default async function AgendaPage() {
                     <div className="grid gap-6">
                         {agendaItems.map((item: AgendaItem) => {
                             const date = new Date(item.date);
-                            const formattedDate = date.toLocaleDateString('de-CH', {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                                timeZone: 'Europe/Zurich',
-                            });
+                            const day = date.toLocaleDateString('de-CH', { day: 'numeric', timeZone: 'Europe/Zurich' });
+                            const month = date.toLocaleDateString('de-CH', { month: 'short', timeZone: 'Europe/Zurich' }).toUpperCase().replace('.', '');
+                            const weekdayShort = date.toLocaleDateString('de-CH', { weekday: 'short', timeZone: 'Europe/Zurich' });
+                            const weekdayLong = date.toLocaleDateString('de-CH', { weekday: 'long', timeZone: 'Europe/Zurich' });
+                            const year = date.toLocaleDateString('de-CH', { year: 'numeric', timeZone: 'Europe/Zurich' });
+                            const monthLong = date.toLocaleDateString('de-CH', { month: 'long', timeZone: 'Europe/Zurich' });
                             const time = date.toLocaleTimeString('de-CH', {
                                 hour: '2-digit',
                                 minute: '2-digit',
@@ -68,7 +67,7 @@ export default async function AgendaPage() {
                             return (
                                 <div
                                     key={item._id}
-                                    className="agenda-card group relative overflow-hidden rounded-2xl p-6 shadow-lg ring-1 transition-all hover:shadow-xl"
+                                    className="agenda-card group relative overflow-hidden rounded-2xl p-5 sm:p-6 shadow-lg ring-1 transition-all hover:shadow-xl"
                                 >
                                     {/* Optional Logo */}
                                     {item.logoType && item.logoType !== 'none' && (
@@ -83,33 +82,83 @@ export default async function AgendaPage() {
                                         </div>
                                     )}
 
-                                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 relative z-20">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-2 text-sm font-medium text-[color:var(--gospel-primary)] mb-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-                                                    <path fillRule="evenodd" d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z" clipRule="evenodd" />
-                                                </svg>
-                                                {formattedDate} • {time}
+                                    <div className="flex flex-row items-start gap-4 sm:gap-6 relative z-20">
+                                        {/* Calendar Leaf */}
+                                        <div className="shrink-0">
+                                            <div
+                                                className="w-22 sm:w-28 rounded-2xl overflow-hidden shadow-md ring-1 ring-black/10 bg-white transition-transform duration-300 group-hover:scale-105 select-none"
+                                            >
+                                                {/* Header band */}
+                                                <div
+                                                    className="py-1.5 px-2 text-center text-xs sm:text-sm font-bold uppercase tracking-wider text-white"
+                                                    style={{ backgroundColor: 'var(--gospel-primary)' }}
+                                                >
+                                                    {month}
+                                                </div>
+                                                {/* Day number & weekday */}
+                                                <div className="py-2.5 sm:py-3 px-2 text-center flex flex-col items-center justify-center bg-white">
+                                                    <span
+                                                        className="text-4xl sm:text-5xl font-black tracking-tight leading-none text-neutral-900"
+                                                    >
+                                                        {day}
+                                                    </span>
+                                                    <span
+                                                        className="text-xs sm:text-sm font-bold uppercase tracking-wider mt-1.5 text-neutral-600"
+                                                    >
+                                                        {weekdayShort}
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <h2 className="text-2xl font-bold mb-1" style={{ color: 'var(--foreground)' }}>
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="flex-1 min-w-0">
+                                            {/* Title */}
+                                            <h2
+                                                className="text-xl sm:text-2xl font-bold mb-1.5 pr-0 sm:pr-28"
+                                                style={{ color: 'var(--foreground)' }}
+                                            >
                                                 {item.title}
                                             </h2>
-                                            <div className="mt-4 md:mt-0 flex-shrink-0">
-                                                <a
-                                                    href={item.placeUrl}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-2 transition-colors hover:text-[color:var(--gospel-primary)]"
-                                                    style={{ color: 'var(--text-secondary)' }}
-                                                >
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 opacity-70">
-                                                        <path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.62.829.799 1.654 1.381 2.274 1.766.311.192.571.337.757.433.093.048.17.088.232.117.029.014.05.024.066.032l.009.004.003.002zM10 13a4 4 0 100-8 4 4 0 000 8z" clipRule="evenodd" />
+
+                                            {/* Time & full date meta row */}
+                                            <div
+                                                className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm font-medium mb-2"
+                                                style={{ color: 'var(--gospel-primary)' }}
+                                            >
+                                                <span className="flex items-center gap-1.5">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-80">
+                                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clipRule="evenodd" />
                                                     </svg>
-                                                    <span>{item.placeName}</span>
-                                                </a>
+                                                    {time} Uhr
+                                                </span>
+                                                <span className="text-(--text-muted)">•</span>
+                                                <span style={{ color: 'var(--text-secondary)' }}>
+                                                    {weekdayLong}, {day}. {monthLong} {year}
+                                                </span>
                                             </div>
+
+                                            {/* Location */}
+                                            {item.placeName && (
+                                                <div className="mt-1">
+                                                    <a
+                                                        href={item.placeUrl || '#'}
+                                                        target={item.placeUrl ? '_blank' : undefined}
+                                                        rel={item.placeUrl ? 'noopener noreferrer' : undefined}
+                                                        className="inline-flex items-center gap-1.5 text-sm transition-colors hover:text-[color:var(--gospel-primary)]"
+                                                        style={{ color: 'var(--text-secondary)' }}
+                                                    >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-70 shrink-0">
+                                                            <path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.62.829.799 1.654 1.381 2.274 1.766.311.192.571.337.757.433.093.048.17.088.232.117.029.014.05.024.066.032l.009.004.003.002zM10 13a4 4 0 100-8 4 4 0 000 8z" clipRule="evenodd" />
+                                                        </svg>
+                                                        <span>{item.placeName}</span>
+                                                    </a>
+                                                </div>
+                                            )}
+
+                                            {/* Description */}
                                             {item.description && (
-                                                <div className="mt-4 prose prose-sm" style={{ color: 'var(--text-secondary)' }}>
+                                                <div className="mt-3 prose prose-sm" style={{ color: 'var(--text-secondary)' }}>
                                                     <PortableText value={item.description} />
                                                 </div>
                                             )}
