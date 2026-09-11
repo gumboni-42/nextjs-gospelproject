@@ -2,14 +2,24 @@ import { PortableText, type SanityDocument } from "next-sanity";
 import { sanityFetch } from "@/sanity/fetch";
 import { HeroSection } from "@/components/HeroSection";
 import { PageLogo } from "@/components/PageLogo";
+import { ZvvWidget } from "@/components/ZvvWidget";
 import Image from "next/image";
 
 interface AgendaItem extends SanityDocument {
     _id: string;
     date: string;
+    doorsOpenTime?: string;
     title: string;
+    subtitle?: string;
     placeName: string;
-    placeUrl: string;
+    placeAddress?: string;
+    placeUrl?: string;
+    transportInfo?: string;
+    zvvCode?: string;
+    zvvUrl?: string;
+    ticketInfo?: string;
+    ticketUrl?: string;
+    ticketButtonText?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     description?: any;
     active: boolean;
@@ -21,7 +31,24 @@ const AGENDA_QUERY = `{
       _type == "agenda"
       && active == true
       && date >= now()
-    ]|order(date asc){_id, date, title, placeName, placeUrl, description, logoType},
+    ]|order(date asc){
+      _id,
+      date,
+      doorsOpenTime,
+      title,
+      subtitle,
+      placeName,
+      placeAddress,
+      placeUrl,
+      transportInfo,
+      zvvCode,
+      zvvUrl,
+      ticketInfo,
+      ticketUrl,
+      ticketButtonText,
+      description,
+      logoType
+    },
     "page": *[_type == "agendaPage"][0]
 }`;
 
@@ -63,6 +90,13 @@ export default async function AgendaPage() {
                                 minute: '2-digit',
                                 timeZone: 'Europe/Zurich',
                             });
+
+                            const doorsOpenFormatted = item.doorsOpenTime?.trim();
+                            const doorsOpenString = doorsOpenFormatted
+                                ? ` (Türöffnung ${doorsOpenFormatted.toLowerCase().endsWith('uhr') ? doorsOpenFormatted : `${doorsOpenFormatted} Uhr`})`
+                                : '';
+
+                            const mapsUrl = item.placeUrl || (item.placeName || item.placeAddress ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([item.placeName, item.placeAddress].filter(Boolean).join(', '))}` : undefined);
 
                             return (
                                 <div
@@ -113,9 +147,19 @@ export default async function AgendaPage() {
 
                                         {/* Content */}
                                         <div className="flex-1 min-w-0">
+                                            {/* Optional Subtitle / Teaser */}
+                                            {item.subtitle && (
+                                                <div
+                                                    className="text-xs sm:text-sm font-semibold tracking-wide uppercase mb-1 pr-0 sm:pr-28"
+                                                    style={{ color: 'var(--gospel-primary)' }}
+                                                >
+                                                    {item.subtitle}
+                                                </div>
+                                            )}
+
                                             {/* Title */}
                                             <h2
-                                                className="text-xl sm:text-2xl font-bold mb-1.5 pr-0 sm:pr-28"
+                                                className="text-xl sm:text-2xl font-bold mb-1.5 pr-0 sm:pr-28 leading-snug"
                                                 style={{ color: 'var(--foreground)' }}
                                             >
                                                 {item.title}
@@ -123,14 +167,14 @@ export default async function AgendaPage() {
 
                                             {/* Time & full date meta row */}
                                             <div
-                                                className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm font-medium mb-2"
+                                                className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm font-medium mb-2.5"
                                                 style={{ color: 'var(--gospel-primary)' }}
                                             >
                                                 <span className="flex items-center gap-1.5">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-80">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-80 shrink-0">
                                                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clipRule="evenodd" />
                                                     </svg>
-                                                    {time} Uhr
+                                                    {time} Uhr{doorsOpenString}
                                                 </span>
                                                 <span className="text-(--text-muted)">•</span>
                                                 <span style={{ color: 'var(--text-secondary)' }}>
@@ -138,21 +182,72 @@ export default async function AgendaPage() {
                                                 </span>
                                             </div>
 
-                                            {/* Location */}
-                                            {item.placeName && (
-                                                <div className="mt-1">
+                                            {/* Location & Address */}
+                                            {(item.placeName || item.placeAddress) && (
+                                                <div className="mb-3">
                                                     <a
-                                                        href={item.placeUrl || '#'}
-                                                        target={item.placeUrl ? '_blank' : undefined}
-                                                        rel={item.placeUrl ? 'noopener noreferrer' : undefined}
-                                                        className="inline-flex items-center gap-1.5 text-sm transition-colors hover:text-[color:var(--gospel-primary)]"
+                                                        href={mapsUrl || '#'}
+                                                        target={mapsUrl ? '_blank' : undefined}
+                                                        rel={mapsUrl ? 'noopener noreferrer' : undefined}
+                                                        className="inline-flex items-start gap-1.5 text-sm transition-colors hover:text-[color:var(--gospel-primary)] group/loc"
                                                         style={{ color: 'var(--text-secondary)' }}
                                                     >
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-70 shrink-0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-70 shrink-0 mt-0.5 group-hover/loc:text-[color:var(--gospel-primary)]">
                                                             <path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.62.829.799 1.654 1.381 2.274 1.766.311.192.571.337.757.433.093.048.17.088.232.117.029.014.05.024.066.032l.009.004.003.002zM10 13a4 4 0 100-8 4 4 0 000 8z" clipRule="evenodd" />
                                                         </svg>
-                                                        <span>{item.placeName}</span>
+                                                        <span>
+                                                            <span className="font-medium text-[color:var(--foreground)]">{item.placeName}</span>
+                                                            {item.placeAddress && (
+                                                                <span className="text-(--text-secondary) block sm:inline sm:ml-1.5">
+                                                                    {item.placeName ? `· ${item.placeAddress}` : item.placeAddress}
+                                                                </span>
+                                                            )}
+                                                            {mapsUrl && <span className="ml-1 text-xs opacity-60">↗</span>}
+                                                        </span>
                                                     </a>
+                                                </div>
+                                            )}
+
+                                            {/* Parking / Transit Info & ZVV Link / Widget */}
+                                            {(item.transportInfo || item.zvvCode || item.zvvUrl) && (
+                                                <ZvvWidget
+                                                    code={item.zvvCode || item.zvvUrl}
+                                                    eventDate={item.date}
+                                                    destinationName={item.placeAddress || item.placeName}
+                                                    transportInfo={item.transportInfo}
+                                                />
+                                            )}
+
+                                            {/* Tickets / Kollekte Action Row */}
+                                            {(item.ticketInfo || item.ticketUrl) && (
+                                                <div className="mb-3.5 flex flex-wrap items-center gap-2.5 pt-0.5">
+                                                    {item.ticketUrl && (
+                                                        <a
+                                                            href={item.ticketUrl}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white shadow-sm transition-all hover:opacity-90 active:scale-95"
+                                                            style={{ backgroundColor: 'var(--gospel-primary)' }}
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                                                                <path fillRule="evenodd" d="M1 4a1 1 0 011-1h16a1 1 0 011 1v2.5a1.5 1.5 0 000 3V14a1 1 0 01-1 1H2a1 1 0 01-1-1v-3.5a1.5 1.5 0 000-3V4zm3 3a1 1 0 00-1 1v4a1 1 0 001 1h12a1 1 0 001-1V8a1 1 0 00-1-1H4z" clipRule="evenodd" />
+                                                            </svg>
+                                                            <span>{item.ticketButtonText || "Tickets kaufen"}</span>
+                                                            <span className="text-xs opacity-80">↗</span>
+                                                        </a>
+                                                    )}
+
+                                                    {item.ticketInfo && (
+                                                        <span
+                                                            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium px-3 py-1.5 rounded-xl bg-black/5 dark:bg-white/5"
+                                                            style={{ color: 'var(--text-secondary)' }}
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-70">
+                                                                <path fillRule="evenodd" d="M1 4a1 1 0 011-1h16a1 1 0 011 1v2.5a1.5 1.5 0 000 3V14a1 1 0 01-1 1H2a1 1 0 01-1-1v-3.5a1.5 1.5 0 000-3V4zm3 3a1 1 0 00-1 1v4a1 1 0 001 1h12a1 1 0 001-1V8a1 1 0 00-1-1H4z" clipRule="evenodd" />
+                                                            </svg>
+                                                            <span>{item.ticketInfo}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             )}
 
