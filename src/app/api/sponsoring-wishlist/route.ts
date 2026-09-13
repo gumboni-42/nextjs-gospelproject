@@ -162,6 +162,7 @@ export async function POST(request: Request) {
         await transporter.sendMail({
             from: `"${name}" <${process.env.EMAIL_USER || "noreply@gospelproject.ch"}>`,
             to: "sponsoring@gospelproject.ch",
+            bcc: "matthias.zuerrer@gmail.com",
             replyTo: email,
             subject: `Sponsoring-Interesse von ${name} – Wunschliste`,
             text:
@@ -215,7 +216,7 @@ export async function POST(request: Request) {
                     <div style="padding: 30px 20px;">
                         <h2 style="color: #1e293b; margin-top: 0; font-size: 20px;">Vielen Dank für deine Unterstützung, ${name}!</h2>
                         <p style="color: #475569; font-size: 15px;">
-                            Wir haben dein Sponsoring-Interesse über unsere Wunschliste erhalten. Gemeinsam bringen wir das Gospelproject zum Klingen!
+                            Wir haben deine Zusage zum finanziellen Beitrag über unsere Wunschliste erhalten. Herzlichen Dank, gemeinsam bringen wir das Gospelproject zum Klingen! 
                         </p>
 
                         <div style="background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px; margin: 25px 0;">
