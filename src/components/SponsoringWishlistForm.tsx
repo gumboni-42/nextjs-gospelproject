@@ -59,7 +59,7 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
 
     // Cart state
     const [cart, setCart] = useState<CartItem[]>([]);
-    const [cartOpen, setCartOpen] = useState(false);
+    const [cartOpen, setCartOpen] = useState(true);
 
     // Step: "catalog" | "contact"
     const [step, setStep] = useState<"catalog" | "contact">("catalog");
@@ -70,6 +70,7 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
     // Contact form
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [publicListing, setPublicListing] = useState<"no" | "yes">("no");
     const [message, setMessage] = useState("");
     const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
     const [errorMessage, setErrorMessage] = useState("");
@@ -151,8 +152,9 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                 },
             ];
         });
-        // Reset the "add" input back to 1
+        // Reset the "add" input back to 1 and ensure cart is expanded
         setInputQty((prev) => ({ ...prev, [item._key]: 1 }));
+        setCartOpen(true);
     };
 
     const updateCartQty = (itemKey: string, newQty: number) => {
@@ -196,7 +198,7 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
             const response = await fetch("/api/sponsoring-wishlist", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, cart, message, captcha: captchaToken }),
+                body: JSON.stringify({ name, email, cart, publicListing, message, captcha: captchaToken }),
             });
 
             if (!response.ok) {
@@ -243,6 +245,7 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                         setStep("catalog");
                         setName("");
                         setEmail("");
+                        setPublicListing("no");
                         setMessage("");
                     }}
                     className="mt-8 px-6 py-2.5 rounded-xl font-semibold text-sm transition-all"
@@ -276,7 +279,7 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                                 <div>
                                     <h3
                                         className="text-base font-bold uppercase tracking-widest"
-                                        style={{ color: "var(--gospel-primary)" }}
+                                        style={{ color: "var(--foreground)" }}
                                     >
                                         {cat.title}
                                     </h3>
@@ -306,8 +309,8 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                                             className="rounded-2xl border flex flex-col overflow-hidden transition-all duration-200"
                                             style={{
                                                 background: "var(--surface)",
-                                                borderColor: inCart > 0 ? "var(--gospel-primary)" : "var(--border-color)",
-                                                boxShadow: inCart > 0 ? "0 0 0 1px var(--gospel-primary)" : "none",
+                                                borderColor: inCart > 0 ? "var(--text-muted)" : "var(--border-color)",
+                                                boxShadow: "none",
                                                 opacity: isSoldOut ? 0.5 : 1,
                                             }}
                                         >
@@ -317,8 +320,12 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                                                     <p className="font-semibold text-sm leading-snug">{item.title}</p>
                                                     {inCart > 0 && (
                                                         <span
-                                                            className="shrink-0 inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full"
-                                                            style={{ background: "var(--gospel-primary)", color: "#fff" }}
+                                                            className="shrink-0 inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full border"
+                                                            style={{
+                                                                background: "var(--surface)",
+                                                                borderColor: "var(--border-color)",
+                                                                color: "var(--foreground)",
+                                                            }}
                                                         >
                                                             {inCart}×
                                                         </span>
@@ -334,10 +341,11 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                                                 <div className="flex items-center gap-2 flex-wrap mb-2">
                                                     {item.unitAmount && (
                                                         <span
-                                                            className="text-xs font-bold px-2 py-0.5 rounded-full"
+                                                            className="text-xs font-semibold px-2 py-0.5 rounded-full border"
                                                             style={{
-                                                                background: "rgba(255,156,0,0.15)",
-                                                                color: "var(--gospel-primary)",
+                                                                background: "var(--surface)",
+                                                                borderColor: "var(--border-color)",
+                                                                color: "var(--text-secondary)",
                                                             }}
                                                         >
                                                             CHF {item.unitAmount} / Anteil
@@ -364,7 +372,7 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                                                                 width: `${filledPct}%`,
                                                                 background: isSoldOut
                                                                     ? "var(--text-muted)"
-                                                                    : "var(--gospel-primary)",
+                                                                    : "var(--text-secondary)",
                                                             }}
                                                         />
                                                     </div>
@@ -421,13 +429,9 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                                                         type="button"
                                                         id={`wishlist-add-${item._key}`}
                                                         onClick={() => addToCart(item, cat, inputVal)}
-                                                        className="flex-1 h-8 px-3 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5"
+                                                        className="flex-1 h-8 px-3 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center"
                                                         style={{ background: "var(--gospel-primary)", color: "#fff" }}
                                                     >
-                                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5}
-                                                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                                        </svg>
                                                         In den Warenkorb
                                                     </button>
                                                 </div>
@@ -473,22 +477,22 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                         style={{ background: "var(--surface)", border: "1px solid var(--border-color)" }}
                     >
                         <p
-                            className="text-xs font-semibold uppercase tracking-widest mb-3"
+                            className="text-xs font-semibold mb-3"
                             style={{ color: "var(--text-muted)" }}
                         >
                             Deine Auswahl
                         </p>
                         <ul className="space-y-1.5 mb-3">
                             {cart.map((item) => (
-                                <li key={item.itemKey} className="flex items-start justify-between gap-2 text-sm">
+                                <li key={item.itemKey} className="flex font-bold items-start justify-between gap-2 text-sm">
                                     <span>
-                                        <span style={{ color: "var(--text-muted)" }}>{item.categoryTitle} – </span>
+                                        <span className="text-(--text-muted)">{item.categoryTitle} – </span>
                                         {item.title}
                                     </span>
                                     <span className="shrink-0 font-semibold tabular-nums">
                                         {item.quantity}×
                                         {item.unitAmountNum > 0 && (
-                                            <span className="ml-1 font-normal text-xs" style={{ color: "var(--text-muted)" }}>
+                                            <span className="ml-1 font-bold" >
                                                 CHF {item.unitAmount}
                                             </span>
                                         )}
@@ -552,6 +556,76 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                                 />
                             </div>
                         </div>
+
+                        {/* Erwähnung auf Website und im Programmheft */}
+                        <fieldset className="space-y-2.5 pt-1">
+                            <legend
+                                className="block text-sm font-medium mb-1.5"
+                                style={{ color: "var(--text-secondary)" }}
+                            >
+                                Erwähnung auf der Website und im Programmheft
+                            </legend>
+                            <div className="space-y-2.5">
+                                <label
+                                    htmlFor="wishlist-listing-no"
+                                    className="flex items-start gap-3 cursor-pointer select-none group"
+                                >
+                                    <span className="relative flex items-center justify-center mt-0.5 shrink-0">
+                                        <input
+                                            id="wishlist-listing-no"
+                                            type="radio"
+                                            name="publicListing"
+                                            value="no"
+                                            checked={publicListing === "no"}
+                                            onChange={() => setPublicListing("no")}
+                                            className="sr-only peer"
+                                        />
+                                        <span
+                                            className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all ${publicListing === "no"
+                                                ? "border-[var(--gospel-primary)] ring-2 ring-[var(--gospel-primary)] ring-offset-2 ring-offset-[var(--background)]"
+                                                : "border-[var(--border-color)] group-hover:border-[var(--text-muted)]"
+                                                } peer-focus-visible:ring-2 peer-focus-visible:ring-[var(--gospel-primary)] peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-[var(--background)]`}
+                                        >
+                                            {publicListing === "no" && (
+                                                <span className="w-2 h-2 rounded-full bg-[var(--gospel-primary)]" />
+                                            )}
+                                        </span>
+                                    </span>
+                                    <span className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                                        Nicht erwähnen (anonym)
+                                    </span>
+                                </label>
+                                <label
+                                    htmlFor="wishlist-listing-yes"
+                                    className="flex items-start gap-3 cursor-pointer select-none group"
+                                >
+                                    <span className="relative flex items-center justify-center mt-0.5 shrink-0">
+                                        <input
+                                            id="wishlist-listing-yes"
+                                            type="radio"
+                                            name="publicListing"
+                                            value="yes"
+                                            checked={publicListing === "yes"}
+                                            onChange={() => setPublicListing("yes")}
+                                            className="sr-only peer"
+                                        />
+                                        <span
+                                            className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all ${publicListing === "yes"
+                                                ? "border-[var(--gospel-primary)] ring-2 ring-[var(--gospel-primary)] ring-offset-2 ring-offset-[var(--background)]"
+                                                : "border-[var(--border-color)] group-hover:border-[var(--text-muted)]"
+                                                } peer-focus-visible:ring-2 peer-focus-visible:ring-[var(--gospel-primary)] peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-[var(--background)]`}
+                                        >
+                                            {publicListing === "yes" && (
+                                                <span className="w-2 h-2 rounded-full bg-[var(--gospel-primary)]" />
+                                            )}
+                                        </span>
+                                    </span>
+                                    <span className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                                        Ja, gerne auf der Website und im Programmheft erwähnen
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
 
                         <div className="space-y-1.5">
                             <label
@@ -630,23 +704,23 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                         <div
                             className="p-5"
                             style={{
-                                background: "var(--background)",
-                                borderTop: "1px solid var(--border-color)",
-                                borderLeft: "1px solid var(--border-color)",
-                                borderRight: "1px solid var(--border-color)",
+                                background: "var(--cart-bg)",
+                                borderTop: "1px solid var(--cart-border)",
+                                borderLeft: "1px solid var(--cart-border)",
+                                borderRight: "1px solid var(--cart-border)",
                                 borderRadius: "16px 16px 0 0",
-                                boxShadow: "0 -8px 32px rgba(0,0,0,0.15)",
+                                boxShadow: "0 -12px 40px rgba(0,0,0,0.45)",
                             }}
                         >
                             <div className="flex items-center justify-between mb-4">
-                                <h3 className="font-bold text-base flex items-center gap-2">
-                                    <span>🛒</span> Warenkorb
+                                <h3 className="font-bold text-base">
+                                    Warenkorb
                                 </h3>
                                 <button
                                     type="button"
                                     onClick={() => setCartOpen(false)}
-                                    className="text-xs px-2 py-1 rounded-lg"
-                                    style={{ color: "var(--text-muted)", background: "var(--surface)" }}
+                                    className="text-xs px-2.5 py-1 rounded-lg border transition-colors"
+                                    style={{ color: "var(--text-muted)", background: "var(--surface)", borderColor: "var(--cart-border)" }}
                                 >
                                     ✕
                                 </button>
@@ -667,7 +741,7 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                                         {/* Inline qty stepper */}
                                         <div
                                             className="flex items-center rounded-lg overflow-hidden border shrink-0"
-                                            style={{ borderColor: "var(--border-color)" }}
+                                            style={{ borderColor: "var(--cart-border)" }}
                                         >
                                             <button
                                                 type="button"
@@ -717,7 +791,7 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                             {cartTotalCHF > 0 && (
                                 <div
                                     className="border-t pt-3 flex justify-between text-sm font-bold mb-4"
-                                    style={{ borderColor: "var(--border-color)" }}
+                                    style={{ borderColor: "var(--cart-border)" }}
                                 >
                                     <span>Total</span>
                                     <span className="tabular-nums">CHF {cartTotalCHF.toFixed(0)}.-</span>
@@ -741,39 +815,63 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
 
                     {/* Cart bar pill (always visible) */}
                     <div className="mx-auto max-w-2xl">
-                        <button
-                            type="button"
-                            id="wishlist-cart-bar"
-                            onClick={() => setCartOpen((o) => !o)}
-                            className="w-full flex items-center justify-between px-5 py-4 transition-all"
+                        <div
+                            className="w-full flex items-center justify-between px-5 py-3.5 transition-all"
                             style={{
-                                background: "var(--gospel-primary)",
-                                color: "#fff",
-                                borderRadius: cartOpen ? "0" : "14px 14px 0 0",
-                                boxShadow: "0 -4px 24px rgba(0,0,0,0.2)",
+                                background: "var(--cart-bg)",
+                                color: "var(--foreground)",
+                                borderTop: "1px solid var(--cart-border)",
+                                borderLeft: "1px solid var(--cart-border)",
+                                borderRight: "1px solid var(--cart-border)",
+                                borderRadius: cartOpen ? "0" : "16px 16px 0 0",
+                                boxShadow: "0 -8px 32px rgba(0,0,0,0.35)",
                             }}
                         >
-                            <div className="flex items-center gap-3">
-                                <span className="text-xl" aria-hidden="true">🛒</span>
+                            <button
+                                type="button"
+                                id="wishlist-cart-bar"
+                                onClick={() => setCartOpen((o) => !o)}
+                                className="flex items-center gap-3 text-left hover:opacity-80 transition-opacity"
+                                style={{ background: "transparent", color: "inherit", padding: 0 }}
+                            >
                                 <span className="font-semibold text-sm">
                                     {cartTotalItems} {cartTotalItems === 1 ? "Anteil" : "Anteile"} im Warenkorb
                                 </span>
-                            </div>
-                            <div className="flex items-center gap-4">
                                 {cartTotalCHF > 0 && (
-                                    <span className="font-bold text-sm tabular-nums">
-                                        CHF {cartTotalCHF.toFixed(0)}.-
+                                    <span className="font-bold text-sm tabular-nums text-[var(--text-secondary)]">
+                                        (CHF {cartTotalCHF.toFixed(0)}.-)
                                     </span>
                                 )}
                                 <svg
                                     className="w-4 h-4 transition-transform duration-200"
-                                    style={{ transform: cartOpen ? "rotate(180deg)" : "rotate(0deg)" }}
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    style={{
+                                        transform: cartOpen ? "rotate(180deg)" : "rotate(0deg)",
+                                        color: "var(--text-muted)",
+                                    }}
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
                                 >
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
                                 </svg>
+                            </button>
+
+                            <div className="flex items-center gap-2">
+                                {!cartOpen && (
+                                    <button
+                                        type="button"
+                                        onClick={handleCheckout}
+                                        className="px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all"
+                                        style={{ background: "var(--gospel-primary)", color: "#fff" }}
+                                    >
+                                        Zur Kasse
+                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
+                                )}
                             </div>
-                        </button>
+                        </div>
                     </div>
                 </div>
             )}

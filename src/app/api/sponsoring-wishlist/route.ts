@@ -47,17 +47,26 @@ const writeClient = createClient({
 
 export async function POST(request: Request) {
     try {
-        const { name, email, cart, message, captcha } = (await request.json()) as {
+        const { name, email, cart, message, captcha, publicListing } = (await request.json()) as {
             name: string;
             email: string;
             cart: CartItem[];
             message?: string;
             captcha: string;
+            publicListing?: string | boolean;
         };
 
         if (!name || !email || !cart || cart.length === 0 || !captcha) {
             return NextResponse.json({ message: "Fehlende Pflichtfelder" }, { status: 400 });
         }
+
+        const isListed =
+            publicListing === "yes" ||
+            publicListing === true ||
+            publicListing === "Ja, gerne auf der Website und im Programmheft erwähnen";
+        const listingText = isListed
+            ? "Ja, gerne auf der Website und im Programmheft erwähnen"
+            : "Nicht auf Website und im Programmheft erwähnen (anonym)";
 
         // ── reCAPTCHA verification ────────────────────────────────────────────
         const secretKey = process.env.RECAPTCHA_SECRET_KEY;
@@ -152,12 +161,13 @@ export async function POST(request: Request) {
         // ── 1. Send notification email to owner ──────────────────────────────
         await transporter.sendMail({
             from: `"${name}" <${process.env.EMAIL_USER || "noreply@gospelproject.ch"}>`,
-            to: "matthias.zuerrer@gospelproject.ch",
+            to: "sponsoring@gospelproject.ch",
             replyTo: email,
             subject: `Sponsoring-Interesse von ${name} – Wunschliste`,
             text:
                 `Neues Sponsoring-Interesse via Wunschliste\n\n` +
-                `Name: ${name}\nE-Mail: ${email}\n\n` +
+                `Name: ${name}\nE-Mail: ${email}\n` +
+                `Erwähnung (Website & Programmheft): ${listingText}\n\n` +
                 `Ausgewählte Wünsche:\n${itemsText}` +
                 (totalCHF > 0 ? `\n\nTotal: CHF ${totalCHF.toFixed(0)}.-` : "") +
                 (message ? `\n\nMitteilung:\n${message}` : ""),
@@ -165,6 +175,7 @@ export async function POST(request: Request) {
                 <h2>Neues Sponsoring-Interesse via Wunschliste</h2>
                 <p><strong>Name:</strong> ${name}</p>
                 <p><strong>E-Mail:</strong> <a href="mailto:${email}">${email}</a></p>
+                <p><strong>Erwähnung (Website &amp; Programmheft):</strong> ${listingText}</p>
                 <h3>Ausgewählte Wünsche (${cart.reduce((s, c) => s + c.quantity, 0)} Anteile):</h3>
                 <ul>${itemsHtml}</ul>
                 ${totalCHF > 0 ? `<p><strong>Gesamtbetrag: CHF ${totalCHF.toFixed(0)}.-</strong></p>` : ""}
@@ -234,6 +245,15 @@ export async function POST(request: Request) {
                             </table>
                         </div>
 
+                        <div style="background-color: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; padding: 14px 18px; margin: 20px 0;">
+                            <p style="margin: 0; font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                                Erwähnung auf Website &amp; Programmheft
+                            </p>
+                            <p style="margin: 4px 0 0 0; font-size: 14px; color: #1e293b; font-weight: 500;">
+                                ${listingText}
+                            </p>
+                        </div>
+
                         ${message ? `
                         <div style="border-left: 3px solid #ff9c00; padding: 12px 16px; margin: 20px 0; background-color: #fffbeb; border-radius: 0 8px 8px 0;">
                             <p style="margin: 0; font-size: 13px; color: #92400e; font-weight: 600;">Deine Mitteilung an uns:</p>
@@ -241,13 +261,13 @@ export async function POST(request: Request) {
                         </div>` : ""}
 
                         <p style="color: #475569; font-size: 14px; line-height: 1.6;">
-                            Im Anhang findest du unsere Zahlungsinformationen (QR-Rechnung / Bankverbindung). Wir werden uns zudem in Kürze persönlich bei dir melden.
+                            Im Anhang findest du unsere Zahlungsinformationen (QR-Rechnung / Bankverbindung / Twint). Wir werden uns zudem in Kürze persönlich bei dir melden.
                             Wenn du in der Zwischenzeit Fragen hast, kannst du einfach direkt auf diese E-Mail antworten.
                         </p>
 
                         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #f0f0f0;">
                             <p style="margin: 0; color: #475569; font-size: 14px;">Herzliche Grüsse,</p>
-                            <p style="margin: 4px 0 0 0; font-weight: 700; color: #1e293b; font-size: 15px;">Matthias Zürrer &amp; das Gospelproject-Team</p>
+                            <p style="margin: 4px 0 0 0; font-weight: 700; color: #1e293b; font-size: 15px;">Dein Gospelproject-Team</p>
                             <p style="margin: 4px 0 0 0; font-size: 13px;"><a href="https://gospelproject.ch" style="color: #ff9c00; text-decoration: none;">www.gospelproject.ch</a></p>
                         </div>
                     </div>
@@ -272,6 +292,7 @@ export async function POST(request: Request) {
                     )
                     .join("\n") +
                 (totalCHF > 0 ? `\n\nGesamtbetrag: CHF ${totalCHF.toFixed(0)}.-` : "") +
+                `\n\nErwähnung auf Website & Programmheft: ${listingText}` +
                 (message ? `\n\nDeine Mitteilung:\n${message}` : "") +
                 `\n\nIm Anhang findest du unsere Zahlungsinformationen (QR-Rechnung / Bankverbindung). Wir werden uns zudem in Kürze persönlich bei dir melden.\n` +
                 `Bei Fragen kannst du einfach direkt auf diese E-Mail antworten.\n\n` +
@@ -295,7 +316,7 @@ export async function POST(request: Request) {
             await transporter.sendMail({
                 from: `"Gospelproject" <${process.env.EMAIL_USER || "noreply@gospelproject.ch"}>`,
                 to: email,
-                replyTo: "matthias.zuerrer@gospelproject.ch",
+                replyTo: "sponsoring@gospelproject.ch",
                 subject: "Vielen Dank für deine Unterstützung – Gospelproject Wunschliste",
                 text: confirmationText,
                 html: confirmationHtml,

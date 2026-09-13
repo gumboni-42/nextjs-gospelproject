@@ -18,6 +18,10 @@
   --nav-text: #e5e7eb;
   --mobile-menu-bg: rgba(0, 0, 0, 0.95);
 
+  /* Cart elevation */
+  --cart-bg: #222228;
+  --cart-border: rgba(255, 255, 255, 0.16);
+
   /* Custom colors — same in both modes */
   --gospel-primary: #ff9c00;
   --gospel-secondary: #8e5700;
@@ -35,6 +39,10 @@
   --partner-logo-bg: transparent;
   --text-muted: #6b7280;
   --text-secondary: #374151;
+
+  /* Cart elevation */
+  --cart-bg: #ffffff;
+  --cart-border: rgba(0, 0, 0, 0.12);
 }
 
 @theme inline {
@@ -171,11 +179,23 @@ select {
   outline: none;
 }
 
-input:focus,
+input:not([type="radio"]):not([type="checkbox"]):focus,
 textarea:focus,
 select:focus {
   border-color: transparent;
   box-shadow: 0 0 0 2px var(--gospel-primary);
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  accent-color: var(--gospel-primary);
+  outline: none;
+}
+
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 /* Hide Google reCAPTCHA badge */
