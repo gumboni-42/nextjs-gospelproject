@@ -159,12 +159,36 @@ export async function POST(request: Request) {
         });
 
         // ── 1. Send notification email to owner ──────────────────────────────
-        await transporter.sendMail({
-            from: `"${name}" <${process.env.EMAIL_USER || "noreply@gospelproject.ch"}>`,
+        const sanitizedName = name.replace(/["\r\n]/g, "");
+        const notificationHtml = `<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neues Sponsoring-Interesse via Wunschliste</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1e293b; background-color: #f8fafc; margin: 0; padding: 20px;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; padding: 24px;">
+        <h2 style="margin-top: 0; color: #0f172a; font-size: 20px; border-bottom: 2px solid #ff9c00; padding-bottom: 8px;">Neues Sponsoring-Interesse via Wunschliste</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>E-Mail:</strong> <a href="mailto:${email}" style="color: #ff9c00;">${email}</a></p>
+        <p><strong>Erwähnung (Website &amp; Programmheft):</strong> ${listingText}</p>
+        <h3 style="color: #0f172a; margin-top: 20px;">Ausgewählte Wünsche (${cart.reduce((s, c) => s + c.quantity, 0)} Anteile):</h3>
+        <ul style="padding-left: 20px;">${itemsHtml}</ul>
+        ${totalCHF > 0 ? `<p style="font-size: 16px;"><strong>Gesamtbetrag: CHF ${totalCHF.toFixed(0)}.-</strong></p>` : ""}
+        ${message ? `<h3 style="color: #0f172a;">Mitteilung:</h3><p style="background: #f8fafc; padding: 12px; border-radius: 6px; border-left: 3px solid #ff9c00;">${message.replace(/\n/g, "<br>")}</p>` : ""}
+        <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0 12px 0;">
+        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Gesendet über <a href="https://gospelproject.ch/sponsoring/wunschliste" style="color: #94a3b8;">gospelproject.ch/sponsoring/wunschliste</a></p>
+    </div>
+</body>
+</html>`;
+
+        const ownerMailInfo = await transporter.sendMail({
+            from: `"Gospelproject Wunschliste" <${process.env.EMAIL_USER || "noreply@gospelproject.ch"}>`,
             to: "sponsoring@gospelproject.ch",
             bcc: "matthias.zuerrer@gmail.com",
-            replyTo: email,
-            subject: `Sponsoring-Interesse von ${name} – Wunschliste`,
+            replyTo: `"${sanitizedName}" <${email}>`,
+            subject: `Sponsoring-Interesse von ${sanitizedName} – Wunschliste`,
             text:
                 `Neues Sponsoring-Interesse via Wunschliste\n\n` +
                 `Name: ${name}\nE-Mail: ${email}\n` +
@@ -172,19 +196,12 @@ export async function POST(request: Request) {
                 `Ausgewählte Wünsche:\n${itemsText}` +
                 (totalCHF > 0 ? `\n\nTotal: CHF ${totalCHF.toFixed(0)}.-` : "") +
                 (message ? `\n\nMitteilung:\n${message}` : ""),
-            html: `
-                <h2>Neues Sponsoring-Interesse via Wunschliste</h2>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>E-Mail:</strong> <a href="mailto:${email}">${email}</a></p>
-                <p><strong>Erwähnung (Website &amp; Programmheft):</strong> ${listingText}</p>
-                <h3>Ausgewählte Wünsche (${cart.reduce((s, c) => s + c.quantity, 0)} Anteile):</h3>
-                <ul>${itemsHtml}</ul>
-                ${totalCHF > 0 ? `<p><strong>Gesamtbetrag: CHF ${totalCHF.toFixed(0)}.-</strong></p>` : ""}
-                ${message ? `<h3>Mitteilung:</h3><p>${message.replace(/\n/g, "<br>")}</p>` : ""}
-                <hr>
-                <p style="color:#888;font-size:12px;">Gesendet über gospelproject.ch/sponsoring/wunschliste</p>
-            `,
+            html: notificationHtml,
         });
+
+        if (ownerMailInfo.rejected && ownerMailInfo.rejected.length > 0) {
+            console.warn("Notification email rejected recipients:", ownerMailInfo.rejected);
+        }
 
         // ── 2. Send confirmation email to submitter ────────────────────────────
         try {
@@ -206,8 +223,15 @@ export async function POST(request: Request) {
                 )
                 .join("");
 
-            const confirmationHtml = `
-                <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6; background-color: #ffffff;">
+            const confirmationHtml = `<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wunschliste – Bestätigung</title>
+</head>
+<body style="margin: 0; padding: 20px 0; background-color: #f1f5f9;">
+                <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6; background-color: #ffffff; border-radius: 8px; overflow: hidden;">
                     <div style="padding: 24px 0; border-bottom: 2px solid #f0f0f0; text-align: center;">
                         <h1 style="color: #ff9c00; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: 0.5px;">Gospelproject</h1>
                         <p style="color: #64748b; margin: 4px 0 0 0; font-size: 14px;">Wunschliste – Bestätigung</p>
@@ -277,7 +301,8 @@ export async function POST(request: Request) {
                         <p style="margin: 0;">© ${new Date().getFullYear()} Gospelproject. Alle Rechte vorbehalten.</p>
                     </div>
                 </div>
-            `;
+</body>
+</html>`;
 
             const confirmationText =
                 `Hallo ${name},\n\n` +
