@@ -165,11 +165,11 @@ export async function POST(request: Request) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neues Sponsoring-Interesse via Wunschliste</title>
+    <title>Neues Sponsoring-Zusage via Wunschliste</title>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1e293b; background-color: #f8fafc; margin: 0; padding: 20px;">
     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; padding: 24px;">
-        <h2 style="margin-top: 0; color: #0f172a; font-size: 20px; border-bottom: 2px solid #ff9c00; padding-bottom: 8px;">Neues Sponsoring-Interesse via Wunschliste</h2>
+        <h2 style="margin-top: 0; color: #0f172a; font-size: 20px; border-bottom: 2px solid #ff9c00; padding-bottom: 8px;">Neues Sponsoring-Zusage via Wunschliste</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>E-Mail:</strong> <a href="mailto:${email}" style="color: #ff9c00;">${email}</a></p>
         <p><strong>Erwähnung (Website &amp; Programmheft):</strong> ${listingText}</p>
@@ -188,9 +188,9 @@ export async function POST(request: Request) {
             to: "sponsoring@gospelproject.ch",
             bcc: "matthias.zuerrer@gmail.com",
             replyTo: `"${sanitizedName}" <${email}>`,
-            subject: `Sponsoring-Interesse von ${sanitizedName} – Wunschliste`,
+            subject: `Sponsoring-Zusage von ${sanitizedName} – Wunschliste`,
             text:
-                `Neues Sponsoring-Interesse via Wunschliste\n\n` +
+                `Neues Sponsoring-Zusage via Wunschliste\n\n` +
                 `Name: ${name}\nE-Mail: ${email}\n` +
                 `Erwähnung (Website & Programmheft): ${listingText}\n\n` +
                 `Ausgewählte Wünsche:\n${itemsText}` +
