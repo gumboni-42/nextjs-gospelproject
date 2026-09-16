@@ -21,6 +21,8 @@ interface AgendaItem extends SanityDocument {
     ticketUrl?: string;
     ticketButtonText?: string;
     ticketStatus?: 'not_yet' | 'on_sale' | 'sold_out';
+    ticketNotYetText?: string;
+    ticketSoldOutText?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     description?: any;
     active: boolean;
@@ -48,6 +50,8 @@ const AGENDA_QUERY = `{
       ticketUrl,
       ticketButtonText,
       ticketStatus,
+      ticketNotYetText,
+      ticketSoldOutText,
       description,
       logoType
     },
@@ -118,50 +122,71 @@ export default async function AgendaPage() {
                                         </div>
                                     )}
 
-                                    <div className="flex flex-row items-start gap-4 sm:gap-6 relative z-20">
-                                        {/* Calendar Leaf */}
-                                        <div className="shrink-0">
-                                            <div
-                                                className="w-22 sm:w-28 rounded-2xl overflow-hidden shadow-md ring-1 ring-black/10 bg-white transition-transform duration-300 group-hover:scale-105 select-none"
-                                            >
-                                                {/* Header band */}
+                                    <div className="flex flex-col sm:flex-row sm:items-start sm:gap-6 relative z-20">
+                                        {/* === MOBILE: top header row (leaf + title) === */}
+                                        <div className="flex flex-row items-start gap-3 sm:contents">
+                                            {/* Calendar Leaf */}
+                                            <div className="shrink-0">
                                                 <div
-                                                    className="py-1.5 px-2 text-center text-xs sm:text-sm font-bold uppercase tracking-wider text-white"
-                                                    style={{ backgroundColor: 'var(--gospel-primary)' }}
+                                                    className="w-16 sm:w-28 rounded-2xl overflow-hidden shadow-md ring-1 ring-black/10 bg-white transition-transform duration-300 group-hover:scale-105 select-none"
                                                 >
-                                                    {month}
-                                                </div>
-                                                {/* Day number & weekday */}
-                                                <div className="py-2.5 sm:py-3 px-2 text-center flex flex-col items-center justify-center bg-white">
-                                                    <span
-                                                        className="text-4xl sm:text-5xl font-black tracking-tight leading-none text-neutral-900"
+                                                    {/* Header band */}
+                                                    <div
+                                                        className="py-1.5 px-2 text-center text-xs sm:text-sm font-bold uppercase tracking-wider text-white"
+                                                        style={{ backgroundColor: 'var(--gospel-primary)' }}
                                                     >
-                                                        {day}
-                                                    </span>
-                                                    <span
-                                                        className="text-xs sm:text-sm font-bold uppercase tracking-wider mt-1.5 text-neutral-600"
-                                                    >
-                                                        {weekdayShort}
-                                                    </span>
+                                                        {month}
+                                                    </div>
+                                                    {/* Day number & weekday */}
+                                                    <div className="py-2 sm:py-3 px-2 text-center flex flex-col items-center justify-center bg-white">
+                                                        <span
+                                                            className="text-3xl sm:text-5xl font-black tracking-tight leading-none text-neutral-900"
+                                                        >
+                                                            {day}
+                                                        </span>
+                                                        <span
+                                                            className="text-xs sm:text-sm font-bold uppercase tracking-wider mt-1 sm:mt-1.5 text-neutral-600"
+                                                        >
+                                                            {weekdayShort}
+                                                        </span>
+                                                    </div>
                                                 </div>
+                                            </div>
+
+                                            {/* Mobile-only: subtitle + title next to the leaf */}
+                                            <div className="flex-1 min-w-0 sm:hidden pt-0.5">
+                                                {item.subtitle && (
+                                                    <div
+                                                        className="text-xs font-semibold tracking-wide uppercase mb-0.5"
+                                                        style={{ color: 'var(--gospel-primary)' }}
+                                                    >
+                                                        {item.subtitle}
+                                                    </div>
+                                                )}
+                                                <h2
+                                                    className="text-lg font-bold leading-tight"
+                                                    style={{ color: 'var(--foreground)' }}
+                                                >
+                                                    {item.title}
+                                                </h2>
                                             </div>
                                         </div>
 
-                                        {/* Content */}
-                                        <div className="flex-1 min-w-0">
-                                            {/* Optional Subtitle / Teaser */}
+                                        {/* Content — on desktop this is the single flex column next to the leaf */}
+                                        <div className="flex-1 min-w-0 mt-3 sm:mt-0">
+                                            {/* Desktop-only: subtitle + title (hidden on mobile, shown above) */}
                                             {item.subtitle && (
                                                 <div
-                                                    className="text-xs sm:text-sm font-semibold tracking-wide uppercase mb-1 pr-0 sm:pr-28"
+                                                    className="hidden sm:block text-xs sm:text-sm font-semibold tracking-wide uppercase mb-1 pr-0 sm:pr-28"
                                                     style={{ color: 'var(--gospel-primary)' }}
                                                 >
                                                     {item.subtitle}
                                                 </div>
                                             )}
 
-                                            {/* Title */}
+                                            {/* Title — desktop only */}
                                             <h2
-                                                className="text-xl sm:text-2xl font-bold mb-1.5 pr-0 sm:pr-28 leading-snug"
+                                                className="hidden sm:block text-xl sm:text-2xl font-bold mb-1.5 pr-0 sm:pr-28 leading-snug"
                                                 style={{ color: 'var(--foreground)' }}
                                             >
                                                 {item.title}
@@ -230,7 +255,7 @@ export default async function AgendaPage() {
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-80">
                                                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clipRule="evenodd" />
                                                             </svg>
-                                                            <span>Tickets demnächst erhältlich</span>
+                                                            <span>{item.ticketNotYetText || "Tickets demnächst erhältlich"}</span>
                                                         </span>
                                                     )}
 
@@ -258,7 +283,7 @@ export default async function AgendaPage() {
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-80">
                                                                 <path fillRule="evenodd" d="M1 4a1 1 0 011-1h16a1 1 0 011 1v2.5a1.5 1.5 0 000 3V14a1 1 0 01-1 1H2a1 1 0 01-1-1v-3.5a1.5 1.5 0 000-3V4zm3 3a1 1 0 00-1 1v4a1 1 0 001 1h12a1 1 0 001-1V8a1 1 0 00-1-1H4z" clipRule="evenodd" />
                                                             </svg>
-                                                            <span>Ausverkauft</span>
+                                                            <span>{item.ticketSoldOutText || "Ausverkauft"}</span>
                                                         </span>
                                                     )}
 
