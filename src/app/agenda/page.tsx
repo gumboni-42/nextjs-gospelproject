@@ -202,7 +202,6 @@ export default async function AgendaPage() {
                                                                     {item.placeName ? `· ${item.placeAddress}` : item.placeAddress}
                                                                 </span>
                                                             )}
-                                                            {mapsUrl && <span className="ml-1 text-xs opacity-60">↗</span>}
                                                         </span>
                                                     </a>
                                                 </div>
@@ -233,7 +232,6 @@ export default async function AgendaPage() {
                                                                 <path fillRule="evenodd" d="M1 4a1 1 0 011-1h16a1 1 0 011 1v2.5a1.5 1.5 0 000 3V14a1 1 0 01-1 1H2a1 1 0 01-1-1v-3.5a1.5 1.5 0 000-3V4zm3 3a1 1 0 00-1 1v4a1 1 0 001 1h12a1 1 0 001-1V8a1 1 0 00-1-1H4z" clipRule="evenodd" />
                                                             </svg>
                                                             <span>{item.ticketButtonText || "Tickets kaufen"}</span>
-                                                            <span className="text-xs opacity-80">↗</span>
                                                         </a>
                                                     )}
 

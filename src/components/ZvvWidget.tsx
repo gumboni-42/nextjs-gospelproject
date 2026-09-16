@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Fragment } from "react";
 
 interface ZvvWidgetProps {
     code?: string;
@@ -136,7 +136,16 @@ export function ZvvWidget({ code, eventDate, destinationName, transportInfo }: Z
                         <path d="M6.5 3c-1.1 0-2 .9-2 2v9c0 .73.4 1.36 1 1.7V17a1 1 0 001 1h1a1 1 0 001-1v-1h5v1a1 1 0 001 1h1a1 1 0 001-1v-1.3c.6-.34 1-.97 1-1.7V5c0-1.1-.9-2-2-2h-7zm0 2h7a.5.5 0 01.5.5V8H6V5.5a.5.5 0 01.5-.5zM6 9.5h8V13H6V9.5zm1.5 5a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z" />
                     </svg>
                     <span className="leading-snug">
-                        {transportInfo || "Öffentlicher Verkehr & Anreise"}
+                        {transportInfo ? (
+                            transportInfo.split(/\r?\n/).map((line, idx, arr) => (
+                                <Fragment key={idx}>
+                                    {line}
+                                    {idx < arr.length - 1 && <br />}
+                                </Fragment>
+                            ))
+                        ) : (
+                            "Öffentlicher Verkehr & Anreise"
+                        )}
                     </span>
                 </div>
 
@@ -154,7 +163,6 @@ export function ZvvWidget({ code, eventDate, destinationName, transportInfo }: Z
                                     <path d="M6.5 3c-1.1 0-2 .9-2 2v9c0 .73.4 1.36 1 1.7V17a1 1 0 001 1h1a1 1 0 001-1v-1h5v1a1 1 0 001 1h1a1 1 0 001-1v-1.3c.6-.34 1-.97 1-1.7V5c0-1.1-.9-2-2-2h-7zm0 2h7a.5.5 0 01.5.5V8H6V5.5a.5.5 0 01.5-.5zM6 9.5h8V13H6V9.5zm1.5 5a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z" />
                                 </svg>
                                 <span>ZVV Fahrplan</span>
-                                <span className="text-[11px] opacity-70">↗</span>
                             </a>
                         ) : (
                             <button
@@ -193,7 +201,6 @@ export function ZvvWidget({ code, eventDate, destinationName, transportInfo }: Z
                             className="inline-flex items-center gap-1 hover:text-neutral-900 dark:hover:text-white transition-colors"
                         >
                             <span>Auf zvv.ch öffnen</span>
-                            <span>↗</span>
                         </a>
                     </div>
                     <div className="rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-white shadow-inner">
