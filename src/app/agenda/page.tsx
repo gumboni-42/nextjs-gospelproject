@@ -20,6 +20,7 @@ interface AgendaItem extends SanityDocument {
     ticketInfo?: string;
     ticketUrl?: string;
     ticketButtonText?: string;
+    ticketStatus?: 'not_yet' | 'on_sale' | 'sold_out';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     description?: any;
     active: boolean;
@@ -46,6 +47,7 @@ const AGENDA_QUERY = `{
       ticketInfo,
       ticketUrl,
       ticketButtonText,
+      ticketStatus,
       description,
       logoType
     },
@@ -218,9 +220,22 @@ export default async function AgendaPage() {
                                             )}
 
                                             {/* Tickets / Kollekte Action Row */}
-                                            {(item.ticketInfo || item.ticketUrl) && (
+                                            {(item.ticketStatus || item.ticketInfo || item.ticketUrl) && (
                                                 <div className="mb-3.5 flex flex-wrap items-center gap-2.5 pt-0.5">
-                                                    {item.ticketUrl && (
+                                                    {/* Status: Tickets not yet on sale */}
+                                                    {item.ticketStatus === 'not_yet' && (
+                                                        <span
+                                                            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium px-3 py-1.5 rounded-xl bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300"
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-80">
+                                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clipRule="evenodd" />
+                                                            </svg>
+                                                            <span>Tickets demnächst erhältlich</span>
+                                                        </span>
+                                                    )}
+
+                                                    {/* Status: On sale – show buy button */}
+                                                    {item.ticketStatus === 'on_sale' && item.ticketUrl && (
                                                         <a
                                                             href={item.ticketUrl}
                                                             target="_blank"
@@ -235,6 +250,19 @@ export default async function AgendaPage() {
                                                         </a>
                                                     )}
 
+                                                    {/* Status: Sold out */}
+                                                    {item.ticketStatus === 'sold_out' && (
+                                                        <span
+                                                            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium px-3 py-1.5 rounded-xl bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 opacity-80">
+                                                                <path fillRule="evenodd" d="M1 4a1 1 0 011-1h16a1 1 0 011 1v2.5a1.5 1.5 0 000 3V14a1 1 0 01-1 1H2a1 1 0 01-1-1v-3.5a1.5 1.5 0 000-3V4zm3 3a1 1 0 00-1 1v4a1 1 0 001 1h12a1 1 0 001-1V8a1 1 0 00-1-1H4z" clipRule="evenodd" />
+                                                            </svg>
+                                                            <span>Ausverkauft</span>
+                                                        </span>
+                                                    )}
+
+                                                    {/* Free-text info (e.g. «Freier Eintritt mit Kollekte») */}
                                                     {item.ticketInfo && (
                                                         <span
                                                             className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium px-3 py-1.5 rounded-xl bg-black/5 dark:bg-white/5"
