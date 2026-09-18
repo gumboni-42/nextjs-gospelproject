@@ -66,7 +66,7 @@ Kommende Konzerte 2026:
 - 28. November 2026, 19:00 Uhr — Gospelproject Konzert, Stadthofsaal Uster ZH
 - 29. November 2026, 16:00 Uhr — Gospelproject Konzert, Stadthofsaal Uster ZH
 
-- [Agenda](${SITE_URL}/agenda): Vollständige Konzert- und Eventübersicht
+- [Konzerte](${SITE_URL}/konzerte): Vollständige Konzert- und Eventübersicht
 
 ## Weitere Seiten
 

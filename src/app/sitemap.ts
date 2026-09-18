@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { url: SITE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
         { url: `${SITE_URL}/gospelproject`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
         { url: `${SITE_URL}/gospelation`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-        { url: `${SITE_URL}/agenda`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${SITE_URL}/konzerte`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${SITE_URL}/gospelverein`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
         { url: `${SITE_URL}/sponsoring`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
         { url: `${SITE_URL}/sponsoring/wunschliste`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },

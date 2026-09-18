@@ -7,7 +7,7 @@ const APP_DIR = path.join(process.cwd(), 'src/app');
 
 // Maps each page route path to its Sanity document _id (or a special key)
 const PATH_SANITY_MAP: Record<string, string> = {
-    '/agenda': 'agendaPage',
+    '/konzerte': 'agendaPage',
     '/gospelation': 'gospelationPage',
     '/gospelation/engagieren': 'gospelationEngagierenPage',
     '/gospelproject': 'gospelprojectPage',
