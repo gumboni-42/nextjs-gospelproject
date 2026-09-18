@@ -40,6 +40,11 @@ const nextConfig: NextConfig = {
         destination: 'https://gospelproject.ch/zusammenklang',
         permanent: true,
       },
+      {
+        source: '/agenda',
+        destination: '/konzerte',
+        permanent: true,
+      },
     ];
   },
   images: {
