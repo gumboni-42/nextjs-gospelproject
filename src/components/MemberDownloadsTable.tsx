@@ -205,14 +205,11 @@ export function MemberDownloadsTable({
                                     backgroundColor: 'rgba(0, 0, 0, 0.15)',
                                 }}
                             >
-                                <th scope="col" className="py-3.5 px-4 w-20 text-center">
+                                <th scope="col" className="py-3.5 px-4 w-14 text-center">
                                     Status
                                 </th>
-                                <th scope="col" className="py-3.5 px-4 min-w-[200px]">
+                                <th scope="col" className="py-3.5 px-4 min-w-[280px]">
                                     Name
-                                </th>
-                                <th scope="col" className="py-3.5 px-4 min-w-[160px]">
-                                    Dateiname
                                 </th>
                                 <th scope="col" className="py-3.5 px-4 whitespace-nowrap w-28">
                                     Grösse
@@ -245,11 +242,11 @@ export function MemberDownloadsTable({
                                         <td className="py-4 px-4 text-center align-middle">
                                             {item.isNew ? (
                                                 <span
-                                                    className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold shadow-sm tracking-wide text-white uppercase"
-                                                    style={{ backgroundColor: 'var(--gospel-primary)' }}
-                                                    title="Neu hinzugefügt oder aktualisiert"
+                                                    className="text-base leading-none"
+                                                    title="neu"
+                                                    aria-label="neu"
                                                 >
-                                                    NEU
+                                                    🔥
                                                 </span>
                                             ) : (
                                                 <span
@@ -262,15 +259,6 @@ export function MemberDownloadsTable({
                                         {/* Name & Description Column */}
                                         <td className="py-4 px-4 align-middle">
                                             <div className="flex items-start gap-3">
-                                                <span
-                                                    className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider shrink-0 mt-0.5"
-                                                    style={{
-                                                        backgroundColor: category.badgeBg,
-                                                        color: category.badgeColor,
-                                                    }}
-                                                >
-                                                    {category.label}
-                                                </span>
                                                 <div>
                                                     <div
                                                         className="font-medium text-sm leading-snug"
@@ -287,19 +275,19 @@ export function MemberDownloadsTable({
                                                         </p>
                                                     )}
                                                 </div>
+                                                <span
+                                                    className="inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider shrink-0 mt-0.5"
+                                                    style={{
+                                                        backgroundColor: category.badgeBg,
+                                                        color: category.badgeColor,
+                                                    }}
+                                                >
+                                                    {category.label}
+                                                </span>
                                             </div>
                                         </td>
 
-                                        {/* Filename Column */}
-                                        <td className="py-4 px-4 align-middle">
-                                            <span
-                                                className="font-mono text-xs block truncate max-w-[200px]"
-                                                style={{ color: 'var(--text-secondary)' }}
-                                                title={filename}
-                                            >
-                                                {filename}
-                                            </span>
-                                        </td>
+
 
                                         {/* Filesize Column */}
                                         <td className="py-4 px-4 align-middle whitespace-nowrap">
@@ -329,31 +317,15 @@ export function MemberDownloadsTable({
                                                 }}
                                                 title={isExternal ? 'In neuem Tab öffnen' : `${filename} herunterladen`}
                                             >
-                                                {isExternal ? (
-                                                    <>
-                                                        <span>Öffnen</span>
-                                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                strokeWidth={2}
-                                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                                            />
-                                                        </svg>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                strokeWidth={2}
-                                                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                                                            />
-                                                        </svg>
-                                                        <span>Download</span>
-                                                    </>
-                                                )}
+                                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                                    />
+                                                </svg>
+                                                <span>Download</span>
                                             </a>
                                         </td>
                                     </tr>
@@ -398,10 +370,11 @@ export function MemberDownloadsTable({
                                     </span>
                                     {item.isNew && (
                                         <span
-                                            className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wide"
-                                            style={{ backgroundColor: 'var(--gospel-primary)' }}
+                                            className="text-base leading-none"
+                                            title="neu"
+                                            aria-label="neu"
                                         >
-                                            NEU
+                                            🔥
                                         </span>
                                     )}
                                 </div>
@@ -445,31 +418,15 @@ export function MemberDownloadsTable({
                                         textDecoration: 'none',
                                     }}
                                 >
-                                    {isExternal ? (
-                                        <>
-                                            <span>Öffnen</span>
-                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                                />
-                                            </svg>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                                                />
-                                            </svg>
-                                            <span>Download</span>
-                                        </>
-                                    )}
+                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                        />
+                                    </svg>
+                                    <span>Download</span>
                                 </a>
                             </div>
                         </div>
