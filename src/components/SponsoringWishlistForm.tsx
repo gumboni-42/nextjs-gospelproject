@@ -355,7 +355,7 @@ export function SponsoringWishlistForm({ categories, successTitle, successText }
                                                         <span className="text-xs" style={{ color: "var(--text-muted)" }}>
                                                             {isSoldOut
                                                                 ? "Alle Anteile vergeben"
-                                                                : `${remaining} von ${quota} verfügbar`}
+                                                                : `${quota} verfügbar`}
                                                         </span>
                                                     )}
                                                 </div>
