@@ -7,8 +7,9 @@ export type HeroSectionProps = {
     image?: any;
     size?: 'default' | 'large';
     overlay?: boolean;
+    children?: React.ReactNode;
 };
-export const HeroSection = ({ title, image, size = 'default', overlay = true }: HeroSectionProps) => {
+export const HeroSection = ({ title, image, size = 'default', overlay = true, children }: HeroSectionProps) => {
 
     const backgroundUrl = getImageUrl(image);
 
@@ -49,6 +50,9 @@ export const HeroSection = ({ title, image, size = 'default', overlay = true }: 
                     </h1>
                 </div>
             )}
+
+            {/* Overlaid children (e.g. promo badge) */}
+            {children}
         </section>
     );
 };

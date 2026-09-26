@@ -2,9 +2,13 @@ import { type SanityDocument } from "next-sanity";
 import { HeroSection } from "@/components/HeroSection";
 import { NewsBar } from "@/components/NewsBar";
 import { FeatureSection } from "@/components/FeatureSection";
+import { PromoBadge } from "@/components/PromoBadge";
 import { sanityFetch } from "@/sanity/fetch";
 
-const HOME_QUERY = `*[_id in ["homePage", "drafts.homePage"]][0]`;
+const HOME_QUERY = `*[_id in ["homePage", "drafts.homePage"]][0]{
+  ...,
+  promoBadge
+}`;
 
 export const metadata = {
   title: "Home",
@@ -27,7 +31,14 @@ export default async function IndexPage() {
 
   return (
     <main className="min-h-screen flex flex-col">
-      <HeroSection image={homeData.heroImage} size="large" overlay={false} />
+      <HeroSection image={homeData.heroImage} size="large" overlay={false}>
+        {homeData.promoBadge?.enabled && homeData.promoBadge?.text && (
+          <PromoBadge
+            text={homeData.promoBadge.text}
+            href={homeData.promoBadge.link ?? "/konzerte"}
+          />
+        )}
+      </HeroSection>
 
       {homeData.newsEnabled && <NewsBar items={homeData.newsItems} />}
 

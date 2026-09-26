@@ -2,6 +2,7 @@ import React from 'react';
 
 export interface MemberDownloadItem {
     _key?: string;
+    _createdAt?: string;
     title: string;
     description?: string;
     isNew?: boolean;
@@ -42,8 +43,8 @@ function formatFileSize(bytes?: number, customSize?: string): string {
     return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
 }
 
-function formatUploadDate(uploadedAt?: string, customDate?: string): string {
-    const rawDate = customDate || uploadedAt;
+function formatUploadDate(uploadedAt?: string, customDate?: string, createdAt?: string): string {
+    const rawDate = customDate || uploadedAt || createdAt;
     if (!rawDate) return '–';
 
     try {
@@ -169,6 +170,15 @@ export function MemberDownloadsTable({
         return null;
     }
 
+    const sortedItems = [...items].sort((a, b) => {
+        const dateA = a.customUploadDate || a.uploadedAt || a._createdAt;
+        const dateB = b.customUploadDate || b.uploadedAt || b._createdAt;
+        if (!dateA && !dateB) return 0;
+        if (!dateA) return 1;
+        if (!dateB) return -1;
+        return new Date(dateB).getTime() - new Date(dateA).getTime();
+    });
+
     return (
         <section className="my-14" aria-labelledby="downloads-heading">
             <div className="mb-6">
@@ -223,10 +233,10 @@ export function MemberDownloadsTable({
                             </tr>
                         </thead>
                         <tbody className="divide-y" style={{ borderColor: 'var(--border-color)' }}>
-                            {items.map((item, index) => {
+                            {sortedItems.map((item, index) => {
                                 const filename = getDisplayFilename(item);
                                 const filesize = formatFileSize(item.fileSize, item.customFilesize);
-                                const uploadDate = formatUploadDate(item.uploadedAt, item.customUploadDate);
+                                const uploadDate = formatUploadDate(item.uploadedAt, item.customUploadDate, item._createdAt);
                                 const category = getFileCategory(item);
                                 const downloadUrl = item.fileUrl
                                     ? `${item.fileUrl}?dl=${encodeURIComponent(filename)}`
@@ -338,10 +348,10 @@ export function MemberDownloadsTable({
 
             {/* Mobile Card List View (visible only on small screens) */}
             <div className="md:hidden space-y-3">
-                {items.map((item, index) => {
+                {sortedItems.map((item, index) => {
                     const filename = getDisplayFilename(item);
                     const filesize = formatFileSize(item.fileSize, item.customFilesize);
-                    const uploadDate = formatUploadDate(item.uploadedAt, item.customUploadDate);
+                    const uploadDate = formatUploadDate(item.uploadedAt, item.customUploadDate, item._createdAt);
                     const category = getFileCategory(item);
                     const downloadUrl = item.fileUrl
                         ? `${item.fileUrl}?dl=${encodeURIComponent(filename)}`

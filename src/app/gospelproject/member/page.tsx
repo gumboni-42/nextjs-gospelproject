@@ -20,6 +20,7 @@ const MEMBER_QUERY = `*[_type == "gospelprojectMemberPage"][0]{
   },
   "downloads": downloads[]{
     _key,
+    _createdAt,
     title,
     description,
     isNew,
