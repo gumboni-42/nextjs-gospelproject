@@ -8,17 +8,7 @@ import { MemberPasswordGate } from "@/components/MemberPasswordGate";
 import { MemberDownloadsTable } from "@/components/MemberDownloadsTable";
 import { cookies } from "next/headers";
 
-const MEMBER_QUERY = `*[_type == "gospelprojectMemberPage"][0]{
-  ...,
-  "heroImage": heroImage,
-  "logo": logo,
-  "callToAction": callToAction {
-    text,
-    linkType,
-    internalLink,
-    url
-  },
-  "downloads": downloads[]{
+const DOWNLOAD_ITEM_PROJECTION = `{
     _key,
     _createdAt,
     title,
@@ -34,7 +24,20 @@ const MEMBER_QUERY = `*[_type == "gospelprojectMemberPage"][0]{
     customFilename,
     customFilesize,
     customUploadDate
-  }
+  }`;
+
+const MEMBER_QUERY = `*[_type == "gospelprojectMemberPage"][0]{
+  ...,
+  "heroImage": heroImage,
+  "logo": logo,
+  "callToAction": callToAction {
+    text,
+    linkType,
+    internalLink,
+    url
+  },
+  "werbungDownloads": werbungDownloads[]${DOWNLOAD_ITEM_PROJECTION},
+  "downloads": downloads[]${DOWNLOAD_ITEM_PROJECTION}
 }`;
 
 export const metadata = {
@@ -85,6 +88,14 @@ export default async function GospelprojectMemberPage() {
                     </div>
 
                     <MemberDownloadsTable
+                        id="werbung"
+                        items={data.werbungDownloads}
+                        sectionTitle={data.werbungSectionTitle || 'Werbung'}
+                        sectionDescription={data.werbungSectionDescription}
+                    />
+
+                    <MemberDownloadsTable
+                        id="downloads"
                         items={data.downloads}
                         sectionTitle={data.downloadsSectionTitle}
                         sectionDescription={data.downloadsSectionDescription}

@@ -72,6 +72,7 @@ Kommende Konzerte 2026:
 
 - [Impressionen](${SITE_URL}/impressionen): Fotogalerie und YouTube-Videos aus vergangenen Konzerten
 - [Sponsoring](${SITE_URL}/sponsoring): Sponsoring-Möglichkeiten für die Produktion 2026 (aktuelle Sponsoren: Zürcher Kantonalbank, Crealine Media Systems; Medienpartner: Radio Zürisee)
+- [Sponsoren](${SITE_URL}/sponsoren): Übersicht aller Sponsoren (Hauptsponsoren: Zürcher Kantonalbank, Crealine Media Systems; Goldsponsoren; übrige Sponsoren)
 - [Zusammenklang](${SITE_URL}/zusammenklang): Detailliertes Sponsoring-Konzept, Spendenmöglichkeiten (Bankverbindung ZKB, TWINT)
 - [Newsletter](${SITE_URL}/newsletter): Newsletter abonnieren — aktuelle Infos zu Konzerten und Anmeldung
 - [Kontakt](${SITE_URL}/kontakt): Kontaktformular für allgemeine Anfragen und Buchungen

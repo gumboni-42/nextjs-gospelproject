@@ -6,6 +6,7 @@ import { PageLogo } from "@/components/PageLogo";
 import CldImage from '@/components/CloudinaryImage';
 import { getImageUrl } from "@/sanity/client";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 const SPONSORING_QUERY = `*[_type == "sponsoringPage"][0]{
   ...,
@@ -42,6 +43,8 @@ export default async function SponsoringPage() {
             </main>
         );
     }
+
+    if (data.visible === false) notFound();
 
     return (
         <main className="min-h-screen">

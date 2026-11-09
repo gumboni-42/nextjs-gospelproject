@@ -19,6 +19,8 @@ export interface MemberDownloadItem {
 }
 
 interface MemberDownloadsTableProps {
+    /** Unique id prefix (needed when several tables are on one page) */
+    id?: string;
     items?: MemberDownloadItem[];
     sectionTitle?: string;
     sectionDescription?: string;
@@ -162,6 +164,7 @@ function getFileCategory(item: MemberDownloadItem): {
 }
 
 export function MemberDownloadsTable({
+    id = 'downloads',
     items,
     sectionTitle = 'Downloads & Dateien',
     sectionDescription,
@@ -179,22 +182,44 @@ export function MemberDownloadsTable({
         return new Date(dateB).getTime() - new Date(dateA).getTime();
     });
 
+    const headingId = `${id}-heading`;
+
     return (
-        <section className="my-14" aria-labelledby="downloads-heading">
-            <div className="mb-6">
-                <h3
-                    id="downloads-heading"
-                    className="text-2xl font-bold tracking-tight mb-2"
-                    style={{ color: 'var(--foreground)' }}
-                >
-                    {sectionTitle}
-                </h3>
-                {sectionDescription && (
-                    <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                        {sectionDescription}
-                    </p>
-                )}
-            </div>
+        <section className="my-14" aria-labelledby={headingId}>
+            {/* Native disclosure: collapsible, open by default, content stays findable via "Find in page" */}
+            <details open className="group/table">
+                <summary className="list-none [&::-webkit-details-marker]:hidden cursor-pointer select-none mb-6">
+                    <div className="flex items-center justify-between gap-4">
+                        <h3
+                            id={headingId}
+                            className="text-2xl font-bold tracking-tight"
+                            style={{ color: 'var(--foreground)' }}
+                        >
+                            {sectionTitle}
+                        </h3>
+                        <span
+                            className="inline-flex items-center gap-1.5 text-xs font-medium shrink-0"
+                            style={{ color: 'var(--text-muted)' }}
+                        >
+                            <span className="group-open/table:hidden">Anzeigen</span>
+                            <span className="hidden group-open/table:inline">Einklappen</span>
+                            <svg
+                                className="w-4 h-4 transition-transform duration-200 group-open/table:rotate-180"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </span>
+                    </div>
+                    {sectionDescription && (
+                        <p className="text-sm leading-relaxed mt-2" style={{ color: 'var(--text-muted)' }}>
+                            {sectionDescription}
+                        </p>
+                    )}
+                </summary>
 
             {/* Desktop / Tablet Table View (hidden on very small screens) */}
             <div
@@ -443,6 +468,7 @@ export function MemberDownloadsTable({
                     );
                 })}
             </div>
+            </details>
         </section>
     );
 }

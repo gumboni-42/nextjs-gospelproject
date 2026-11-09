@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { url: `${SITE_URL}/gospelverein`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
         { url: `${SITE_URL}/sponsoring`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
         { url: `${SITE_URL}/sponsoring/wunschliste`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+        { url: `${SITE_URL}/sponsoren`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
         { url: `${SITE_URL}/kontakt`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.6 },
         { url: `${SITE_URL}/zusammenklang`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
         { url: `${SITE_URL}/newsletter`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },

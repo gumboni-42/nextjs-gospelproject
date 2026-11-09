@@ -19,6 +19,7 @@ const PATH_SANITY_MAP: Record<string, string> = {
     '/impressionen': 'impressionenPage',
     '/kontakt': 'kontaktPage',
     '/sponsoring': 'sponsoringPage',
+    '/sponsoren': 'sponsorenPage',
     '/gospelproject/teilnahmebedingungen': 'gospelprojectBedingungenPage',
     '/gospelverein': 'gospelvereinPage',
 };
