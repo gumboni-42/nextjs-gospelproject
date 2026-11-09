@@ -133,7 +133,7 @@ export function FooterContent({ data, memberPageVisible }: { data: FooterData; m
                                                         alt={data.mediaPartner.name}
                                                         width={240}
                                                         height={120}
-                                                        crop="fit"
+                                                        crop="fill"
                                                         className="h-15 w-[120px] object-contain rounded-md"
                                                     />
                                                 ) : (

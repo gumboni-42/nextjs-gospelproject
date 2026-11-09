@@ -55,7 +55,7 @@ function SponsorLogo({ sponsor, sizes }: { sponsor: Sponsor; sizes: string }) {
         );
     }
     return (
-        <span className="text-lg font-semibold text-center">{sponsor.name}</span>
+        <span className="text-lg font-semibold text-center text-gray-900">{sponsor.name}</span>
     );
 }
 
@@ -71,7 +71,7 @@ function MaybeLink({ url, label, className, children }: { url?: string; label: s
 }
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
-    return <h2 className="text-3xl font-semibold mb-10 text-center">{children}</h2>;
+    return <h3 className="text-3xl font-semibold mb-10 text-center">{children}</h3>;
 }
 
 export default async function SponsorenPage() {
@@ -130,9 +130,11 @@ export default async function SponsorenPage() {
                                         key={sponsor._key ?? index}
                                         url={sponsor.url}
                                         label={sponsor.name}
-                                        className="w-full max-w-[320px] relative aspect-[3/2] flex items-center justify-center"
+                                        className="w-full max-w-[320px] aspect-[3/2] bg-white rounded-xl p-6 flex items-center justify-center shadow-sm"
                                     >
-                                        <SponsorLogo sponsor={sponsor} sizes="(min-width: 768px) 320px, 80vw" />
+                                        <div className="relative w-full h-full flex items-center justify-center">
+                                            <SponsorLogo sponsor={sponsor} sizes="(min-width: 768px) 320px, 80vw" />
+                                        </div>
                                     </MaybeLink>
                                 ))}
                             </div>
@@ -151,8 +153,10 @@ export default async function SponsorenPage() {
                                         label={sponsor.name}
                                         className="flex flex-col items-center text-center"
                                     >
-                                        <div className="w-full max-w-[200px] relative aspect-[3/2] flex items-center justify-center mb-4">
-                                            <SponsorLogo sponsor={sponsor} sizes="(min-width: 768px) 200px, 40vw" />
+                                        <div className="w-full max-w-[200px] aspect-[3/2] bg-white rounded-xl p-4 flex items-center justify-center mb-4 shadow-sm">
+                                            <div className="relative w-full h-full flex items-center justify-center">
+                                                <SponsorLogo sponsor={sponsor} sizes="(min-width: 768px) 200px, 40vw" />
+                                            </div>
                                         </div>
                                         <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
                                             {sponsor.name}
