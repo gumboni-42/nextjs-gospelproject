@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { NewsBar } from "@/components/NewsBar";
 import { FeatureSection } from "@/components/FeatureSection";
 import { PromoBadge } from "@/components/PromoBadge";
+import { GoldSponsorsBanner, type GoldSponsor } from "@/components/GoldSponsorsBanner";
 import { sanityFetch } from "@/sanity/fetch";
 
 const HOME_QUERY = `*[_id in ["homePage", "drafts.homePage"]][0]{
@@ -10,13 +11,18 @@ const HOME_QUERY = `*[_id in ["homePage", "drafts.homePage"]][0]{
   promoBadge
 }`;
 
+const GOLD_SPONSORS_QUERY = `*[_type == "sponsorenPage"][0].goldSponsors[]{ _key, name, logo, url }`;
+
 export const metadata = {
   title: "Home",
   description: "Willkommen beim Gospelproject – Gemeinsam Gospel singen, erleben und geniessen. Entdecke unsere Konzerte, Events und werde Teil der Gospel-Community in der Schweiz.",
 };
 
 export default async function IndexPage() {
-  const homeData = await sanityFetch<SanityDocument>({ query: HOME_QUERY, tags: ['homePage'] });
+  const [homeData, goldSponsors] = await Promise.all([
+    sanityFetch<SanityDocument>({ query: HOME_QUERY, tags: ['homePage'] }),
+    sanityFetch<GoldSponsor[] | null>({ query: GOLD_SPONSORS_QUERY, tags: ['sponsorenPage'] }),
+  ]);
 
   if (!homeData) {
     return (
@@ -60,6 +66,8 @@ export default async function IndexPage() {
           />
         </div>
       </div>
+
+      <GoldSponsorsBanner sponsors={goldSponsors ?? undefined} />
     </main>
   );
 }
